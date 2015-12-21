@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block main %}
+      <div class="responses-header">
+        <h3 class="breadcrumb">
+          <a class="backlink" href="/">form responses</a>
+            →
+          <span class="current">
+            response {{response.id}}
+          </span>
+
+        </h3>
+      </div>
+
+      <table class="table response">
+        <!-- loop through keys and write them out -->
+      <tr class="reponse-attribute">
+        <th>Date submitted</th>
+        <td>{{ response.date_received }}</td>
+      </tr>
+      <tr class="reponse-attribute">
+        <th>PDF</th>
+        <td>{% include "pdf_button.html" %}</td>
+      </tr>
+      {% for key, value in response.answers.items() %}
+      <tr class="reponse-attribute">
+        <th>{{ key }}</th>
+        <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+      </table>
+
+{% endblock main %}

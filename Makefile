@@ -26,4 +26,4 @@ db.rebuild:
 	make db.init
 
 serve:
-	python manage.py server
+	gulp

@@ -3597,6 +3597,9 @@ input[type="button"].btn-block {
   margin: 0 auto;
   max-width: 40em;
 }
+.breadcrumb .current {
+  color: #333333;
+}
 .stateful .state {
   display: none;
 }

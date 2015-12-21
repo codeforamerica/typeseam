@@ -1,0 +1,27 @@
+{%- if response.pdf_url -%}
+        <a class="btn btn-primary" href="{{ response.pdf_url }}" target="_blank">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          PDF
+        </a>
+        {%- else -%}
+        <span class="btn btn-default stateful ">
+          <span class="state content_default">
+            Click to generate PDF
+          </span>
+
+          <span class="state content_sending">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            Sending form data
+          </span>
+
+          <span class="state content_generating">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            Generating filled PDF
+          </span>
+
+          <span class="state content_retrieving">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            Retrieving link to PDF
+          </span>
+        </span>
+{%- endif -%}

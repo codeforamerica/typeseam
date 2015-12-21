@@ -27,6 +27,10 @@ form_serializer = TypeformSerializer()
 def get_response_model(response_id):
     return TypeformResponse.query.get(int(response_id))
 
+def get_response_detail(response_id):
+    response = get_response_model(response_id)
+    return response_serializer.dump(response).data
+
 def most_recent_responses(count=20):
     q = TypeformResponse.query.\
             order_by(desc(TypeformResponse.date_received)).\
