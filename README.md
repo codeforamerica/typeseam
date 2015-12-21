@@ -11,7 +11,7 @@ Here's the next steps:
 - [x] create a mapped translation between a Typeform form and a SeamlessDocs pdf
 - [x] create a post url for receiving typeform submissions and saving them
 - [x] create a process for filling the pdf with typeform submissions
-- [ ] deploy
+- [x] deploy
 - [ ] improve the UI
 - [ ] create logins to protect the privacy of form submissions
 - [ ] allow for adding more than one form
@@ -35,7 +35,7 @@ Here is an example `.env` file with a list of the necessary variables:
 
 ```
 DB_NAME='typeseam'
-DATABASE_URI="postgresql+psycopg2://bgolder@localhost/$DB_NAME"
+DATABASE_URI="postgresql+psycopg2://dbusername@localhost/$DB_NAME"
 SECRET_KEY='o0o0o0o0o0o0o0o0oo0o0o'
 CONFIG=typeseam.settings.DevConfig
 PYTHONPATH=".:$PYTHONPATH"
