@@ -15,7 +15,6 @@ function listenToEvents(){
 }
 
 function getNewResponses(e){
-  console.log("clicked for new responses");
   $('button.load_new_responses').addClass('loading');
   $.ajax({
     url: "/api/new_responses",
@@ -27,7 +26,6 @@ function getNewResponses(e){
 function stateTransitionChain(target, stateStack, index){
   if( index > 0){
     var prevStateClassName = stateStack[index - 1][0];
-    console.log('removing previous state', prevStateClassName);
     target.removeClass(prevStateClassName);
   }
   if( index == stateStack.length ){
@@ -42,9 +40,7 @@ function stateTransitionChain(target, stateStack, index){
 }
 
 function getPDF(e){
-  console.log("clicked for pdf");
   var target = $(this);
-  console.log(this.className);
   target.removeClass("untouched");
   target.addClass('loading');
   var responseId = target.parent('.response').attr('id');
@@ -58,14 +54,12 @@ function getPDF(e){
 }
 
 function handleNewResponses(html){
-  console.log("received responses", html);
   $('.responses').prepend(html);
   $('button.load_new_responses').removeClass('loading');
 }
 
 function handleNewPDF(responseId){
   return function(html){
-    console.log("pdf response!", html)
     $('#response-'+responseId).replaceWith(html);
   };
 }

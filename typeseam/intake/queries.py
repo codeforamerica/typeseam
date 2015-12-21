@@ -39,7 +39,6 @@ def get_responses_csv():
     data = flat_response_serializer.dump(q, many=True).data
     keys = list(data[0].keys())
     keys.sort()
-    pprint(keys)
     with io.StringIO() as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=keys, quoting=csv.QUOTE_NONNUMERIC)
         writer.writeheader()
