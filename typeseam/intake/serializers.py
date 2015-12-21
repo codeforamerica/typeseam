@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, post_dump
 from typeseam.extensions import ma
 from typeseam.intake.models import (
     TypeformResponse,
@@ -41,6 +41,25 @@ class TypeformResponseModelSerializer(LookupMixin):
             'seamless_submitted',
             'pdf_url'
             )
+
+class FlatResponseSerializer(ma.ModelSchema):
+    answers = fields.Dict()
+    date_received = fields.DateTime(format=TYPEFORM_DATE_FORMAT)
+
+    class Meta:
+        model = TypeformResponse
+        fields = (
+            'id',
+            'date_received',
+            'answers',
+            'pdf_url'
+            )
+
+    @post_dump(pass_many=True)
+    def flatten(self, data, many=True):
+        for datum in data:
+            datum.update(datum.pop("answers"))
+        return data
 
 class TypeformSerializer(LookupMixin):
 

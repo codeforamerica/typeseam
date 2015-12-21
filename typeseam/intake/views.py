@@ -1,5 +1,5 @@
 
-from flask import render_template, jsonify
+from flask import render_template, jsonify, Response
 from typeseam.intake import (
     blueprint,
     queries,
@@ -24,6 +24,10 @@ def local_responses():
         responses=responses,
     )
 
+@blueprint.route('/responses.csv')
+def responses_csv():
+    csv = queries.get_responses_csv()
+    return Response(csv, mimetype="text/csv")
 
 @blueprint.route('/api/new_responses', methods=['GET'])
 def remote_responses():

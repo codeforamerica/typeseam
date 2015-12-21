@@ -3,7 +3,7 @@ var concat = require('gulp-concat');
 var less = require('gulp-less');
 
 gulp.task('fonts', function(){
-  return gulp.src('./node_modules/bootstrap/fonts/*.{ttf,woff,woof2,eot,svg}')
+  return gulp.src('./node_modules/bootstrap/fonts/*.{ttf,woff,woff2,eot,svg}')
     .pipe(gulp.dest('typeseam/static/fonts/'))
 });
 

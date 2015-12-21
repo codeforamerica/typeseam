@@ -3,6 +3,8 @@ from sqlalchemy import desc, inspect
 from typeseam.app import db
 from typeseam import utils
 
+import io
+import csv
 from pprint import pprint
 
 from .models import (
@@ -12,12 +14,14 @@ from .models import (
 
 from .serializers import (
     TypeformResponseModelSerializer,
+    FlatResponseSerializer,
     TypeformSerializer
     )
 
 from typeseam.intake import form_field_processors
 
 response_serializer = TypeformResponseModelSerializer()
+flat_response_serializer = FlatResponseSerializer()
 form_serializer = TypeformSerializer()
 
 def get_response_model(response_id):
@@ -25,9 +29,22 @@ def get_response_model(response_id):
 
 def most_recent_responses(count=20):
     q = TypeformResponse.query.\
-        order_by(desc(TypeformResponse.date_received)).\
-        limit(count)
+            order_by(desc(TypeformResponse.date_received)).\
+            limit(count)
     return response_serializer.dump(q.all(), many=True).data
+
+def get_responses_csv():
+    q = TypeformResponse.query.\
+            order_by(desc(TypeformResponse.date_received)).all()
+    data = flat_response_serializer.dump(q, many=True).data
+    keys = list(data[0].keys())
+    keys.sort()
+    pprint(keys)
+    with io.StringIO() as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=keys, quoting=csv.QUOTE_NONNUMERIC)
+        writer.writeheader()
+        writer.writerows(data)
+        return csvfile.getvalue()
 
 def parse_typeform_data(data):
     items = []

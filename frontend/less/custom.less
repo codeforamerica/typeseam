@@ -9,3 +9,40 @@
   margin: 0 auto;
   max-width: 40em;
 }
+
+// states
+.stateful .state { display: none; }
+.untouched .state.content_default { display: inline; }
+.sending .state.content_sending { display: inline; }
+.generating .state.content_generating { display: inline; }
+.retrieving .state.content_retrieving { display: inline; }
+
+.btn .glyphicon {
+  margin-right: .5em;
+}
+
+.loading .glyphicon-refresh {
+   -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
