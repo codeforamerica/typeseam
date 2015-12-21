@@ -5,33 +5,45 @@
   <link rel="stylesheet" type="text/css" href="/static/css/main.css">
 </head>
 <body>
-<h1 id="{{ form.id }}">{{ form.title }}</h1>
-<div class="form_data">
-<ul class="form_nav">
-  <li class="form_nav_item">
-    <a href="{{ form.live_url }}" target="_blank">View live form</a>
-  </li>
-  <li class="form_nav_item">
-    <a href="{{ form.edit_url }}">Edit form</a>
-  </li>
-</ul>
-</div>
-<table>
-  <caption>
-  Form responses
-  <button class="load_new_responses">Check for new responses</button>
-  </caption>
-  <thead>
-    <tr>
-      <th>Received</th>
-      <th>PDF</th>
-    </tr>
-  </thead>
-  <tbody class="responses">
-{% include "response_list.html" %}
-  </tbody>
-</table>
+  <header>
+    <div class="container">
 
-<script src="/static/js/main.js"></script>
+    <h3>FORM TITLE</h3>
+    <h1 id="{{ form.id }}">{{ form.title }}</h1>
+    <div class="form_data">
+      <ul class="form_nav">
+        <li class="form_nav_item">
+          <a class="btn btn-default" href="{{ form.live_url }}" target="_blank">View live form</a>
+        </li>
+        <li class="form_nav_item">
+          <a class="btn btn-default" href="{{ form.edit_url }}">Edit form</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </header>
+    <div class="container">
+
+  <table class="table">
+    <caption>
+      <h3>
+        Form responses
+      </h3>
+      <button class="btn btn-primary load_new_responses">
+      <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      Check for new responses</button>
+    </caption>
+    <thead>
+      <tr>
+        <th>Received</th>
+        <th>PDF</th>
+      </tr>
+    </thead>
+    <tbody class="responses">
+      {% include "response_list.html" %}
+    </tbody>
+  </table>
+</div>
+  <script src="/static/js/main.js"></script>
 </body>
 </html>

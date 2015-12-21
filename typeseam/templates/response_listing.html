@@ -1,8 +1,11 @@
     <tr id="response-{{response.id}}" class="response">
       <td class="date_cell">{{ response.date_received }}</td>
       <td class="pdf_cell">{% if response.pdf_url -%}
-      <a href="{{ response.pdf_url }}" target="_blank">PDF</a>
+      <a class="btn btn-primary" href="{{ response.pdf_url }}" target="_blank">
+      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+      PDF
+      </a>
       {%- else -%}
-      No PDF
+      <span class="btn btn-default">Click to generate PDF</span>
       {%- endif %}</td>
     </tr>
