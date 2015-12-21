@@ -14,12 +14,12 @@ class Config(object):
 class ProdConfig(Config):
     ENV = 'prod'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 class DevConfig(Config):
     ENV = 'dev'
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI', 'sqlite:////tmp/test.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
 
 class TestConfig(Config):
     TESTING = True
