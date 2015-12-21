@@ -4,6 +4,7 @@ from typeseam.intake.models import (
     TypeformResponse,
     Typeform
     )
+
 # '2015-12-19 00:19:43'
 TYPEFORM_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 

@@ -5,3 +5,4 @@ requests==2.8.1
 Flask-Migrate==1.6.0
 flask-marshmallow==0.6.2
 marshmallow-sqlalchemy==0.7.1
+gunicorn==19.4.1
