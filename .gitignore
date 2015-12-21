@@ -1,0 +1,6 @@
+.env
+migrations
+node_modules
+__pycache__
+*.sw[op]
+*.pyc

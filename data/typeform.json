@@ -14,8 +14,7 @@
                {"id": "yesno_15075576",
                 "question": "Are you a United States Citizen?"},
                {"id": "yesno_15075591",
-                "question": "Do you have an address where we can send you "
-                            "mail?"},
+                "question": "Do you have an address where we can send you mail?"},
                {"id": "group_15075752",
                 "question": "Great! Let's get your mailing address."},
                {"group": "group_15075752",
@@ -31,11 +30,9 @@
                 "id": "textfield_15075851",
                 "question": "Zip Code?"},
                {"id": "yesno_15075861",
-                "question": "Do you have a phone number where we can leave "
-                            "you voice messages?"},
+                "question": "Do you have a phone number where we can leave you voice messages?"},
                {"id": "textfield_15076839",
-                "question": "What is the phone number where we can leave "
-                            "you messages?"},
+                "question": "What is the phone number where we can leave you messages?"},
                {"id": "list_15076883_choice",
                 "question": "What kind of phone is this?"},
                {"id": "list_15076883_other",
@@ -52,22 +49,17 @@
                {"id": "yesno_15076728",
                 "question": "Are you currently being charged with a crime?"},
                {"id": "yesno_15076784",
-                "question": "Have you ever been arrested or convicted "
-                            "outside of San Francisco?"},
+                "question": "Have you ever been arrested or convicted outside of San Francisco?"},
                {"id": "textarea_15076790",
-                "question": "When were you arrested or convicted outside "
-                            "of San Francisco?"},
+                "question": "When were you arrested or convicted outside of San Francisco?"},
                {"id": "yesno_15076795",
                 "question": "Are you currently employed?"},
                {"id": "textfield_15076804",
                 "question": "What is your monthly income?"},
                {"id": "textfield_15076814",
-                "question": "How much do you spend each month on things "
-                            "like rent, groceries, utilities, medical "
-                            "expenses, or childcare expenses?"},
+                "question": "How much do you spend each month on things like rent, groceries, utilities, medical expenses, or childcare expenses?"},
                {"id": "textfield_15076818",
-                "question": "How did you hear about the Clean Slate "
-                            "program?"}],
+                "question": "How did you hear about the Clean Slate program?"}],
  "responses": [{"answers": {"date_15075567": "1982-02-06",
                             "dropdown_15075846": "CA - California",
                             "email_15077308": "",
@@ -77,17 +69,17 @@
                             "textfield_15075498": "Ben",
                             "textfield_15075501": "Golder",
                             "textfield_15075504": "Joseph Osborne",
-                            "textfield_15075537": "987-234-5323",
-                            "textfield_15075547": "D3114325",
-                            "textfield_15075763": "494 38th St. Apt. 4",
-                            "textfield_15075797": "Oakland",
-                            "textfield_15075851": "94609",
+                            "textfield_15075537": "987-23-5323",
+                            "textfield_15075547": "D0987234",
+                            "textfield_15075763": "123013240 Satellite Street",
+                            "textfield_15075797": "Pittsburgh",
+                            "textfield_15075851": "02140",
                             "textfield_15076739": "",
                             "textfield_15076767": "",
                             "textfield_15076804": "8000",
                             "textfield_15076814": "1400",
                             "textfield_15076818": "from a friend",
-                            "textfield_15076839": "831-420-7603",
+                            "textfield_15076839": "432-234-2342",
                             "yesno_15075576": "1",
                             "yesno_15075591": "1",
                             "yesno_15075861": "1",
@@ -105,11 +97,6 @@
                              "network_id": "8317a6c0f3f790f39ff5a6d0fed5d87b29be4df9",
                              "platform": "other",
                              "referer": "https://bgolder.typeform.com/to/o8MrpO",
-                             "user_agent": "Mozilla/5.0 (Macintosh; Intel "
-                                           "Mac OS X 10_10_5) "
-                                           "AppleWebKit/537.36 (KHTML, "
-                                           "like Gecko) "
-                                           "Chrome/47.0.2526.106 "
-                                           "Safari/537.36"},
+                             "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"},
                 "token": "b016f87ca69af29c012d3944798ee1b2"}],
  "stats": {"responses": {"completed": 1, "showing": 1, "total": 7}}}

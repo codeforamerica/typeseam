@@ -4,8 +4,9 @@
 install:
 	pip install -r requirements.txt
 
-install_dev:
+install.dev:
 	pip install -r requirements/dev.txt
+	npm install
 
 db.drop:
 	rm -rf ./migrations
@@ -24,8 +25,5 @@ db.rebuild:
 	make db.create
 	make db.init
 
-go:
-	python ./typeseam/scripts/pull_from_typeform.py
-
-check:
-	python ./typeseam/scripts/get_seamless_pdf.py
+serve:
+	python manage.py server

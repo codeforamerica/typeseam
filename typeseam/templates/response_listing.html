@@ -1,0 +1,8 @@
+    <tr id="response-{{response.id}}" class="response">
+      <td class="date_cell">{{ response.date_received }}</td>
+      <td class="pdf_cell">{% if response.pdf_url -%}
+      <a href="{{ response.pdf_url }}" target="_blank">PDF</a>
+      {%- else -%}
+      No PDF
+      {%- endif %}</td>
+    </tr>

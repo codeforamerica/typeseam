@@ -3,7 +3,7 @@
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'intake', __name__, url_prefix='/intake',
+    'intake', __name__,
     template_folder='../templates'
 )
 
