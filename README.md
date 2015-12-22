@@ -5,17 +5,21 @@ This is an alpha proof-of-concept software for tying together [Typeform](http://
 
 It arose out of a need to more rapidly make webforms that can auto-fill pdf forms.
 
-Here's the next steps:
+## Next steps
 
-- [x] connect and authenticate to both Typeform and SeamlessDocs APIs
-- [x] create a mapped translation between a Typeform form and a SeamlessDocs pdf
-- [x] create a post url for receiving typeform submissions and saving them
-- [x] create a process for filling the pdf with typeform submissions
-- [x] deploy
-- [ ] improve the UI
-- [ ] create logins to protect the privacy of form submissions
-- [ ] allow for adding more than one form
-- [ ] use a simple task queue for external API calls
+### For v0.01 — [sufficient features for one forgiving user](https://github.com/codeforamerica/typeseam/issues?q=is%3Aopen+is%3Aissue+milestone%3Av0.01)
+
+- Better tests and mocking
+- UI for failing API calls
+- Logins and registration
+- Ability to delete or hide specific repsonses
+
+### For v0.02 — [sufficient features for a small group of forgiving users](https://github.com/codeforamerica/typeseam/issues?q=is%3Aopen+is%3Aissue+milestone%3Av0.02)
+
+- Remove hardcoded question configuration, create models for storing configurations
+- Create a UI for adding forms and editing question configurations
+- Put blocking tasks & API calls into background task queues
+- Sufficient features for a motivated, tech-savvy non-programmer to add forms
 
 ## Quickstart
 

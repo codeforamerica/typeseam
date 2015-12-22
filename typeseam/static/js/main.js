@@ -9215,7 +9215,7 @@ $( document ).ready(function() {
 });
 
 var PDF_LOADING_STATES = [
-  ["sending",      2000],
+  ["sending", 2000],
   ["generating", 13000],
   ["retrieving", 5000]
   ];
