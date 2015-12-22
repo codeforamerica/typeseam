@@ -14,9 +14,7 @@ FORM = {
     }
 @blueprint.route('/', methods=['GET'])
 def local_responses():
-    # get serialized existing responses
     responses = queries.most_recent_responses()
-    # render them in a template
     return render_template(
         'index.html',
         form=FORM,
@@ -34,6 +32,9 @@ def response_detail(response_id):
 
 @blueprint.route('/responses.csv')
 def responses_csv():
+    # this generates a csv on the fly
+    # this can be done as a background task
+    # should regenerate a static file when respones are refreshed
     csv = queries.get_responses_csv()
     return Response(csv, mimetype="text/csv")
 
