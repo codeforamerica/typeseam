@@ -27,3 +27,12 @@ db.rebuild:
 
 serve:
 	gulp
+
+test:
+	export CONFIG='typeseam.settings.TestConfig'
+	nosetests \
+		--verbose \
+		--nocapture \
+		--with-coverage \
+		--cover-package=./typeseam \
+		--cover-erase

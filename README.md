@@ -21,13 +21,13 @@ It arose out of a need to more rapidly make webforms that can auto-fill pdf form
 - Put blocking tasks & API calls into background task queues
 - Sufficient features for a motivated, tech-savvy non-programmer to add forms
 
-## Quickstart
+## Quickstart for local development
 
 1. Create a python virtual environment running Python 3 (this has not yet been tested with Python 2)
 2. Clone this repo and activate your virtual environment
 3. Set the required environmental variables (discussed below) using a method of your choice
 4. create a PostgreSQL database that you can connect to with the `DATABASE_URI` environmental variable
-5. run `make install`
+5. run `make install.dev`
 6. run `make db.init`
 7. run `make serve` to start the local server
 
