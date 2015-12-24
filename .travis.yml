@@ -1,11 +1,8 @@
 # Config file for automatic testing at travis-ci.org
-
 language: python
-
 python:
   - "3.4"
-  - "2.7"
-
 install: make install.dev
-
 script: make test
+addons:
+  postgresql: "9.4"
