@@ -13,7 +13,7 @@ install.dev:
 
 db.drop:
 	rm -rf ./migrations
-	dropdb $(DB_NAME)
+	dropdb $(DB_NAME) --if-exists
 
 db.create:
 	createdb $(DB_NAME)
@@ -32,12 +32,28 @@ serve:
 	gulp
 
 test:
+	dropdb test_$(DB_NAME) --if-exists
+	createdb test_$(DB_NAME)
+	nosetests \
+		--eval-attr "not slow" \
+		--verbose \
+		--nocapture \
+		--with-coverage \
+		--cover-package=./typeseam \
+		--cover-erase
+	dropdb test_$(DB_NAME)
+
+test.full:
+	$(info This test requires the server to be running locally)
+	dropdb test_$(DB_NAME) --if-exists
+	createdb test_$(DB_NAME)
 	nosetests \
 		--verbose \
 		--nocapture \
 		--with-coverage \
 		--cover-package=./typeseam \
 		--cover-erase
+	dropdb test_$(DB_NAME)
 
 test.travis:
 	nosetests \
