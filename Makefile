@@ -29,8 +29,16 @@ serve:
 	gulp
 
 test:
-	export CONFIG='typeseam.settings.TestConfig'
 	nosetests \
+		--verbose \
+		--nocapture \
+		--with-coverage \
+		--cover-package=./typeseam \
+		--cover-erase
+
+test.travis:
+	nosetests \
+		--eval-attr "not selenium" \
 		--verbose \
 		--nocapture \
 		--with-coverage \
