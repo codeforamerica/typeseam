@@ -1,5 +1,7 @@
 # typeseam
 
+[![Build Status](https://travis-ci.org/codeforamerica/typeseam.svg?branch=master)](https://travis-ci.org/codeforamerica/typeseam)
+
 This is an alpha proof-of-concept software for tying together [Typeform](http://www.typeform.com/) forms and
 [SeamlessDocs](http://www.seamlessdocs.com/) pdf forms, for the purpose of auto-filling pdfs from an ad-hoc webform.
 
@@ -27,9 +29,11 @@ It arose out of a need to more rapidly make webforms that can auto-fill pdf form
 2. Clone this repo and activate your virtual environment
 3. Set the required environmental variables (discussed below) using a method of your choice
 4. create a PostgreSQL database that you can connect to with the `DATABASE_URI` environmental variable
-5. run `make install.dev`
-6. run `make db.init`
-7. run `make serve` to start the local server
+5. Make sure you have `npm` and `gulp` installed
+6. run `make install.dev` to install all dependencies
+7. run `make db.init` to set up the database
+8. run `make serve` to start the local server
+9. run `make test` to run tests (use `make test.full` to include selenium tests)
 
 ## Environmental Variables
 
@@ -40,6 +44,7 @@ Here is an example `.env` file with a list of the necessary variables:
 ```
 DB_NAME='typeseam'
 DATABASE_URI="postgresql+psycopg2://dbusername@localhost/$DB_NAME"
+TEST_DATABASE_URI="postgresql+psycopg2://dbusername@localhost/test_$DB_NAME"
 SECRET_KEY='o0o0o0o0o0o0o0o0oo0o0o'
 CONFIG=typeseam.settings.DevConfig
 PYTHONPATH=".:$PYTHONPATH"
