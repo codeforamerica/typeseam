@@ -4,6 +4,9 @@
 install:
 	pip install -r requirements.txt
 
+install.travis:
+	pip install -r requirements/ci.txt
+
 install.dev:
 	pip install -r requirements/dev.txt
 	npm install
