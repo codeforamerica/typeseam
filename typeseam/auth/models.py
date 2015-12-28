@@ -1,6 +1,6 @@
 import datetime
-from typeseam.app import db
-from flask.ext.security import UserMixin
+from typeseam.extensions import db
+from flask_user import UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = 'auth_user'
@@ -8,7 +8,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
-    confirmed_at = db.Column(db.DateTime())
 
     def __repr__(self):
         return '<auth.User(email="{}")>'.format(self.email)

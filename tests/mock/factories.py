@@ -53,7 +53,7 @@ class TypeformFactory(SessionFactory):
 class TypeformResponseFactory(SessionFactory):
     id = factory.Sequence(lambda n: n)
     date_received = lazy(recent_date)
-    answers = lazy(faker.answers)
+    answers = lazy(lambda x: faker.answers())
 
     class Meta:
         model = TypeformResponse
@@ -69,3 +69,8 @@ def generate_fake_users(n=20):
         users.append(create_user(datum))
     return users
 
+def generate_fake_typeforms(n=10, user=None):
+    pass
+
+def generate_fake_typeform_responses(n=20, typeform=None):
+    pass

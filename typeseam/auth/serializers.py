@@ -1,4 +1,5 @@
-from marshmallow import Schema, fields, post_dump
+from marshmallow import Schema, fields, pre_load
+from flask import current_app
 from typeseam.app import ma
 from typeseam.auth.models import (
     User,
@@ -34,3 +35,9 @@ class UserSerializer(LookupMixin):
             'email',
             'password'
             )
+
+    @pre_load
+    def has_password(self, raw_data):
+        unhashed_password = raw_data['password']
+        raw_data['password'] = current_app.user_manager.hash_password(unhashed_password)
+        return raw_data

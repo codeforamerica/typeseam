@@ -1,9 +1,12 @@
 import os
 from flask import Flask
-from pprint import pprint
+
 
 from typeseam.extensions import (
     db, migrate, seamless_auth, ma
+    )
+from flask_user import (
+    UserManager, SQLAlchemyAdapter
     )
 
 def create_app():
@@ -19,6 +22,11 @@ def register_extensions(app):
     migrate.init_app(app, db)
     seamless_auth.init_app(app)
     ma.init_app(app)
+
+    # setup flask-user
+    from typeseam.auth.models import User
+    db_adapter = SQLAlchemyAdapter(db, User)
+    user_manager = UserManager(db_adapter, app)
 
 def register_blueprints(app):
     from typeseam.intake import blueprint as intake

@@ -1,5 +1,5 @@
 import datetime
-from typeseam.app import db
+from typeseam.extensions import db
 from sqlalchemy.dialects.postgresql import JSON
 
 class Typeform(db.Model):

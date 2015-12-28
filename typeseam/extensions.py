@@ -10,3 +10,6 @@ ma = Marshmallow()
 
 from flask_migrate import Migrate
 migrate = Migrate()
+
+from flask_login import LoginManager
+login_manager = LoginManager()

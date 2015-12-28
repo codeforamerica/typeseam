@@ -15,5 +15,5 @@ requests==2.8.1
 # Remote server
 gunicorn==19.4.1
 
-# Security
-Flask-Security==1.7.5
+# User Accounts (includes Flask-mail as dependency)
+Flask-User==0.6.8
