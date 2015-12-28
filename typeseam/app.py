@@ -3,7 +3,7 @@ from flask import Flask
 
 
 from typeseam.extensions import (
-    db, migrate, seamless_auth, ma
+    db, migrate, seamless_auth, ma, csrf
     )
 from flask_user import (
     UserManager, SQLAlchemyAdapter
@@ -22,6 +22,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     seamless_auth.init_app(app)
     ma.init_app(app)
+    csrf.init_app(app)
 
     # setup flask-user
     from typeseam.auth.models import User

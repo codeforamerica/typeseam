@@ -48,8 +48,8 @@ class TestAuthViews(BaseTestCase):
         self.assertIn('Log in', r.data.decode('utf-8')) # did it redirect to Log in?
 
     def test_login_form_includes_csrf_token(self):
-        raise NotImplementedError
-        # go to login page
+        r = self.client.get(url_for('auth.login'))
+        self.assertIn('csrf_token', r.data.decode('utf-8'))
 
     def test_login_fails_without_csrf(self):
         raise NotImplementedError

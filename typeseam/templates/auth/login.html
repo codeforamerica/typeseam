@@ -6,6 +6,7 @@
     Login Form
   </h1>
   <form action="{{ url_for('auth.login') }}" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <input type="email" name="email">
 
     <input type="password" name="password">
