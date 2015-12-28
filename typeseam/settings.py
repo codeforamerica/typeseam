@@ -11,6 +11,7 @@ class Config(object):
     SEAMLESS_DOCS_API_KEY = os.environ.get('SEAMLESS_DOCS_API_KEY')
     SEAMLESS_DOCS_API_SECRET = os.environ.get('SEAMLESS_DOCS_API_SECRET')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    USER_UNAUTHENTICATED_ENDPOINT = 'auth.login'
 
 class ProdConfig(Config):
     ENV = 'prod'

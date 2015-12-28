@@ -42,9 +42,10 @@ class TestAuthViews(BaseTestCase):
             presumably_hashed_password)
 
     def test_unauthenticated_home_page_resolves_to_login_view(self):
-        raise NotImplementedError
-        # go to home page
-        # check for redirect to login view
+        r = self.client.get('/')
+        self.assertEqual(r.status_code, 302) # is it a redirect?
+        r = self.client.get('/', follow_redirects=True)
+        self.assertIn('Log in', r.data.decode('utf-8')) # did it redirect to Log in?
 
     def test_login_form_includes_csrf_token(self):
         raise NotImplementedError
