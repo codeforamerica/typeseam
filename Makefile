@@ -43,6 +43,15 @@ test:
 		--cover-erase
 	dropdb test_$(DB_NAME)
 
+test.specific:
+	dropdb test_$(DB_NAME) --if-exists
+	createdb test_$(DB_NAME)
+	nosetests \
+		$(CURRENT_TESTS) \
+		--verbose \
+		--nocapture
+	dropdb test_$(DB_NAME)
+
 test.full:
 	$(info This test requires the server to be running locally)
 	dropdb test_$(DB_NAME) --if-exists

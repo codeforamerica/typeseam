@@ -9,6 +9,7 @@ import sys
 sys.path.append('./data')
 import translator
 
+
 def build_seamless_auth():
     return SeamlessDocsAPIAuth()
 

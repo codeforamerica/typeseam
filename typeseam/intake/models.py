@@ -3,13 +3,13 @@ from typeseam.app import db
 from sqlalchemy.dialects.postgresql import JSON
 
 class Typeform(db.Model):
-    __tablename__ = 'typeform'
+    __tablename__ = 'intake_typeform'
     id = db.Column(db.Integer, primary_key=True, index=True)
     form_key = db.Column(db.String(64))
     title = db.Column(db.String(128))
 
 class TypeformResponse(db.Model):
-    __tablename__ = 'response'
+    __tablename__ = 'intake_response'
     id = db.Column(db.Integer, primary_key=True, index=True)
     date_received = db.Column(db.DateTime)
     answers = db.Column(JSON)

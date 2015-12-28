@@ -9,6 +9,7 @@ from factory.alchemy import SQLAlchemyModelFactory
 
 from typeseam.app import db
 from typeseam.intake.models import Typeform, TypeformResponse
+from typeseam.auth.queries import create_user
 
 faker = FakerFactory.create('en_US', includes=['tests.mock.typeform'])
 
@@ -27,6 +28,13 @@ def recent_date(*args, **kwargs):
     # return a datetime within last 8 weeks
     return faker.date_time_between(start_date='-8w')
 
+def user_data(**kwargs):
+    d = {
+        'email': faker.email(),
+        'password': faker.password()
+        }
+    d.update(**kwargs)
+    return d
 
 class SessionFactory(SQLAlchemyModelFactory):
     class Meta:
@@ -37,7 +45,7 @@ class SessionFactory(SQLAlchemyModelFactory):
 class TypeformFactory(SessionFactory):
     id = factory.Sequence(lambda n: n)
     form_key = lazy(typeform_key)
-    title = lazy(lambda x: return faker.sentence(nb_words=4))
+    title = lazy(lambda x: faker.sentence(nb_words=4))
     class Meta:
         model = Typeform
 
@@ -49,3 +57,15 @@ class TypeformResponseFactory(SessionFactory):
 
     class Meta:
         model = TypeformResponse
+
+
+def fake_user_data(num_users=20):
+    return [user_data() for n in range(num_users)]
+
+def generate_fake_users(n=20):
+    data = fake_user_data(n)
+    users = []
+    for datum in data:
+        users.append(create_user(datum))
+    return users
+
