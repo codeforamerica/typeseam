@@ -35,7 +35,7 @@ test:
 	dropdb test_$(DB_NAME) --if-exists
 	createdb test_$(DB_NAME)
 	nosetests \
-		--eval-attr "speed != 'slow'" \
+		--eval-attr "not selenium" \
 		--verbose \
 		--nocapture \
 		--with-coverage \

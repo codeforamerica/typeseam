@@ -6,5 +6,9 @@ install: make install.travis
 script: make test.travis
 addons:
   postgresql: "9.4"
+env:
+  - TEST_DATABASE_URL="postgresql+psycopg2://postgres@localhost/test_typeseam"
+before_script:
+  - psql -c 'create database test_typeseam;' -U postgres
 after_success:
   - coveralls
