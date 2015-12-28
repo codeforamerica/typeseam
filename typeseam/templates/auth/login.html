@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container">
+  <h1>
+    Login Form
+  </h1>
+  <form action="{{ url_for('auth.login') }}" method="POST">
+    <input type="email" name="email">
+
+    <input type="password" name="password">
+
+    <p class="forgot_login_message">
+      I forgot my password.
+    </p>
+
+    <button type="submit">Log in</button>
+  </form>
+</div>
+{% endblock body %}

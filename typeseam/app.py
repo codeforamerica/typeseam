@@ -23,3 +23,5 @@ def register_extensions(app):
 def register_blueprints(app):
     from typeseam.intake import blueprint as intake
     app.register_blueprint(intake)
+    from typeseam.auth import blueprint as auth
+    app.register_blueprint(auth)
