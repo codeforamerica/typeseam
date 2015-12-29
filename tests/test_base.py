@@ -10,6 +10,8 @@ from typeseam.app import (
     db
     )
 
+from tests.utils import get_value_for_name
+
 
 class BaseTestCase(FlaskTestCase):
     '''
@@ -20,6 +22,9 @@ class BaseTestCase(FlaskTestCase):
         app = _create_app()
         app.testing = True
         return app
+
+    def get_input_value(self, name, response):
+        return get_value_for_name(name, response.data.decode('utf-8'))
 
     def setUp(self):
         FlaskTestCase.setUp(self)

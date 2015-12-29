@@ -1,13 +1,20 @@
+from datetime import datetime
+from flask import current_app as app
 from typeseam.app import db
-from typeseam.auth.serializers import UserSerializer
 
+from typeseam.auth.models import User
 
-user_serializer = UserSerializer()
+def create_user(email, password):
+    user = User.query.filter(User.email == email).first()
+    if not user:
+        user = User(email=email,
+                    password=app.user_manager.hash_password(password),
+                    active=True,
+                    confirmed_at=datetime.utcnow())
+        db.session.add(user)
+        db.session.commit()
+    return user
 
-def create_user(data):
-    model, errors = user_serializer.load(data, session=db.session)
-    if errors:
-        return errors
-    db.session.add(model)
-    db.session.commit()
-    return model
+def get_user_by_email(email):
+    user, _ = app.user_manager.find_user_by_email(email)
+    return user

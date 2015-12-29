@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 
-
 from typeseam.extensions import (
     db, migrate, seamless_auth, ma, csrf
     )
@@ -15,6 +14,11 @@ def create_app():
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
+
+    @app.before_first_request
+    def setup():
+        load_initial_data(app)
+
     return app
 
 def register_extensions(app):
@@ -34,3 +38,13 @@ def register_blueprints(app):
     app.register_blueprint(intake)
     from typeseam.auth import blueprint as auth
     app.register_blueprint(auth)
+
+def load_initial_data(app):
+    with app.app_context():
+        if os.environ.get('MAKE_DEFAULT_USER', False):
+            email = os.environ.get('DEFAULT_ADMIN_EMAIL', 'someone@example.com')
+            password = os.environ.get('DEFAULT_ADMIN_PASSWORD', 'Passw0rd')
+            from typeseam.auth.queries import create_user
+            create_user(email, password)
+
+

@@ -6,6 +6,7 @@ from typeseam.intake import (
     queries,
     tasks
     )
+
 FORM = {
         'id': 1,
         'title': 'Clean Slate SF',

@@ -6,6 +6,9 @@
   </head>
   <body>
     {% block body %}
+    {% include "includes/flash_messages.html" %}
+
+    {% block main %}{% block content %}{% endblock %}{% endblock %}
     {% endblock body %}
     <script src="/static/js/main.js"></script>
   </body>
