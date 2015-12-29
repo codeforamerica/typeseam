@@ -27,6 +27,12 @@ def register_extensions(app):
     seamless_auth.init_app(app)
     ma.init_app(app)
     csrf.init_app(app)
+    sslify.init_app(app)
+
+    from flask_sslify import SSLify
+    # only trigger SSLify if the app is running on Heroku
+    if 'DYNO' in os.environ:
+        SSLify(app)
 
     # setup flask-user
     from typeseam.auth.models import User
