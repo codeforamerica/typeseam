@@ -3,7 +3,7 @@ import os
 import time
 from pprint import pprint
 from typeseam.app import db
-from typeseam import utils
+from typeseam.utils import seamless_auth
 from typeseam.intake import queries
 
 def get_typeform_responses(form_key=None):
@@ -25,7 +25,7 @@ def get_seamless_doc_pdf(response_id):
         form_id = os.environ.get('DEFAULT_SEAMLESS_FORM_ID')
         submit_url = base_url + 'form/{}/submit'.format(form_id)
         submit_result = requests.post(submit_url,
-            auth=utils.build_seamless_auth(),
+            auth=seamless_auth.build_seamless_auth(),
             data=response.answers).json()
         if 'application_id' in submit_result:
             response.seamless_key = submit_result['application_id']
@@ -35,7 +35,7 @@ def get_seamless_doc_pdf(response_id):
     app_url = base_url + 'application/{}'.format(response.seamless_key)
     # wait for the pdf to be generated
     time.sleep(10)
-    app_result = requests.get(app_url, auth=utils.build_seamless_auth()).json()
+    app_result = requests.get(app_url, auth=seamless_auth.build_seamless_auth()).json()
     response.pdf_url = app_result.get('submission_pdf_url', '')
     if response.pdf_url:
         db.session.commit()

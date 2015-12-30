@@ -1,8 +1,7 @@
 from sqlalchemy import desc, inspect
 
 from typeseam.app import db
-from typeseam import utils
-
+from typeseam.utils import translate
 import io
 import csv
 from pprint import pprint
@@ -52,7 +51,7 @@ def get_responses_csv():
 def parse_typeform_data(data):
     items = []
     for response in data['responses']:
-        translated_answers = utils.translate_to_seamless(response, processors=form_field_processors)
+        translated_answers = translate.translate_to_seamless(response, processors=form_field_processors)
         items.append(dict(
             answers=translated_answers,
             answers_translated=True,

@@ -2,7 +2,7 @@ import os
 from flask import Flask
 
 from typeseam.extensions import (
-    db, migrate, seamless_auth, ma, csrf
+    db, migrate, seamless_auth, ma, csrf, mail, sg
     )
 from flask_user import (
     UserManager, SQLAlchemyAdapter
@@ -27,7 +27,8 @@ def register_extensions(app):
     seamless_auth.init_app(app)
     ma.init_app(app)
     csrf.init_app(app)
-    sslify.init_app(app)
+    mail.init_app(app)
+    sg.init_app(app)
 
     from flask_sslify import SSLify
     # only trigger SSLify if the app is running on Heroku
@@ -38,6 +39,9 @@ def register_extensions(app):
     from typeseam.auth.models import User
     db_adapter = SQLAlchemyAdapter(db, User)
     user_manager = UserManager(db_adapter, app)
+    # use sendgrid for sending emails
+    from typeseam.auth.tasks import sendgrid_email
+    user_manager.send_email_function = sendgrid_email
 
 def register_blueprints(app):
     from typeseam.intake import blueprint as intake
