@@ -4,7 +4,6 @@ from pprint import pprint
 from nose.plugins.attrib import attr
 
 from tests.selenium_test_base import SeleniumBaseTestCase
-from selenium.webdriver.common.keys import Keys
 
 class TestAuthTasks(SeleniumBaseTestCase):
 
@@ -18,11 +17,11 @@ class TestAuthTasks(SeleniumBaseTestCase):
         self.wait(1)
         email_input = self.xpath("//input[@name='Email']")
         email_input.send_keys(self.user['email'])
-        email_input.send_keys(Keys.ENTER)
+        email_input.send_keys(self.keys.ENTER)
         self.wait(1)
         password_input = self.xpath("//input[@name='Passwd']")
         password_input.send_keys(self.user['password'])
-        password_input.send_keys(Keys.ENTER)
+        password_input.send_keys(self.keys.ENTER)
         self.wait(30)
 
     def test_redirect_to_login(self):
