@@ -41,7 +41,6 @@ test:
 		--with-coverage \
 		--cover-package=./typeseam \
 		--cover-erase
-	dropdb test_$(DB_NAME)
 
 test.specific:
 	dropdb test_$(DB_NAME) --if-exists
@@ -50,7 +49,6 @@ test.specific:
 		$(CURRENT_TESTS) \
 		--verbose \
 		--nocapture
-	dropdb test_$(DB_NAME)
 
 test.full:
 	$(info This test requires the server to be running locally)
@@ -62,7 +60,6 @@ test.full:
 		--with-coverage \
 		--cover-package=./typeseam \
 		--cover-erase
-	dropdb test_$(DB_NAME)
 
 test.travis:
 	nosetests \

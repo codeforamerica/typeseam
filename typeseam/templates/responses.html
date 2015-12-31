@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+
+{% block body %}
+
+{% include "includes/header.html" %}
+
+
+{% include "form_header.html" %}
+
+    <div class="container">
+    {% block main %}
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Received</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+
+        <tbody class="responses">
+{% for response in responses %}
+{% include "response_listing.html" %}
+{% endfor %}
+        </tbody>
+      </table>
+
+
+    {% endblock main %}
+    </div> <!-- end container -->
+{% endblock body %}

@@ -59,7 +59,7 @@ class Provider(BaseProvider):
             phone_type = self.random_element(self.phone_type_choices)
             answers['list_15076883_choice'] = phone_type
             if phone_type == self.phone_type_choices[-1]:
-                answers['list_15076883_other'] = self.generator.word()
+                 answers['list_15076883_other'] = self.generator.word()
         return answers
 
     def outside_convictions(self, answers):
@@ -104,7 +104,8 @@ class Provider(BaseProvider):
             "yesno_15075576": self.random_element({"1": 0.8, "0": 0.2}),
             "yesno_15076724": self.random_element({"1": 0.1, "0": 0.9}),
             "yesno_15076728": self.random_element({"1": 0.1, "0": 0.9}),
-            "yesno_15076795": self.random_element({"1": 0.6, "0": 0.4})}
+            "yesno_15076795": self.random_element({"1": 0.6, "0": 0.4}),
+            }
         answers = self.set_phone(answers)
         answers = self.set_address(answers)
         answers = self.outside_convictions(answers)

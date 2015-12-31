@@ -1,44 +1,31 @@
 {% extends "base.html" %}
 
 {% block body %}
-{% include "includes/flash_messages.html" %}
-{% include "form_header.html" %}
+
+{% include "includes/header.html" %}
 
     <div class="container">
-      {% block main %}
+    {% block main %}
 
-
-
-      <div class="responses-header">
-        <h3>
-          Form responses
-        </h3>
-        <div class="reponses-actions">
-          <button class="btn btn-primary load_new_responses">
-            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-            Check for new responses
-          </button>
-          <a class="btn btn-default" href="/responses.csv">
-            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-            Download .csv
-          </a>
-        </div>
-      </div>
+      <h3>
+        {{ current_user.email }}
+      </h3>
 
       <table class="table">
-        <caption>
-        </caption>
         <thead>
           <tr>
-            <th>Received</th>
-            <th>PDF</th>
+            <th>Typeform</th>
+            <th>Total responses</th>
+            <th>Most recent response</th>
           </tr>
         </thead>
-        <tbody class="responses">
-          {% include "response_list.html" %}
+        <tbody class="typeforms">
+          {% for form in typeforms %}
+          {% include "form_listing.html" %}
+          {% endfor %}
         </tbody>
       </table>
 
-      {% endblock main %}
+    {% endblock main %}
     </div>
 {% endblock body %}

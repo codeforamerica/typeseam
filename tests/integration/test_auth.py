@@ -1,6 +1,4 @@
-from urllib.parse import urlparse
-
-from flask import url_for, render_template, request, session
+from flask import url_for, request, session
 from flask.ext.login import current_user
 from sqlalchemy import func, distinct
 from pprint import pprint

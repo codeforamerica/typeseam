@@ -1,6 +1,6 @@
-from tests.test_base import SeleniumBaseTestCase
+from tests.selenium_test_base import SeleniumBaseTestCase
 
-class TestIntakeTasks(SeleniumBaseTestCase):
+class TestFormFillerTasks(SeleniumBaseTestCase):
 
     def test_index_get(self):
         self.get('/')

@@ -1,15 +1,29 @@
+# -*- coding: utf-8 -*-
 import os
 from pprint import pprint
 from nose.plugins.attrib import attr
 
-from tests.test_base import SeleniumBaseTestCase
+from tests.selenium_test_base import SeleniumBaseTestCase
+from selenium.webdriver.common.keys import Keys
 
 class TestAuthTasks(SeleniumBaseTestCase):
 
     user = {
-        'email': os.environ.get('DEFAULT_USER_EMAIL', 'the_colonel@gmail.com'),
-        'password': os.environ.get('DEFAULT_USER_PASSWORD', 'this-sketch-is-too-silly'),
+        'email': os.environ.get('DEFAULT_ADMIN_EMAIL', 'the_colonel@gmail.com'),
+        'password': os.environ.get('DEFAULT_ADMIN_PASSWORD', 'this-sketch-is-too-silly'),
     }
+
+    def open_email_inbox(self):
+        self.get_email()
+        self.wait(1)
+        email_input = self.xpath("//input[@name='Email']")
+        email_input.send_keys(self.user['email'])
+        email_input.send_keys(Keys.ENTER)
+        self.wait(1)
+        password_input = self.xpath("//input[@name='Passwd']")
+        password_input.send_keys(self.user['password'])
+        password_input.send_keys(Keys.ENTER)
+        self.wait(30)
 
     def test_redirect_to_login(self):
         self.get('/')

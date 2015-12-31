@@ -4,7 +4,7 @@ import time
 from pprint import pprint
 from typeseam.app import db
 from typeseam.utils import seamless_auth
-from typeseam.intake import queries
+from typeseam.form_filler import queries
 
 def get_typeform_responses(form_key=None):
     if not form_key:
@@ -15,7 +15,7 @@ def get_typeform_responses(form_key=None):
         'key': os.environ.get('TYPEFORM_API_KEY', None),
         'completed': 'true'}
     data = requests.get(url, params=args).json()
-    responses = queries.parse_typeform_data(data)
+    responses = queries.save_new_typeform_data(data, form_key)
     return responses
 
 def get_seamless_doc_pdf(response_id):

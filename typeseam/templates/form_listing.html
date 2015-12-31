@@ -1,0 +1,19 @@
+    <tr id="typeform-{{form.id}}" class="typeform">
+
+      <td class="typeform_cell">
+        <a href="/{{ form.form_key }}/responses">
+          <span class="typeform_listing_title">
+            {{ form.title }}
+          </span>
+        </a>
+      </td>
+
+      <td class="typeform_listing_response_count">
+        {{ form.response_count }}
+      </td>
+
+      <td class="typeform_listing_last_response">
+        {{ form.latest_response }}
+      </td>
+
+    </tr>
