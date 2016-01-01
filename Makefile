@@ -67,5 +67,4 @@ test.travis:
 		--verbose \
 		--nocapture \
 		--with-coverage \
-		--cover-package=./typeseam \
-		--cover-erase
+		--cover-package=./typeseam
