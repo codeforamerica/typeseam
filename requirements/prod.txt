@@ -19,5 +19,8 @@ gunicorn==19.4.1
 Flask-User==0.6.8
 Flask-SSLify==0.1.5
 
+# https://github.com/heroku/heroku-buildpack-python/issues/231#issuecomment-109094147)
+cryptography==1.1.2
+
 # Email
 sendgrid==1.5.19
