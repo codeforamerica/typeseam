@@ -9210,6 +9210,7 @@ return jQuery;
 }));
 
 $( document ).ready(function() {
+  addCSRFTokenToRequests()
   listenToEvents();
   getNewResponses();
 });
@@ -9217,18 +9218,31 @@ $( document ).ready(function() {
 var PDF_LOADING_STATES = [
   ["sending", 2000],
   ["generating", 13000],
-  ["retrieving", 5000]
+  ["retrieving", 5000],
   ];
+
+function addCSRFTokenToRequests(){
+  // Taken directly from
+  // http://flask-wtf.readthedocs.org/en/latest/csrf.html#ajax
+  var csrftoken = $('meta[name=csrf-token]').attr('content');
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken)
+          }
+      }
+  });
+}
 
 function listenToEvents(){
   $('.responses-header').on('click', '.load_new_responses', getNewResponses);
-  $('.responses').on('click', '.pdf_cell', getPDF);
+  $('.container').on('click', '.pdf_button', getPDF);
 }
 
 function getNewResponses(e){
   $('button.load_new_responses').addClass('loading');
   $.ajax({
-    url: "/api/new_responses",
+    url: API_ENDPOINTS.new_responses,
     success: handleNewResponses,
     timeout: 10000
   });
@@ -9240,6 +9254,8 @@ function stateTransitionChain(target, stateStack, index){
     target.removeClass(prevStateClassName);
   }
   if( index == stateStack.length ){
+    target.removeClass("loading");
+    target.addClass('default');
     return;
   }
   var stateClassName = stateStack[index][0];
@@ -9252,13 +9268,15 @@ function stateTransitionChain(target, stateStack, index){
 
 function getPDF(e){
   var target = $(this);
-  target.removeClass("untouched");
+  console.log("clicked to get pdf on", target);
+  target.removeClass("default");
   target.addClass('loading');
-  var responseId = target.parent('.response').attr('id');
+  var responseId = target.parents('.response').attr('id');
   responseId = responseId.split("-")[1]
-  stateTransitionChain($(this), PDF_LOADING_STATES, 0);
+  stateTransitionChain(target, PDF_LOADING_STATES, 0);
   $.ajax({
-    url: "/api/get_pdf/" + responseId,
+    method: "POST",
+    url: target.attr("data-apiendpoint"),
     success: handleNewPDF(responseId),
     timeout: 20000
   });

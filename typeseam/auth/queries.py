@@ -5,6 +5,9 @@ from typeseam.app import db
 from typeseam.auth.models import User
 
 def create_user(email, password, active=True, confirmed_at=None):
+    user, _ = app.user_manager.find_user_by_email(email)
+    if user:
+        return user
     if confirmed_at == None:
         confirmed_at = datetime.utcnow()
     user = User(email=email,

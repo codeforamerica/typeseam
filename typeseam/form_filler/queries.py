@@ -95,6 +95,11 @@ def get_responses_csv(user, typeform_key):
         writer.writerows(data)
         return csvfile.getvalue()
 
+def get_seamless_doc_key_for_response(response):
+    return SeamlessDoc.query.get(response.seamless_id).seamless_key
+
+def get_typeform_for_response(response):
+    return
 def get_response_model(response_id):
     return TypeformResponse.query.get(int(response_id))
 
@@ -104,9 +109,24 @@ def get_response_detail(user, response_id):
         abort(403)
     return response_serializer.dump(response).data
 
+def get_response_count():
+    return db.session.query(func.count(TypeformResponse.id)).scalar()
+
 def create_typeform(form_key, title='', user=None):
-    typeform = Typeform(form_key=form_key, title=title, user_id=user.id)
-    db.session.add(typeform)
-    db.session.commit()
+    params = dict(form_key=form_key, title=title, user_id=user.id)
+    typeform = db.session.query(Typeform).filter_by(**params).first()
+    if not typeform:
+        typeform = Typeform(**params)
+        db.session.add(typeform)
+        db.session.commit()
+
+def get_typeform(**kwargs):
+    params = {k:v for k, v in kwargs.items() if v}
+    if not params:
+        abort(404)
+    typeform = db.session.query(Typeform).filter_by(**params).first()
+    if not typeform:
+        abort(404)
+    return typeform_serializer.dump(typeform).data
 
 

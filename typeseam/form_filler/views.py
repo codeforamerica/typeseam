@@ -26,7 +26,7 @@ def responses(typeform_key):
     """
     form, responses = queries.get_responses_for_typeform(current_user, typeform_key, count=30)
     return render_template(
-        'typeform.html',
+        'responses.html',
         form=form,
         responses=responses,
     )
@@ -37,9 +37,11 @@ def response_detail(typeform_key, response_id):
     """Show the details of a particular typeform response
     """
     response = queries.get_response_detail(current_user, response_id)
+    form = queries.get_typeform(typeform_key)
     return render_template(
         "response_detail.html",
-        response=response
+        response=response,
+        form=form
         )
 
 @blueprint.route('/<typeform_key>/responses.csv')
@@ -49,6 +51,7 @@ def responses_csv(typeform_key):
     """
     csv = queries.get_responses_csv(current_user, typeform_key)
     return Response(csv, mimetype="text/csv")
+
 
 @blueprint.route('/api/<typeform_key>/new_responses/', methods=['GET'])
 @login_required
@@ -67,5 +70,5 @@ def fill_seamless_docs_pdf(response_id):
     # save the new pdf URL
     # return the new pdf
     # this can be done as a background task
-    response = tasks.get_seamless_doc_pdf(response_id)
-    return render_template("response_listing.html", response=response)
+    form, response = tasks.get_seamless_doc_pdf(response_id)
+    return render_template("response_listing.html", form=form, response=response)

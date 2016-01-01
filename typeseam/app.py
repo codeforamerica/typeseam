@@ -64,8 +64,11 @@ def load_initial_data(app):
                 from typeseam.form_filler.queries import create_typeform
                 create_typeform(form_key=form_key, title=title, user=user)
         if app.config.get('LOAD_FAKE_DATA', False) and not app.testing:
+            from typeseam.form_filler.queries import get_response_count
             from tests.mock.factories import generate_fake_data
-            generate_fake_data(num_users=10)
+            if get_response_count() < 10:
+                results = generate_fake_data(num_users=10)
+                print(results[0])
 
 
 

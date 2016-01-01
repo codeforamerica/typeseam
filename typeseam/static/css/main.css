@@ -3603,16 +3603,16 @@ input[type="button"].btn-block {
 .stateful .state {
   display: none;
 }
-.untouched .state.content_default {
+.stateful.default .state.content_default {
   display: inline;
 }
-.sending .state.content_sending {
+.stateful.sending .state.content_sending {
   display: inline;
 }
-.generating .state.content_generating {
+.stateful.generating .state.content_generating {
   display: inline;
 }
-.retrieving .state.content_retrieving {
+.stateful.retrieving .state.content_retrieving {
   display: inline;
 }
 .btn .glyphicon {

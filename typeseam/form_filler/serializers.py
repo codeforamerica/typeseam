@@ -82,5 +82,7 @@ class TypeformSerializer(LookupMixin):
         fields = (
             'form_key',
             'id',
-            'title'
+            'title',
+            'response_count',
+            'latest_response'
             )

@@ -1,10 +1,7 @@
-{%- if response.pdf_url -%}
-        <a class="btn btn-primary" href="{{ response.pdf_url }}" target="_blank">
-          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-          PDF
-        </a>
-        {%- else -%}
-        <span class="btn btn-default stateful ">
+{%- if not response.pdf_url -%}
+        <span class="btn btn-default stateful pdf_button default" data-apiendpoint="{{
+          url_for('form_filler.fill_seamless_docs_pdf',response_id=response.id)
+        }}">
           <span class="state content_default">
             Click to generate PDF
           </span>
@@ -24,4 +21,9 @@
             Retrieving link to PDF
           </span>
         </span>
+{%- else -%}
+        <a class="btn btn-primary" href="{{ response.pdf_url }}" target="_blank">
+          <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+          PDF
+        </a>
 {%- endif -%}

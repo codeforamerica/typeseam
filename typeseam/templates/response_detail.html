@@ -3,21 +3,17 @@
 {% block main %}
       <div class="responses-header">
         <h3 class="breadcrumb">
-          <a class="backlink" href="/">form responses</a>
+          <a class="backlink" href="{{ url_for('form_filler.responses', typeform_key=form.form_key) }}">form responses</a>
             →
           <span class="current">
-            response {{response.id}}
+            response {{ response.date_received }}
           </span>
 
         </h3>
       </div>
 
-      <table class="table response">
+      <table id="response-{{ response.id }}" class="table response">
         <!-- loop through keys and write them out -->
-      <tr class="reponse-attribute">
-        <th>Date submitted</th>
-        <td>{{ response.date_received }}</td>
-      </tr>
       <tr class="reponse-attribute">
         <th>PDF</th>
         <td>{% include "pdf_button.html" %}</td>
