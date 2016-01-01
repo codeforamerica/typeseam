@@ -4,6 +4,7 @@ from flask import Flask
 from typeseam.extensions import (
     db, migrate, seamless_auth, ma, csrf, mail, sg
     )
+from typeseam.setup_logging import register_logging
 from flask_user import (
     UserManager, SQLAlchemyAdapter
     )
@@ -17,6 +18,7 @@ def create_app():
 
     @app.before_first_request
     def setup():
+        register_logging(app, config)
         load_initial_data(app)
 
     return app
