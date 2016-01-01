@@ -15,10 +15,10 @@ def create_app():
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
+    register_logging(app, config)
 
     @app.before_first_request
     def setup():
-        register_logging(app, config)
         load_initial_data(app)
 
     return app

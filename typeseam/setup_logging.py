@@ -1,3 +1,4 @@
+import sys
 import logging
 
 def register_logging(app, config_string):
@@ -19,7 +20,6 @@ def register_logging(app, config_string):
 --------------------------------------------------------------------------------
 '''
         ))
-        app.logger.addFilter(_filter)
         app.logger.addHandler(stdout)
 
     else:
