@@ -29,7 +29,7 @@ def sendgrid_email(recipients=None, subject=None, html_message=None, text_messag
         text=text_message,
         from_email=sender
         )
-    result = sg.send(message)
+    return sg.send(message)
 
 def invite_new_user(email):
     user_manager = current_app.user_manager

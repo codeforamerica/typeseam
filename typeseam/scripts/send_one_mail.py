@@ -1,6 +1,6 @@
 
 from typeseam.app import create_app
-from typeseam.auth.tasks import invite_new_user
+from typeseam.auth.tasks import sendgrid_email
 
 def run():
     app = create_app()
