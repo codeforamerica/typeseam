@@ -3,7 +3,7 @@
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'intake', __name__,
+    'form_filler', __name__,
     template_folder='../templates'
 )
 

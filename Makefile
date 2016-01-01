@@ -35,13 +35,20 @@ test:
 	dropdb test_$(DB_NAME) --if-exists
 	createdb test_$(DB_NAME)
 	nosetests \
-		--eval-attr "not slow" \
+		--eval-attr "not selenium" \
 		--verbose \
 		--nocapture \
 		--with-coverage \
 		--cover-package=./typeseam \
 		--cover-erase
-	dropdb test_$(DB_NAME)
+
+test.specific:
+	dropdb test_$(DB_NAME) --if-exists
+	createdb test_$(DB_NAME)
+	nosetests \
+		$(CURRENT_TESTS) \
+		--verbose \
+		--nocapture
 
 test.full:
 	$(info This test requires the server to be running locally)
@@ -53,7 +60,6 @@ test.full:
 		--with-coverage \
 		--cover-package=./typeseam \
 		--cover-erase
-	dropdb test_$(DB_NAME)
 
 test.travis:
 	nosetests \

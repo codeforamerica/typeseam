@@ -1,29 +1,27 @@
-from marshmallow import Schema, fields, post_dump
-from typeseam.extensions import ma
-from typeseam.intake.models import (
+from marshmallow import Schema, fields, post_dump, pre_load
+
+from typeseam.app import ma
+
+from typeseam.form_filler.models import (
     TypeformResponse,
     Typeform
     )
 
+from typeseam.utils import translate
+from typeseam.form_filler import form_field_processors
+
+from typeseam.auth.serializers import LookupMixin
+
 # '2015-12-19 00:19:43'
 TYPEFORM_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-class LookupMixin(ma.ModelSchema):
-    def get_instance(self, data):
-        """Overrides ModelSchema.get_instance with custom lookup fields"""
-        filters = {
-            key: data[key]
-            for key in self.fields.keys() if key in self.lookup_fields}
+class DeserializationError(Exception):
+    pass
 
-        if None not in filters.values():
-            return self.session.query(
-                self.opts.model
-            ).filter_by(
-                **filters
-            ).first()
-        return None
+class SerializationError(Exception):
+    pass
 
-class TypeformResponseModelSerializer(LookupMixin):
+class TypeformResponseSerializer(LookupMixin):
     answers = fields.Dict()
     date_received = fields.DateTime(format=TYPEFORM_DATE_FORMAT)
 
@@ -41,6 +39,18 @@ class TypeformResponseModelSerializer(LookupMixin):
             'seamless_submitted',
             'pdf_url'
             )
+
+    @pre_load(pass_many=True)
+    def parse_typeform_responses(self, data, many=True):
+        items = []
+        for response in data['responses']:
+            translated_answers = translate.translate_to_seamless(response, processors=form_field_processors)
+            items.append(dict(
+                answers=translated_answers,
+                answers_translated=True,
+                date_received=response['metadata']['date_submit']
+                ))
+        return items
 
 class FlatResponseSerializer(ma.ModelSchema):
     answers = fields.Dict()
@@ -72,5 +82,7 @@ class TypeformSerializer(LookupMixin):
         fields = (
             'form_key',
             'id',
-            'title'
+            'title',
+            'response_count',
+            'latest_response'
             )

@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+
+{% block body %}
+
+{% include "includes/header.html" %}
+
+
+{% include "form_header.html" %}
+
+    <div class="container">
+    {% block main %}
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Received</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+
+        <tbody class="responses">
+{% include "response_list.html" %}
+{% for response in responses %}
+{% include "response_listing.html" %}
+{% endfor %}
+        </tbody>
+      </table>
+
+
+    {% endblock main %}
+    </div> <!-- end container -->
+{% endblock body %}
+
+{% block js_variables %}
+  var API_ENDPOINTS = {
+    new_responses: "{{ url_for('form_filler.remote_responses', typeform_key=form.form_key) }}",
+  };
+{% endblock js_variables %}

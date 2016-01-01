@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% include "head.html" %}
+    {% include "includes/head.html" %}
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
   </head>
   <body>
     {% block body %}
+    {% include "includes/header.html" %}
+
+    {% block main %}{% block content %}{% endblock %}{% endblock %}
     {% endblock body %}
+    <script>
+    {% block js_variables %}
+    {% endblock js_variables %}
+    </script>
     <script src="/static/js/main.js"></script>
   </body>
 </html>

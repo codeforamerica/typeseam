@@ -14,3 +14,10 @@ requests==2.8.1
 
 # Remote server
 gunicorn==19.4.1
+
+# User Accounts (includes Flask-mail as dependency)
+Flask-User==0.6.8
+Flask-SSLify==0.1.5
+
+# Email
+sendgrid==1.5.19

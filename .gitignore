@@ -1,3 +1,4 @@
+.DS_Store
 .env
 migrations
 node_modules

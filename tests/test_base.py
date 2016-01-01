@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
 import os
-
 from flask.ext.testing import TestCase as FlaskTestCase
 
 from typeseam.app import (
@@ -9,6 +7,7 @@ from typeseam.app import (
     db
     )
 
+from tests.utils import get_value_for_name
 
 class BaseTestCase(FlaskTestCase):
     '''
@@ -16,9 +15,15 @@ class BaseTestCase(FlaskTestCase):
     '''
     def create_app(self):
         os.environ['CONFIG'] = 'typeseam.settings.TestConfig'
-        return _create_app()
+        app = _create_app()
+        app.testing = True
+        return app
+
+    def get_input_value(self, name, response):
+        return get_value_for_name(name, response.data.decode('utf-8'))
 
     def setUp(self):
+        FlaskTestCase.setUp(self)
         db.create_all()
 
     def tearDown(self):

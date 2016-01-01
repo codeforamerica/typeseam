@@ -1,9 +1,9 @@
     <tr id="response-{{response.id}}" class="response">
       <td class="date_cell">
-        <a href="/response/{{response.id}}">
+        <a href="{{ url_for('form_filler.response_detail', typeform_key=form.form_key, response_id=response.id)}}">
           {{ response.date_received }}
         </a>
       </td>
 
-      <td class="pdf_cell untouched">{% include "pdf_button.html" %}</td>
+      <td class="pdf_cell">{% include "pdf_button.html" %}</td>
       </tr>
