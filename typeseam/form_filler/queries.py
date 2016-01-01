@@ -78,10 +78,12 @@ def get_responses_for_typeform(user, typeform_key, count=20):
 
 def get_responses_csv(user, typeform_key):
     # get responses
-    q = TypeformResponse.query.\
-            join(Typeform.form_key, TypeformResponse.typeform_id == Typeform.id).\
+    q = db.session.query(TypeformResponse, Typeform.form_key).\
+            join(Typeform, TypeformResponse.typeform_id == Typeform.id).\
             filter(TypeformResponse.user_id == user.id).\
+            filter(Typeform.form_key == typeform_key).\
             order_by(desc(TypeformResponse.date_received)).all()
+
     # serialize them
     data = flat_response_serializer.dump(q, many=True).data
     if len(data) < 1:
