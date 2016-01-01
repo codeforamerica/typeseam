@@ -1,6 +1,6 @@
 # typeseam
 
-[![Build Status](https://travis-ci.org/codeforamerica/typeseam.svg?branch=master)](https://travis-ci.org/codeforamerica/typeseam)
+[![Build Status](https://travis-ci.org/codeforamerica/typeseam.svg?branch=master)](https://travis-ci.org/codeforamerica/typeseam) [![Coverage Status](https://coveralls.io/repos/codeforamerica/typeseam/badge.svg?branch=master&service=github)](https://coveralls.io/github/codeforamerica/typeseam?branch=master)
 
 This is an alpha proof-of-concept software for tying together [Typeform](http://www.typeform.com/) forms and
 [SeamlessDocs](http://www.seamlessdocs.com/) pdf forms, for the purpose of auto-filling pdfs from an ad-hoc webform.
