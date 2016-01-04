@@ -68,3 +68,6 @@ test.travis:
 		--nocapture \
 		--with-coverage \
 		--cover-package=./typeseam
+
+deploy.static:
+	aws s3 sync ./typeseam/static s3://typeseam/static

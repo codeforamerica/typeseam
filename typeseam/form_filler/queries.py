@@ -128,6 +128,7 @@ def create_typeform(form_key, title='', user=None, **kwargs):
         typeform = Typeform(**params)
         db.session.add(typeform)
         db.session.commit()
+    return typeform
 
 
 def get_typeform(**kwargs):
