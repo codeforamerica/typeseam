@@ -42,7 +42,7 @@ def save_new_typeform_data(data, form_key=None):
         if not inspect(m).persistent:
             db.session.add(m)
             new_responses.append(m)
-    if new_responses and form_key:
+    if new_responses and typeform:
         update_typeform_with_new_responses(typeform, new_responses)
     db.session.commit()
     return response_serializer.dump(new_responses, many=True).data
