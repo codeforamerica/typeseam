@@ -1,5 +1,6 @@
 from tests.selenium_test_base import SeleniumBaseTestCase
 
+
 class TestFormFillerTasks(SeleniumBaseTestCase):
 
     def test_index_get(self):

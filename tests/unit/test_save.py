@@ -15,6 +15,7 @@ from tests.mock.factories import (
     Typeform, TypeformResponse, SeamlessDoc
     )
 
+
 class TestModelSaving(BaseTestCase):
 
     def test_save_a_user(self):
@@ -43,11 +44,11 @@ class TestModelSaving(BaseTestCase):
 
     @attr(speed="slow")
     def test_save_everything(self):
-        user_report, user_data, users, form_sets, response_sets = generate_fake_data(num_users=10)
+        data = generate_fake_data(num_users=10)
+        user_report, user_data, users, form_sets, response_sets = data
         users = User.query.all()
         forms = Typeform.query.all()
         responses = TypeformResponse.query.all()
         self.assertTrue(len(users) == 10)
         self.assertTrue(len(forms) > 0)
         self.assertTrue(len(responses) > 0)
-

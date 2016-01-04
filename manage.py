@@ -6,6 +6,7 @@ from typeseam.app import create_app, db
 app = create_app()
 manager = Manager(app)
 
+
 def _make_context():
     """Return context dict for a shell session so you can access
     app and db by default.

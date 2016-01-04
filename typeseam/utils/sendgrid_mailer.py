@@ -3,8 +3,10 @@ from flask import current_app
 from flask.signals import Namespace
 import sendgrid
 
+
 class SendEmailError(Exception):
     pass
+
 
 class SendGridEmailer(object):
 
@@ -24,7 +26,8 @@ class SendGridEmailer(object):
             self.config_from_app(app)
         else:
             self.config_from_env()
-        self.sg = sendgrid.SendGridClient(self.config.get('SENDGRID_API_KEY',''))
+        self.sg = sendgrid.SendGridClient(
+            self.config.get('SENDGRID_API_KEY', ''))
 
     def config_from_app(self, app):
         for key in self.config:
@@ -41,7 +44,8 @@ class SendGridEmailer(object):
             message.set_from(self.config['MAIL_DEFAULT_SENDER'])
 
         # send signal
-        email_dispatched.send(current_app._get_current_object(), message=message)
+        email_dispatched.send(
+            current_app._get_current_object(), message=message)
 
         if self.app and self.app.testing:
             return

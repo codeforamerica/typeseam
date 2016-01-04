@@ -2,6 +2,7 @@
 from typeseam.app import create_app
 from typeseam.auth.tasks import sendgrid_email
 
+
 def run():
     app = create_app()
     with app.app_context():
@@ -10,7 +11,8 @@ def run():
             recipients=['benjamin.j.golder@gmail.com'],
             text_message="What is up?"
             )
-        print( status )
+        print(status)
+
 
 if __name__ == '__main__':
     run()

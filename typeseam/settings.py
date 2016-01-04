@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 
+from .settings_auth import AuthConfig
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, os.pardir))
 
-from .settings_auth import AuthConfig
 
 class Config(AuthConfig):
     SECRET_KEY = os.environ.get('SECRET_KEY', 'secret-key')
@@ -16,14 +17,17 @@ class Config(AuthConfig):
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
     SERVER_NAME = os.environ.get('HOST_NAME', 'localhost:9000')
 
+
 class ProdConfig(Config):
     ENV = 'prod'
     DEBUG = False
+
 
 class DevConfig(Config):
     ENV = 'dev'
     DEBUG = True
     LOAD_FAKE_DATA = True
+
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')

@@ -17,13 +17,16 @@ from typeseam.form_filler.serializers import TypeformResponseSerializer
 
 faker = FakerFactory.create('en_US', includes=['tests.mock.typeform'])
 
+
 def lazy(func):
     return factory.LazyAttribute(func)
+
 
 def deferred(func, *args, **kwargs):
     def toss(obj):
         return func(*args, **kwargs)
     return factory.LazyAttribute(toss)
+
 
 def typeform_key(*args):
     '''example: "o8MrpO"
@@ -33,9 +36,11 @@ def typeform_key(*args):
         special_chars=False,
         )
 
+
 def recent_date(start_date='-8w'):
     # return a datetime within last 8 weeks
     return faker.date_time_between(start_date=start_date)
+
 
 class SessionFactory(SQLAlchemyModelFactory):
     class Meta:
@@ -51,9 +56,11 @@ class TypeformFactory(SessionFactory):
     class Meta:
         model = Typeform
 
+
 class SeamlessDocFactory(SessionFactory):
     class Meta:
         model = SeamlessDoc
+
 
 class TypeformResponseFactory(SessionFactory):
     date_received = deferred(recent_date)
@@ -62,12 +69,15 @@ class TypeformResponseFactory(SessionFactory):
     class Meta:
         model = TypeformResponse
 
+
 class UserFactory(SessionFactory):
     id = factory.Sequence(lambda n: n)
     email = factory.Faker('free_email')
     confirmed_at = deferred(recent_date)
+
     class Meta:
         model = User
+
 
 def user_data(**kwargs):
     d = {
@@ -78,23 +88,27 @@ def user_data(**kwargs):
     d.update(**kwargs)
     return d
 
+
 def fake_typeform_responses(num_responses=1, start_date='-8w'):
     responses = []
     for n in range(num_responses):
         response = {
           'answers': faker.answers(),
           'metadata': {
-            'date_submit': faker.date_time_between(start_date=start_date).strftime("%Y-%m-%d %H:%M:%S")
+            'date_submit': faker.date_time_between(
+                start_date=start_date).strftime("%Y-%m-%d %H:%M:%S")
           }}
         responses.append(response)
     return {'responses': responses}
 
+
 def generate_fake_responses(typeform=None, count=None):
     deserializer = TypeformResponseSerializer()
-    if count == None:
+    if count is None:
         count = random.randint(1, 20)
     raw_responses = fake_typeform_responses(count)
-    models, errors = deserializer.load(raw_responses, many=True, session=db.session)
+    models, errors = deserializer.load(
+        raw_responses, many=True, session=db.session)
     if errors:
         print("!ERRORS generating fake responses!!:", errors)
     for m in models:
@@ -105,13 +119,16 @@ def generate_fake_responses(typeform=None, count=None):
         db.session.add(m)
     if typeform:
         typeform.response_count = len(models)
-        typeform.latest_response = max(models, key=lambda m: m.date_received).date_received
+        typeform.latest_response = max(
+            models, key=lambda m: m.date_received
+            ).date_received
         db.session.add(typeform)
     db.session.commit()
     return models
 
+
 def generate_fake_typeforms(user=None, count=None):
-    if count == None:
+    if count is None:
         count = random.randint(1, 6)
     forms = []
     user_id = None
@@ -125,8 +142,10 @@ def generate_fake_typeforms(user=None, count=None):
         forms.append(form)
     return forms
 
+
 def fake_user_data(num_users=20):
-    return [user_data() for n in range(num_users)]\
+    return [user_data() for n in range(num_users)]
+
 
 def generate_fake_users(num_users=20):
     data = fake_user_data(num_users)
@@ -134,6 +153,7 @@ def generate_fake_users(num_users=20):
     for datum in data:
         users.append(create_user(**datum))
     return users, data
+
 
 def generate_fake_data(num_users=10):
     users, user_data = generate_fake_users(num_users)
@@ -150,4 +170,3 @@ def generate_fake_data(num_users=10):
         for form in form_set:
             response_sets.append(generate_fake_responses(form))
     return user_report, user_data, users, form_sets, response_sets
-

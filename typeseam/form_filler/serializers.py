@@ -16,11 +16,14 @@ from typeseam.auth.serializers import LookupMixin
 # '2015-12-19 00:19:43'
 TYPEFORM_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+
 class DeserializationError(Exception):
     pass
 
+
 class SerializationError(Exception):
     pass
+
 
 class TypeformResponseSerializer(LookupMixin):
     answers = fields.Dict()
@@ -45,13 +48,15 @@ class TypeformResponseSerializer(LookupMixin):
     def parse_typeform_responses(self, data, many=True):
         items = []
         for response in data['responses']:
-            translated_answers = translate.translate_to_seamless(response, processors=form_field_processors)
+            translated_answers = translate.translate_to_seamless(
+                response, processors=form_field_processors)
             items.append(dict(
                 answers=translated_answers,
                 answers_translated=True,
                 date_received=response['metadata']['date_submit']
                 ))
         return items
+
 
 class FlatResponseSerializer(ma.ModelSchema):
     answers = fields.Dict()
@@ -67,6 +72,7 @@ class FlatResponseSerializer(ma.ModelSchema):
             'pdf_url',
             'typeform_key'
             )
+
     @pre_dump(pass_many=True)
     def parse_db_join(self, data, many=True):
         parsed_data = []
@@ -80,6 +86,7 @@ class FlatResponseSerializer(ma.ModelSchema):
         for datum in data:
             datum.update(datum.pop("answers"))
         return data
+
 
 class TypeformSerializer(LookupMixin):
 

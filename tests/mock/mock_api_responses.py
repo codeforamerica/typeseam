@@ -3,7 +3,6 @@ from tests.mock.factories import faker, fake_typeform_responses
 from unittest.mock import MagicMock
 
 
-
 good_response = MagicMock()
 sample_response = fake_typeform_responses(2)
 sample_response.update(http_status=200)
@@ -18,4 +17,3 @@ bad_response = MagicMock()
 bad_response.json.return_value = {
     'http_status': 500,
 }
-

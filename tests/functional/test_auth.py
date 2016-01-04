@@ -5,11 +5,16 @@ from nose.plugins.attrib import attr
 
 from tests.selenium_test_base import SeleniumBaseTestCase
 
+
 class TestAuthTasks(SeleniumBaseTestCase):
 
     user = {
-        'email': os.environ.get('DEFAULT_ADMIN_EMAIL', 'the_colonel@gmail.com'),
-        'password': os.environ.get('DEFAULT_ADMIN_PASSWORD', 'this-sketch-is-too-silly'),
+        'email': os.environ.get(
+            'DEFAULT_ADMIN_EMAIL',
+            'the_colonel@gmail.com'),
+        'password': os.environ.get(
+            'DEFAULT_ADMIN_PASSWORD',
+            'this-sketch-is-too-silly'),
     }
 
     def open_email_inbox(self):
@@ -27,7 +32,8 @@ class TestAuthTasks(SeleniumBaseTestCase):
     def test_redirect_to_login(self):
         self.get('/')
         self.assertIn('Log in', self.browser.title)
-        email_input = self.browser.find_element_by_xpath('//input[@name=email]')
+        email_input = self.browser.find_element_by_xpath(
+            '//input[@name=email]')
         print(email_input)
 
     def test_click_on_forgot_password_gets_email_form(self):

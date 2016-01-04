@@ -4,8 +4,10 @@ import hmac
 import hashlib
 from requests.auth import AuthBase
 
+
 def build_seamless_auth():
     return SeamlessDocsAPIAuth()
+
 
 class SeamlessDocsAPIAuth(AuthBase):
     """Sets up the HMAC Signature-based authorization on
@@ -68,7 +70,7 @@ class SeamlessDocsAPIAuth(AuthBase):
         uri = request.url.split('api')[-1]
         # python's time.time is floating point & too precise
         timestamp = str(int(time.time()))
-        if nonce == None:
+        if nonce is None:
             nonce = self.config['nonce']
         base = '+'.join([method, uri, timestamp, nonce])
         # '<request_method>+<uri>+<timestamp>[+<nonce>]'

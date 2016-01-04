@@ -33,14 +33,15 @@ response_serializer = TypeformResponseSerializer()
 flat_response_serializer = FlatResponseSerializer()
 typeform_serializer = TypeformSerializer()
 
+
 def parse_csv(csv_string):
     data = []
     with io.StringIO(csv_string) as f:
         csv_reader = csv.DictReader(f)
         return [row for row in csv_reader]
 
-class TestQueries(BaseTestCase):
 
+class TestQueries(BaseTestCase):
 
     def setUp(self):
         BaseTestCase.setUp(self)
@@ -103,6 +104,3 @@ class TestQueries(BaseTestCase):
         csv_string = get_responses_csv(self.user, self.typeform.form_key)
         data = parse_csv(csv_string)
         self.assertEqual(len(data), 5)
-
-
-

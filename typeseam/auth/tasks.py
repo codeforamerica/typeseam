@@ -3,10 +3,13 @@ import sendgrid
 from flask import current_app, url_for
 from typeseam.extensions import sg
 
+
 class UserAlreadyRegisteredError(Exception):
     pass
 
-def sendgrid_email(recipients=None, subject=None, html_message=None, text_message=None, sender=None):
+
+def sendgrid_email(recipients=None, subject=None, html_message=None,
+                   text_message=None, sender=None):
     """
     sendgrid.Mail Args:
             to: Recipient or list
@@ -31,16 +34,19 @@ def sendgrid_email(recipients=None, subject=None, html_message=None, text_messag
         )
     return sg.send(message)
 
+
 def invite_new_user(email):
     user_manager = current_app.user_manager
     db_adapter = user_manager.db_adapter
     user, user_email = user_manager.find_user_by_email(email)
     if user:
-        raise UserAlreadyRegisteredError('{} is already registered'.format(email))
+        raise UserAlreadyRegisteredError(
+            '{} is already registered'.format(email))
 
     # the following is copied from flask_user.views.invite
     from flask_user import signals, emails
-    user_invite = db_adapter.add_object(db_adapter.UserInvitationClass, email=email)
+    user_invite = db_adapter.add_object(
+        db_adapter.UserInvitationClass, email=email)
     db_adapter.commit()
     token = user_manager.generate_token(user_invite.id)
     accept_invite_link = url_for('user.register',
@@ -60,6 +66,6 @@ def invite_new_user(email):
         db_adapter.commit()
         raise
 
-    signals \
-        .user_sent_invitation \
+    signals\
+        .user_sent_invitation\
         .send(current_app._get_current_object(), user_invite=user_invite)

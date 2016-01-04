@@ -19,6 +19,7 @@ class TestMail(BaseTestCase):
 
     def test_can_send_mail(self):
         messages = []
+
         def fire(app, message, **extra):
             messages.append(message)
         email_dispatched.connect(fire)

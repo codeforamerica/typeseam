@@ -10,16 +10,15 @@ def register_logging(app, config_string):
         # disable the existing flask handler, we are replacing it with our own
         app.logger.removeHandler(app.logger.handlers[0])
 
-
         app.logger.setLevel(logging.DEBUG)
         stdout = logging.StreamHandler(sys.stdout)
-        stdout.setFormatter(logging.Formatter(
-'''
+        stdout.setFormatter(logging.Formatter('''
+
+%(asctime)s
+%(levelname)s in %(module)s [%(funcName)s] | [%(pathname)s:%(lineno)d]
+%(message)s
 --------------------------------------------------------------------------------
-%(asctime)s | %(levelname)s in %(module)s [%(funcName)s] | [%(pathname)s:%(lineno)d] | %(message)s
---------------------------------------------------------------------------------
-'''
-        ))
+'''))
         app.logger.addHandler(stdout)
 
     else:

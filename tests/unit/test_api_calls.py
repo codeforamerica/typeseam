@@ -16,6 +16,7 @@ from tests.mock.mock_api_responses import (
     bad_response
     )
 
+
 class TestExternalApiCalls(BaseTestCase):
 
     def setUp(self):

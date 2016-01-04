@@ -1,7 +1,9 @@
 
 import sys
 sys.path.append('./data')
+
 import translator
+
 
 def translate_to_seamless(typeform, processors=None):
     trans = translator.fields

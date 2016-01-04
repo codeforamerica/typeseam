@@ -4,13 +4,15 @@ from tests.test_base import BaseTestCase
 
 from nose.plugins.attrib import attr
 
+
 @attr(selenium=True, speed="slow")
 class SeleniumBaseTestCase(BaseTestCase):
     """A base test case for Selenium functional testing
     """
     baseURL = os.environ.get('BASE_URL', 'http://localhost:9000')
     emailBaseURL = os.environ.get('TEST_EMAIL_URL', '')
-    screenshots_folder = os.environ.get('TEST_SCREENSHOTS_FOLDER', 'tests/screenshots')
+    screenshots_folder = os.environ.get(
+        'TEST_SCREENSHOTS_FOLDER', 'tests/screenshots')
 
     def wait(self, seconds=5):
         self.browser.implicitly_wait(seconds)

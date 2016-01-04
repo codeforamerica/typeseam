@@ -4,17 +4,21 @@ into the appropriate SeamlessDocs formats
 
 """
 
+
 def initials(target, input_value):
     return input_value.strip()[0].upper()
 
+
 def add(target, *args):
     return " ".join(args)
+
 
 def yesno(target, input_value):
     if input_value == "1":
         return "Yes"
     else:
         return "No"
+
 
 def phone_switch(target, value='', value_type='', value_type_other=''):
     target_type = target.split("_")[-1]

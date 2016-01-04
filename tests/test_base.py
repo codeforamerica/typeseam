@@ -9,6 +9,7 @@ from typeseam.app import (
 
 from tests.utils import get_value_for_name
 
+
 class BaseTestCase(FlaskTestCase):
     '''
     A base test case that boots our app
