@@ -27,26 +27,28 @@ typeform_serializer = TypeformSerializer()
 
 
 def save_new_typeform_data(data, form_key=None):
+    typeform = db.session.query(Typeform).\
+                    filter(Typeform.form_key == form_key).first()
+    data['user_id'] = typeform.user_id
+    data['typeform_id'] = typeform.id
     models, errors = response_serializer.load(
         data, many=True, session=db.session)
     new_responses = []
     if errors:
         raise DeserializationError(str(errors))
-    for m in models or []:
+    if not models:
+        return []
+    for m in models:
         if not inspect(m).persistent:
             db.session.add(m)
             new_responses.append(m)
-    if new_responses and form_key:
-        update_typeform_with_new_responses(form_key, new_responses)
+    if new_responses:
+        update_typeform_with_new_responses(typeform, new_responses)
     db.session.commit()
     return response_serializer.dump(new_responses, many=True).data
 
 
-def update_typeform_with_new_responses(form_key, responses):
-    typeform = db.session.query(Typeform).\
-                    filter(Typeform.form_key == form_key).first()
-    if not typeform:
-        return
+def update_typeform_with_new_responses(typeform, responses):
     latest_date = max(responses, key=lambda r: r.date_received).date_received
     count = len(responses)
     typeform.response_count = count
@@ -62,21 +64,15 @@ def get_typeforms_for_user(user):
 
 
 def get_responses_for_typeform(user, typeform_key, count=20):
-    q = db.session.query(TypeformResponse, Typeform).\
-            join(Typeform, Typeform.id == TypeformResponse.typeform_id).\
-            filter(Typeform.form_key == typeform_key).\
-            filter(Typeform.user_id == user.id).\
-            order_by(desc(TypeformResponse.date_received)).\
-            limit(count)
-    recordsets = q.all()
-    if len(recordsets) < 1:
-        form = db.session.query(Typeform).\
-            filter(Typeform.form_key == typeform_key).\
-            filter(Typeform.user_id == user.id).first()
-        return typeform_serializer.dump(form).data, []
-    form = recordsets[0].Typeform
-    responses = [r.TypeformResponse for r in recordsets]
-    form_data = typeform_serializer.dump(form).data
+    typeform = db.session.query(Typeform).\
+                    filter(Typeform.form_key == typeform_key).first()
+    q = db.session.query(TypeformResponse).\
+        filter(TypeformResponse.typeform_id == typeform.id).\
+        filter(TypeformResponse.user_id == user.id).\
+        order_by(desc(TypeformResponse.date_received)).\
+        limit(count)
+    responses = q.all()
+    form_data = typeform_serializer.dump(typeform).data
     responses_data = response_serializer.dump(responses, many=True).data
     return form_data, responses_data
 
@@ -123,10 +119,11 @@ def get_response_count():
     return db.session.query(func.count(TypeformResponse.id)).scalar()
 
 
-def create_typeform(form_key, title='', user=None):
+def create_typeform(form_key, title='', user=None, **kwargs):
     params = dict(form_key=form_key, title=title, user_id=user.id)
     typeform = db.session.query(Typeform).filter_by(**params).first()
     if not typeform:
+        params.update(kwargs)
         typeform = Typeform(**params)
         db.session.add(typeform)
         db.session.commit()

@@ -6,6 +6,8 @@ from sqlalchemy.dialects.postgresql import JSON
 class Typeform(db.Model):
     __tablename__ = 'form_filler_typeform'
     id = db.Column(db.Integer, primary_key=True, index=True)
+    live_url = db.Column(db.String(128))
+    edit_url = db.Column(db.String(128))
     form_key = db.Column(db.String(64))
     title = db.Column(db.String(128))
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))

@@ -1,9 +1,14 @@
 {%- if not response.pdf_url -%}
-        <span class="btn btn-default stateful pdf_button default" data-apiendpoint="{{
+        <span id="pdf-button-{{ response.id }}" class="btn btn-default stateful pdf_button default" data-apiendpoint="{{
           url_for('form_filler.fill_seamless_docs_pdf',response_id=response.id)
         }}">
           <span class="state content_default">
             Click to generate PDF
+          </span>
+
+          <span class="state content_error">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            Problem connecting to SeamlessDocs
           </span>
 
           <span class="state content_sending">

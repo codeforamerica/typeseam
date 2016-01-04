@@ -40,7 +40,7 @@ def response_detail(typeform_key, response_id):
     """Show the details of a particular typeform response
     """
     response = queries.get_response_detail(current_user, response_id)
-    form = queries.get_typeform(typeform_key)
+    form = queries.get_typeform(form_key=typeform_key)
     return render_template(
         "response_detail.html",
         response=response,
@@ -77,4 +77,4 @@ def fill_seamless_docs_pdf(response_id):
     # this can be done as a background task
     form, response = tasks.get_seamless_doc_pdf(response_id)
     return render_template(
-        "response_listing.html", form=form, response=response)
+        "pdf_button.html", form=form, response=response)

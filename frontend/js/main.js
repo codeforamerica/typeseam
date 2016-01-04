@@ -10,6 +10,8 @@ var PDF_LOADING_STATES = [
   ["retrieving", 5000],
   ];
 
+var TIMEOUT_HANDLES = {};
+
 function addCSRFTokenToRequests(){
   // Taken directly from
   // http://flask-wtf.readthedocs.org/en/latest/csrf.html#ajax
@@ -33,6 +35,7 @@ function getNewResponses(e){
   $.ajax({
     url: API_ENDPOINTS.new_responses,
     success: handleNewResponses,
+    error: handleLoadResponsesError,
     timeout: 10000
   });
 }
@@ -50,14 +53,14 @@ function stateTransitionChain(target, stateStack, index){
   var stateClassName = stateStack[index][0];
   var delay = stateStack[index][1];
   target.addClass(stateClassName);
-  setTimeout(function(){
+  var handle = setTimeout(function(){
     stateTransitionChain(target, stateStack, index + 1);
-  }, delay)
+  }, delay);
+  TIMEOUT_HANDLES[target.attr('id')] = handle;
 }
 
 function getPDF(e){
   var target = $(this);
-  console.log("clicked to get pdf on", target);
   target.removeClass("default");
   target.addClass('loading');
   var responseId = target.parents('.response').attr('id');
@@ -67,6 +70,7 @@ function getPDF(e){
     method: "POST",
     url: target.attr("data-apiendpoint"),
     success: handleNewPDF(responseId),
+    error: handleLoadPDFError(responseId),
     timeout: 20000
   });
 }
@@ -78,6 +82,35 @@ function handleNewResponses(html){
 
 function handleNewPDF(responseId){
   return function(html){
-    $('#response-'+responseId).replaceWith(html);
+    var button = $('#response-'+responseId).find('.pdf_button');
+    var buttonId = button.attr('id');
+    if( TIMEOUT_HANDLES[buttonId] ){
+      var timeoutHandle = TIMEOUT_HANDLES[buttonId];
+      clearTimeout(timeoutHandle);
+    }
+    button.replaceWith(html);
+  };
+}
+
+function handleLoadResponsesError(jqXHR, error_type, error){
+  var button = $('button.load_new_responses');
+  button.removeClass('loading');
+  button.addClass('error');
+  button.html(
+    '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Problem connecting to Typeform'
+  );
+}
+
+function handleLoadPDFError(responseId){
+  return function(jqXHR, error_type, error){
+    var response = $('#response-'+responseId);
+    var button = response.find('.pdf_button')
+    button.removeClass('loading');
+    button.addClass('error');
+    var buttonId = button.attr('id');
+    if( TIMEOUT_HANDLES[buttonId] ){
+      var timeoutHandle = TIMEOUT_HANDLES[buttonId];
+      clearTimeout(timeoutHandle);
+    }
   };
 }

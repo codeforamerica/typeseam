@@ -3606,6 +3606,9 @@ input[type="button"].btn-block {
 .stateful.default .state.content_default {
   display: inline;
 }
+.stateful.error .state.content_error {
+  display: inline;
+}
 .stateful.sending .state.content_sending {
   display: inline;
 }
