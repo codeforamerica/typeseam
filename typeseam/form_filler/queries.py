@@ -29,8 +29,9 @@ typeform_serializer = TypeformSerializer()
 def save_new_typeform_data(data, form_key=None):
     typeform = db.session.query(Typeform).\
                     filter(Typeform.form_key == form_key).first()
-    data['user_id'] = typeform.user_id
-    data['typeform_id'] = typeform.id
+    if typeform:
+        data['user_id'] = typeform.user_id
+        data['typeform_id'] = typeform.id
     models, errors = response_serializer.load(
         data, many=True, session=db.session)
     new_responses = []
