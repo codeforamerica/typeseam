@@ -13,3 +13,5 @@ before_script:
   - psql -c 'create database test_typeseam;' -U postgres
 after_success:
   - coveralls
+notifications:
+    slack: cfa:CYBv6gMC0oGtY1wwI6ZTfldS
