@@ -63,8 +63,10 @@ def remote_responses(typeform_key):
     # make an api call to Typeform
     # this can be done as a background task
     responses = tasks.get_typeform_responses()
+    form = queries.get_typeform(form_key=typeform_key)
     return render_template(
         "response_list.html",
+        form=form,
         responses=responses)
 
 
