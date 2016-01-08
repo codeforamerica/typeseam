@@ -5,19 +5,22 @@ from pprint import pprint
 from flask import abort
 from typeseam.app import db
 from typeseam.utils import seamless_auth
-from typeseam.form_filler import queries
+from typeseam.form_filler import queries, models
 
 
-def get_typeform_responses(form_key=None):
-    if not form_key:
+def get_typeform_responses(form=None):
+    if not form:
         form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
+        form = db.session.query(models.Typeform).filter(form_key==form_key).first()
+    else:
+        form_key = form.form_key
     template = 'https://api.typeform.com/v0/form/{}'
     url = template.format(form_key)
     args = {
         'key': os.environ.get('TYPEFORM_API_KEY', None),
         'completed': 'true'}
     data = requests.get(url, params=args).json()
-    responses = queries.save_new_typeform_data(data, form_key)
+    responses = queries.save_new_typeform_data(data, form)
     return responses
 
 

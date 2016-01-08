@@ -81,15 +81,10 @@ class TestQueries(BaseTestCase):
         # make some other responses to see if they show up
         other_user = generate_fake_users(1)[0][0]
         other_typeform = generate_fake_typeforms(other_user, 1)[0]
-        form, responses = get_responses_for_typeform(
-            self.user,
-            self.typeform.form_key)
+        responses = get_responses_for_typeform(self.typeform.id)
         self.assertEqual(len(responses), 5)
-        self.assertEqual(form['form_key'], self.typeform.form_key)
-        form, responses = get_responses_for_typeform(
-            other_user,
-            other_typeform.form_key
-            )
+        self.assertEqual(responses[0]['typeform_id'], self.typeform.id)
+        responses = get_responses_for_typeform(other_typeform.id)
         self.assertEqual(len(responses), 0)
 
     def test_get_typeforms_for_user(self):

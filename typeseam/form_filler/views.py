@@ -24,8 +24,8 @@ def index():
 def responses(typeform_key):
     """get the responses of a particular typeform
     """
-    form, responses = queries.get_responses_for_typeform(
-        current_user, typeform_key, count=30)
+    form = queries.get_typeform(user_id=current_user.id)
+    responses = queries.get_responses_for_typeform(typeform_id=form['id'])
     return render_template(
         'responses.html',
         form=form,
@@ -62,8 +62,8 @@ def responses_csv(typeform_key):
 def remote_responses(typeform_key):
     # make an api call to Typeform
     # this can be done as a background task
-    responses = tasks.get_typeform_responses()
-    form = queries.get_typeform(form_key=typeform_key)
+    form = queries.get_typeform(form_key=typeform_key, user_id=current_user.id, model=True)
+    responses = tasks.get_typeform_responses(form)
     return render_template(
         "response_list.html",
         form=form,

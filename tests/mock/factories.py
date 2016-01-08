@@ -140,6 +140,7 @@ def generate_fake_typeforms(user=None, count=None):
             added_on=recent_date(start_date=user.confirmed_at)
             )
         forms.append(form)
+    db.session.commit()
     return forms
 
 

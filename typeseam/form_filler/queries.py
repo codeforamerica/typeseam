@@ -26,9 +26,7 @@ flat_response_serializer = FlatResponseSerializer()
 typeform_serializer = TypeformSerializer()
 
 
-def save_new_typeform_data(data, form_key=None):
-    typeform = db.session.query(Typeform).\
-                    filter(Typeform.form_key == form_key).first()
+def save_new_typeform_data(data, typeform=None):
     if typeform:
         data['user_id'] = typeform.user_id
         data['typeform_id'] = typeform.id
@@ -64,30 +62,23 @@ def get_typeforms_for_user(user):
     return typeform_serializer.dump(q.all(), many=True).data
 
 
-def get_responses_for_typeform(user, typeform_key, count=20):
-    typeform = db.session.query(Typeform).\
-                    filter(Typeform.form_key == typeform_key).first()
+def get_responses_for_typeform(typeform_id):
     q = db.session.query(TypeformResponse).\
-        filter(TypeformResponse.typeform_id == typeform.id).\
-        filter(TypeformResponse.user_id == user.id).\
-        order_by(desc(TypeformResponse.date_received)).\
-        limit(count)
+        filter(TypeformResponse.typeform_id == typeform_id)
     responses = q.all()
-    form_data = typeform_serializer.dump(typeform).data
     responses_data = response_serializer.dump(responses, many=True).data
-    return form_data, responses_data
+    return responses_data
 
 
 def get_responses_csv(user, typeform_key):
+    typeform = get_typeform(model=True, user_id=user.id, form_key=typeform_key)
     # get responses
-    q = db.session.query(TypeformResponse, Typeform.form_key).\
+    results = db.session.query(TypeformResponse, Typeform.form_key).\
             join(Typeform, TypeformResponse.typeform_id == Typeform.id).\
-            filter(TypeformResponse.user_id == user.id).\
-            filter(Typeform.form_key == typeform_key).\
+            filter(Typeform.user_id == user.id, Typeform.form_key == typeform_key).\
             order_by(desc(TypeformResponse.date_received)).all()
-
     # serialize them
-    data = flat_response_serializer.dump(q, many=True).data
+    data = flat_response_serializer.dump(results, many=True).data
     if len(data) < 1:
         abort(404)
     # build csv
@@ -131,11 +122,13 @@ def create_typeform(form_key, title='', user=None, **kwargs):
     return typeform
 
 
-def get_typeform(**kwargs):
+def get_typeform(model=False, **kwargs):
     params = {k: v for k, v in kwargs.items() if v}
     if not params:
         abort(404)
     typeform = db.session.query(Typeform).filter_by(**params).first()
     if not typeform:
         abort(404)
+    if model:
+        return typeform
     return typeform_serializer.dump(typeform).data

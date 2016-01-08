@@ -34,6 +34,7 @@ class TypeformResponseSerializer(LookupMixin):
 
     lookup_fields = (
         'date_received',
+        'typeform_id',
         )
 
     class Meta:
