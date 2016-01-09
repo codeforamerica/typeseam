@@ -44,7 +44,6 @@ def save_new_typeform_data(data, typeform=None):
     if new_responses and typeform:
         update_typeform_with_new_responses(typeform, new_responses)
     db.session.commit()
-    return response_serializer.dump(new_responses, many=True).data
 
 
 def update_typeform_with_new_responses(typeform, responses):
@@ -64,7 +63,8 @@ def get_typeforms_for_user(user):
 
 def get_responses_for_typeform(typeform_id):
     q = db.session.query(TypeformResponse).\
-        filter(TypeformResponse.typeform_id == typeform_id)
+        filter(TypeformResponse.typeform_id == typeform_id).\
+        order_by(desc(TypeformResponse.date_received))
     responses = q.all()
     responses_data = response_serializer.dump(responses, many=True).data
     return responses_data

@@ -76,7 +76,7 @@ function getPDF(e){
 }
 
 function handleNewResponses(html){
-  $('.responses').prepend(html);
+  $('.responses').html(html);
   $('button.load_new_responses').removeClass('loading');
 }
 

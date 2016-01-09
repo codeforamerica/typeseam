@@ -20,8 +20,7 @@ def get_typeform_responses(form=None):
         'key': os.environ.get('TYPEFORM_API_KEY', None),
         'completed': 'true'}
     data = requests.get(url, params=args).json()
-    responses = queries.save_new_typeform_data(data, form)
-    return responses
+    queries.save_new_typeform_data(data, form)
 
 
 def get_seamless_doc_pdf(response_id):
