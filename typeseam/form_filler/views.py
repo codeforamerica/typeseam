@@ -56,14 +56,18 @@ def responses_csv(typeform_key):
     csv = queries.get_responses_csv(current_user, typeform_key)
     return Response(csv, mimetype="text/csv")
 
+##########  API Views  ################################################
+
 
 @blueprint.route('/api/<typeform_key>/new_responses/', methods=['GET'])
 @login_required
 def remote_responses(typeform_key):
     # make an api call to Typeform
     # this can be done as a background task
-    form = queries.get_typeform(form_key=typeform_key, user_id=current_user.id, model=True)
-    responses = tasks.get_typeform_responses(form)
+    form = queries.get_typeform(
+        form_key=typeform_key, user_id=current_user.id, model=True)
+    tasks.get_typeform_responses(form)
+    responses = queries.get_responses_for_typeform(typeform_id=form.id)
     return render_template(
         "response_list.html",
         form=form,
