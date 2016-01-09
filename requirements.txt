@@ -1,1 +1,4 @@
 -r requirements/ci.txt
+
+# aws S3 uploads
+awscli==1.9.15
