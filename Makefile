@@ -70,4 +70,12 @@ test.travis:
 		--cover-package=./typeseam
 
 deploy.static:
+	gulp build
 	aws s3 sync ./typeseam/static s3://typeseam/static
+
+deploy:
+	git push heroku master
+
+deploy.full:
+	make deploy.static
+	make deplo
