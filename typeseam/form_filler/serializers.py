@@ -112,5 +112,7 @@ class TypeformSerializer(LookupMixin):
             'id',
             'title',
             'response_count',
-            'latest_response'
+            'latest_response',
+            'live_url',
+            'edit_url'
             )
