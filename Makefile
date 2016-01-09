@@ -78,4 +78,4 @@ deploy:
 
 deploy.full:
 	make deploy.static
-	make deplo
+	make deploy
