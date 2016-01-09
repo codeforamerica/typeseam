@@ -2,7 +2,7 @@
 <html>
   <head>
     {% include "includes/head.html" %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url }}css/main.css">
   </head>
   <body>
     {% block body %}
@@ -14,6 +14,6 @@
     {% block js_variables %}
     {% endblock js_variables %}
     </script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ static_url }}js/main.js"></script>
   </body>
 </html>
