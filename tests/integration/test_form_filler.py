@@ -1,5 +1,7 @@
 from flask import url_for
 from typeseam.auth.queries import create_user, get_user_by_email
+from typeseam.app import db
+from typeseam.form_filler.models import Typeform
 
 from tests.test_base import BaseTestCase
 from tests.mock.factories import generate_fake_typeforms, generate_fake_responses
@@ -38,7 +40,17 @@ class TestFormFillerViews(BaseTestCase):
     def test_correct_response_count(self):
         ''' The correct number of responses are reported in the form table.
         '''
+        # login and check the baseline response count
         response = self.login()
         self.assertEqual(response.status_code, 200)
         soup = BeautifulSoup(response.data, 'html.parser')
         self.assertEqual(str(self.fake_response_count), soup.find("td", {"data-test-id": "typeform-response-count"}).text.strip())
+        # create a new response
+        fake_user = self.get_user()
+        fake_typeform = db.session.query(Typeform).filter(Typeform.user_id == fake_user.id).first()
+        generate_fake_responses(fake_typeform, 1)
+        # reload the front page and check the new response count
+        response = self.client.get('/', follow_redirects=True)
+        new_response_count = self.fake_response_count + 1
+        soup = BeautifulSoup(response.data, 'html.parser')
+        self.assertEqual(str(new_response_count), soup.find("td", {"data-test-id": "typeform-response-count"}).text.strip())
