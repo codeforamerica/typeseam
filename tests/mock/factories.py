@@ -118,7 +118,6 @@ def generate_fake_responses(typeform=None, count=None):
                 m.user_id = typeform.user_id
         db.session.add(m)
     if typeform:
-        typeform.response_count = len(models)
         typeform.latest_response = max(
             models, key=lambda m: m.date_received
             ).date_received

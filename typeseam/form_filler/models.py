@@ -1,4 +1,3 @@
-import datetime
 from typeseam.extensions import db
 from sqlalchemy.dialects.postgresql import JSON
 
@@ -12,8 +11,9 @@ class Typeform(db.Model):
     title = db.Column(db.String(128))
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
     added_on = db.Column(db.DateTime(), server_default=db.func.now())
-    response_count = db.Column(db.Integer, default=0)
     latest_response = db.Column(db.DateTime())
+    # a dynamic 'responses' relationship that'll perform the query when accessed
+    responses = db.relationship('TypeformResponse', backref='typeform', order_by='desc(TypeformResponse.date_received)')
 
     def __repr__(self):
         return '<Typeform:"{}", title="{}">'.format(self.form_key, self.title)

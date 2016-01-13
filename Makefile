@@ -34,7 +34,7 @@ serve:
 test:
 	dropdb test_$(DB_NAME) --if-exists
 	createdb test_$(DB_NAME)
-	nosetests \
+	nosetests ./tests/ \
 		--eval-attr "not selenium" \
 		--verbose \
 		--nocapture \

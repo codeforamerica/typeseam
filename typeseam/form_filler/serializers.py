@@ -116,3 +116,9 @@ class TypeformSerializer(LookupMixin):
             'live_url',
             'edit_url'
             )
+
+    @pre_dump()
+    def count_responses(self, data):
+        # add a count of the number of responses
+        data.response_count = len(data.responses)
+        return data
