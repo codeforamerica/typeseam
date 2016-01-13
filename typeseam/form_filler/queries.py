@@ -1,4 +1,5 @@
 from sqlalchemy import desc, inspect, func
+from sqlalchemy.orm import subqueryload
 from flask import abort
 from flask.ext.login import current_user
 
@@ -54,6 +55,7 @@ def update_typeform_with_new_responses(typeform, responses):
 
 def get_typeforms_for_user(user):
     q = db.session.query(Typeform).\
+            options(subqueryload(Typeform.responses)).\
             filter(Typeform.user_id == user.id).\
             order_by(desc(Typeform.latest_response))
     return typeform_serializer.dump(q.all(), many=True).data
