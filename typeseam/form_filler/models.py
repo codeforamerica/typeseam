@@ -12,6 +12,8 @@ class Typeform(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
     added_on = db.Column(db.DateTime(), server_default=db.func.now())
     latest_response = db.Column(db.DateTime())
+    # a dynamic 'responses' relationship that'll perform the query when accessed
+    responses = db.relationship('TypeformResponse', backref='typeform', order_by='desc(TypeformResponse.date_received)', lazy='dynamic')
 
     def __repr__(self):
         return '<Typeform:"{}", title="{}">'.format(self.form_key, self.title)
