@@ -48,8 +48,6 @@ def save_new_typeform_data(data, typeform=None):
 
 def update_typeform_with_new_responses(typeform, responses):
     latest_date = max(responses, key=lambda r: r.date_received).date_received
-    count = len(responses)
-    typeform.response_count = count
     typeform.latest_response = latest_date
     db.session.add(typeform)
 
