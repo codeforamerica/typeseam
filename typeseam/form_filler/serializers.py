@@ -46,7 +46,7 @@ class TypeformResponseSerializer(LookupMixin):
             'typeform_id',
             'seamless_id',
             'date_received',
-            'date_received_human',
+            'date_received_relative',
             'answers',
             'answers_translated',
             'seamless_submitted',
@@ -73,7 +73,7 @@ class TypeformResponseSerializer(LookupMixin):
     @pre_dump()
     def add_display_fields(self, data):
         # add a relative date received
-        data.date_received_human = human(data.date_received, precision=1)
+        data.date_received_relative = human(data.date_received, precision=1)
         return data
 
 
@@ -87,7 +87,7 @@ class FlatResponseSerializer(ma.ModelSchema):
         fields = (
             'id',
             'date_received',
-            'date_received_human',
+            'date_received_relative',
             'answers',
             'pdf_url',
             'typeform_key'
@@ -98,7 +98,7 @@ class FlatResponseSerializer(ma.ModelSchema):
         parsed_data = []
         for response, form_key in data:
             response.typeform_key = form_key
-            response.date_received_human = human(response.date_received, precision=1)
+            response.date_received_relative = human(response.date_received, precision=1)
             parsed_data.append(response)
         return parsed_data
 
@@ -123,7 +123,7 @@ class TypeformSerializer(LookupMixin):
             'title',
             'response_count',
             'latest_response',
-            'latest_response_human',
+            'latest_response_relative',
             'live_url',
             'edit_url'
         )
@@ -132,5 +132,5 @@ class TypeformSerializer(LookupMixin):
     def add_display_fields(self, data):
         # add a count of the number of responses
         data.response_count = len(data.responses)
-        data.latest_response_human = human(data.latest_response, precision=1) if data.response_count > 0 else 'No responses yet'
+        data.latest_response_relative = human(data.latest_response, precision=1) if data.response_count > 0 else 'No responses yet'
         return data

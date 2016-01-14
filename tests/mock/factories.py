@@ -120,7 +120,7 @@ def generate_fake_responses(typeform=None, count=None):
         typeform.latest_response = max(
             models, key=lambda m: m.date_received
             ).date_received
-        typeform.latest_response_human = human(typeform.latest_response, precision=1)
+        typeform.latest_response_relative = human(typeform.latest_response, precision=1)
         db.session.add(typeform)
     db.session.commit()
     return models
