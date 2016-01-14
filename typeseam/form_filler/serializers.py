@@ -72,7 +72,7 @@ class TypeformResponseSerializer(LookupMixin):
 
     @pre_dump()
     def add_display_fields(self, data):
-        # add a count of the number of responses
+        # add a relative date received
         data.date_received_human = human(data.date_received, precision=1)
         return data
 
