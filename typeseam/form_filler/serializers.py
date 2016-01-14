@@ -1,12 +1,13 @@
-from marshmallow import Schema, fields, pre_dump, post_dump, pre_load
+from marshmallow import fields, pre_dump, post_dump, pre_load
 
 from typeseam.app import ma
-from pprint import pprint
+from datetime import datetime
+from ago import human
 
 from typeseam.form_filler.models import (
     TypeformResponse,
     Typeform
-    )
+)
 
 from typeseam.utils import translate
 from typeseam.form_filler import form_field_processors
@@ -35,7 +36,7 @@ class TypeformResponseSerializer(LookupMixin):
     lookup_fields = (
         'date_received',
         'typeform_id',
-        )
+    )
 
     class Meta:
         model = TypeformResponse
@@ -45,11 +46,12 @@ class TypeformResponseSerializer(LookupMixin):
             'typeform_id',
             'seamless_id',
             'date_received',
+            'date_received_human',
             'answers',
             'answers_translated',
             'seamless_submitted',
             'pdf_url'
-            )
+        )
 
     @pre_load(pass_many=True)
     def parse_typeform_responses(self, data, many=True):
@@ -65,8 +67,14 @@ class TypeformResponseSerializer(LookupMixin):
                 answers=translated_answers,
                 answers_translated=True,
                 date_received=response['metadata']['date_submit']
-                ))
+            ))
         return items
+
+    @pre_dump()
+    def add_display_fields(self, data):
+        # add a count of the number of responses
+        data.date_received_human = human(data.date_received, precision=1)
+        return data
 
 
 class FlatResponseSerializer(ma.ModelSchema):
@@ -79,16 +87,18 @@ class FlatResponseSerializer(ma.ModelSchema):
         fields = (
             'id',
             'date_received',
+            'date_received_human',
             'answers',
             'pdf_url',
             'typeform_key'
-            )
+        )
 
     @pre_dump(pass_many=True)
     def parse_db_join(self, data, many=True):
         parsed_data = []
         for response, form_key in data:
             response.typeform_key = form_key
+            response.date_received_human = human(response.date_received, precision=1)
             parsed_data.append(response)
         return parsed_data
 
@@ -103,7 +113,7 @@ class TypeformSerializer(LookupMixin):
 
     lookup_fields = (
         'form_key',
-        )
+    )
 
     class Meta:
         model = Typeform
@@ -113,12 +123,14 @@ class TypeformSerializer(LookupMixin):
             'title',
             'response_count',
             'latest_response',
+            'latest_response_human',
             'live_url',
             'edit_url'
-            )
+        )
 
     @pre_dump()
-    def count_responses(self, data):
+    def add_display_fields(self, data):
         # add a count of the number of responses
         data.response_count = len(data.responses)
+        data.latest_response_human = human(data.latest_response, precision=1)
         return data

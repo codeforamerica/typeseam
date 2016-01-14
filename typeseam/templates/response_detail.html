@@ -5,8 +5,9 @@
         <h3 class="breadcrumb">
           <a class="backlink" href="{{ url_for('form_filler.responses', typeform_key=form.form_key) }}">form responses</a>
             →
+          <br />
           <span class="current">
-            response {{ response.date_received }}
+            response from {{ response.date_received_human }} ({{ response.date_received }})
           </span>
 
         </h3>
