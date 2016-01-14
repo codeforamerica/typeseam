@@ -132,5 +132,5 @@ class TypeformSerializer(LookupMixin):
     def add_display_fields(self, data):
         # add a count of the number of responses
         data.response_count = len(data.responses)
-        data.latest_response_human = human(data.latest_response, precision=1)
+        data.latest_response_human = human(data.latest_response, precision=1) if data.response_count > 0 else 'No responses yet'
         return data
