@@ -1,7 +1,7 @@
     <tr id="response-{{response.id}}" class="response">
       <td class="date_cell">
         <a href="{{ url_for('form_filler.response_detail', typeform_key=form.form_key, response_id=response.id)}}">
-          {{ response.date_received }}
+          {{ response.date_received_relative }}
         </a>
       </td>
 
