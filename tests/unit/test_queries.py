@@ -1,6 +1,8 @@
 from unittest.mock import patch
 from tests.test_base import BaseTestCase
 from werkzeug.exceptions import Unauthorized, Forbidden
+import dateutil.parser
+from ago import human
 
 import csv
 import io
@@ -99,3 +101,24 @@ class TestQueries(BaseTestCase):
         csv_string = get_responses_csv(self.user, self.typeform.form_key)
         data = parse_csv(csv_string)
         self.assertEqual(len(data), 5)
+
+    def test_relative_dates(self):
+        # generate some new data
+        user = generate_fake_users(1)[0][0]
+        typeforms = generate_fake_typeforms(user, 2)
+        generate_fake_responses(typeforms[0], 10)
+        # get forms and check the dates
+        check_forms = get_typeforms_for_user(user)
+        for form in check_forms:
+            if form['response_count'] == 0:
+                self.assertIsNone(form['latest_response'])
+                self.assertEqual(form['latest_response_relative'], 'No responses yet')
+            else:
+                self.assertIsNotNone(form['latest_response'])
+                check_date = dateutil.parser.parse(form['latest_response']).replace(tzinfo=None)
+                self.assertEqual(human(check_date, precision=1), form['latest_response_relative'])
+                check_responses = get_responses_for_typeform(form['id'])
+
+        for response in check_responses:
+            check_date = dateutil.parser.parse(response['date_received']).replace(tzinfo=None)
+            self.assertEqual(human(check_date, precision=1), response['date_received_relative'])
