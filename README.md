@@ -58,3 +58,8 @@ SEAMLESS_DOCS_API_SECRET='0o0o0o0o0o0o0o0o0o0o0o0o'
 Two of the keys (`DEFAULT_TYPEFORM_KEY` and `DEFAULT_SEAMLESS_FORM_ID`)
  are derived from using Typeform and SeamlessDocs.
 
+## Adding a new user for live testing
+
+There is a script that allows you to add a new user and give them 20 randomly-generated responses.
+
+    python typeseam/scripts/add_user_with_responses.py user@email.com password
