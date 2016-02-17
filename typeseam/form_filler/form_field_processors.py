@@ -6,7 +6,10 @@ into the appropriate SeamlessDocs formats
 
 
 def initials(target, input_value):
-    return input_value.strip()[0].upper()
+    if input_value:
+        return input_value.strip()[0].upper()
+    else:
+        return ""
 
 
 def add(target, *args):
