@@ -2,7 +2,7 @@ import sys
 import logging
 
 DEFAULT_LOGGING_FORMAT = '''
-%(asctime)s %(levelname)s %(module)s.%(funcName)s[%(lineno)d] %(message)s'''
+%(asctime)s %(levelname)s %(message)s'''
 
 def register_logging(app, config_string):
     app.logger.removeHandler(app.logger.handlers[0])
