@@ -24,6 +24,7 @@ class TestLogging(BaseTestCase):
 
     def test_logs_events_correctly(self):
         logger = current_app.logger
+        # make sure we are using the right logging format
         self.assertEqual(logger.handlers[0].formatter._fmt, DEFAULT_LOGGING_FORMAT)
         with self.assertLogs( logger, level='DEBUG' ) as context_manager:
             logger.info("Something noteable happened")
