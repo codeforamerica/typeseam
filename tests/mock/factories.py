@@ -28,13 +28,22 @@ def deferred(func, *args, **kwargs):
 
 
 def typeform_key(*args):
-    '''example: "o8MrpO"
+    '''example: "o2RrmA"
     '''
     return faker.password(
         length=6,
         special_chars=False,
         )
 
+def seamless_form_id(*args):
+    '''example: "CO14950000011885231"
+    '''
+    return faker.numerify('CO1####000011######')
+
+def seamless_application_id(*args):
+    '''example: "AP14782000010904892"
+    '''
+    return faker.numerify('AP1####00001#######')
 
 def recent_date(start_date='-8w'):
     # return a datetime within last 8 weeks
@@ -57,6 +66,7 @@ class TypeformFactory(SessionFactory):
 
 
 class SeamlessDocFactory(SessionFactory):
+    seamless_key = lazy(seamless_form_id)
     class Meta:
         model = SeamlessDoc
 
@@ -64,6 +74,7 @@ class SeamlessDocFactory(SessionFactory):
 class TypeformResponseFactory(SessionFactory):
     date_received = deferred(recent_date)
     answers = lazy(lambda x: faker.answers())
+    seamless_submission_id = lazy(seamless_application_id)
 
     class Meta:
         model = TypeformResponse
@@ -96,12 +107,23 @@ def fake_typeform_responses(num_responses=1, start_date='-8w'):
           'metadata': {
             'date_submit': faker.date_time_between(
                 start_date=start_date).strftime("%Y-%m-%d %H:%M:%S")
-          }}
+            }}
         responses.append(response)
-    return {'responses': responses}
+    return {'responses': responses,
+        'stats': {'responses': {'showing': num_responses}}}
 
+def fake_translated_typeform_responses(count=1):
+    raw_responses = fake_typeform_responses(count)
+    deserializer = TypeformResponseSerializer()
+    models, errors = deserializer.load(raw_responses, many=True,
+        session=db.session)
+    if not errors:
+        if count == 1:
+            return models[0]
+        else:
+            return models
 
-def generate_fake_responses(typeform=None, count=None):
+def generate_fake_responses(typeform=None, count=None, seamless_doc=None):
     deserializer = TypeformResponseSerializer()
     if count is None:
         count = random.randint(1, 20)
@@ -115,6 +137,8 @@ def generate_fake_responses(typeform=None, count=None):
             m.typeform_id = typeform.id
             if typeform.user_id:
                 m.user_id = typeform.user_id
+        if seamless_doc:
+            m.seamless_id = seamless_doc.id
         db.session.add(m)
     if typeform:
         typeform.latest_response = max(
@@ -142,6 +166,21 @@ def generate_fake_typeforms(user=None, count=None):
     db.session.commit()
     return forms
 
+def generate_fake_seamles_docs(user=None, count=None):
+    if count is None:
+        count = random.randint(1, 6)
+    docs = []
+    user_id = None
+    if user:
+        user_id = user.id
+    for i in range(count):
+        doc = SeamlessDocFactory.create(
+            user_id=user_id,
+            added_on=recent_date(start_date=user.confirmed_at)
+            )
+        docs.append(doc)
+    db.session.commit()
+    return docs
 
 def fake_user_data(num_users=20):
     return [user_data() for n in range(num_users)]
@@ -163,10 +202,13 @@ def generate_fake_data(num_users=10):
         '    {email}: "{password}"'.format(**d)
         for d in user_data])
     form_sets = []
+    doc_sets = []
     for user in users:
         form_sets.append(generate_fake_typeforms(user))
+        doc_sets.append(generate_fake_seamles_docs(user))
     response_sets = []
-    for form_set in form_sets:
+    for form_set, doc_set in zip(form_sets, doc_sets):
         for form in form_set:
-            response_sets.append(generate_fake_responses(form))
-    return user_report, user_data, users, form_sets, response_sets
+            doc = random.choice(doc_set)
+            response_sets.append(generate_fake_responses(form, None, doc))
+    return user_report, user_data, users, form_sets, doc_sets, response_sets

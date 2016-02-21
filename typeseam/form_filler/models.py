@@ -24,8 +24,7 @@ class SeamlessDoc(db.Model):
     id = db.Column(db.Integer, primary_key=True, index=True)
     seamless_key = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
-    typeform_id = db.Column(
-        db.Integer, db.ForeignKey('form_filler_typeform.id'))
+    added_on = db.Column(db.DateTime(), server_default=db.func.now())
 
     def __repr__(self):
         return '<SeamlessDoc:"{}">'.format(self.seamless_key)
