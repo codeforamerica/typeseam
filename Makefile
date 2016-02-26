@@ -69,13 +69,22 @@ test.travis:
 		--with-coverage \
 		--cover-package=./typeseam
 
-deploy.static:
+deploy.demo.static:
+	gulp build
+	aws s3 sync ./typeseam/static s3://typeseam-demo/static
+
+deploy.prod.static:
 	gulp build
 	aws s3 sync ./typeseam/static s3://typeseam/static
 
-deploy:
-	git push heroku master
+deploy.demo:
+	make deploy.demo.static
+	git push demo master
 
-deploy.full:
-	make deploy.static
-	make deploy
+deploy.prod:
+	make deploy.prod.static
+	git push production master
+
+fake_data:
+	python ./typeseam/scripts/load_fake_data.py
+
