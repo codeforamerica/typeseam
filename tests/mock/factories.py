@@ -166,7 +166,7 @@ def generate_fake_typeforms(user=None, count=None):
     db.session.commit()
     return forms
 
-def generate_fake_seamles_docs(user=None, count=None):
+def generate_fake_seamlessdocs(user=None, count=None):
     if count is None:
         count = random.randint(1, 6)
     docs = []
@@ -205,7 +205,7 @@ def generate_fake_data(num_users=10):
     doc_sets = []
     for user in users:
         form_sets.append(generate_fake_typeforms(user))
-        doc_sets.append(generate_fake_seamles_docs(user))
+        doc_sets.append(generate_fake_seamlessdocs(user))
     response_sets = []
     for form_set, doc_set in zip(form_sets, doc_sets):
         for form in form_set:
