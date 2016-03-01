@@ -31,6 +31,7 @@ class TestExternalApiCalls(BaseTestCase):
         BaseTestCase.setUp(self)
         load_initial_data(current_app)
         self.answers = fake_translated_typeform_responses(1).answers
+        self.form_key = 'o2RrmA'
         self.doc_id = 'CO14950000011885231'
         self.app_id = 'AP14782000010904892'
 
@@ -39,7 +40,7 @@ class TestExternalApiCalls(BaseTestCase):
         # make sure that success is appropriately logged.
         mock_requests.get.return_value = FakeTypeformAPIResponses.OK
         with self.assertLogs( current_app.logger, level='INFO' ) as context_manager:
-            get_typeform_responses()
+            get_typeform_responses(self.form_key)
             self.assertTrue(mock_requests.get.called)
             self.assertTrue(FakeTypeformAPIResponses.OK.json.called)
         self.assertIn('TYPEFORM_GET_RESPONSES', context_manager.output[0])

@@ -64,9 +64,12 @@ def responses_csv(typeform_key):
 def remote_responses(typeform_key):
     # make an api call to Typeform
     # this can be done as a background task
+    if not typeform_key:
+        form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
     form = queries.get_typeform(
         form_key=typeform_key, user_id=current_user.id, model=True)
-    tasks.get_typeform_responses(form)
+    results = tasks.get_typeform_responses(form.form_key)
+    queries.save_new_typeform_data(results, form)
     responses = queries.get_responses_for_typeform(typeform_id=form.id)
     return render_template(
         "response_list.html",

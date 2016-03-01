@@ -15,12 +15,7 @@ class SeamlessDocsSubmissionError(Exception):
 class SeamlessDocsPDFError(Exception):
     pass
 
-def get_typeform_responses(form=None):
-    if not form:
-        form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
-        form = db.session.query(models.Typeform).filter(form_key==form_key).first()
-    else:
-        form_key = form.form_key
+def get_typeform_responses(form_key):
     template = 'https://api.typeform.com/v0/form/{}'
     url = template.format(form_key)
     args = {
@@ -31,7 +26,7 @@ def get_typeform_responses(form=None):
     data = response.json()
     logs.log_typeform_get("'{id}', {count} responses".format(
         id=form_key, count=data['stats']['responses']['showing']))
-    queries.save_new_typeform_data(response.json(), form)
+    return data
 
 
 def get_seamless_doc_pdf(response_id, pdf_wait_time=10):
