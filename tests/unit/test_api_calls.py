@@ -52,15 +52,15 @@ class TestExternalApiCalls(BaseTestCase):
         mock_requests.get.return_value = FakeTypeformAPIResponses.ERROR
         with self.assertRaises(HTTPError):
             with self.assertLogs( current_app.logger, level='ERROR') as context_manager:
-                get_typeform_responses()
+                get_typeform_responses(self.form_key)
         mock_requests.get.return_value = FakeTypeformAPIResponses.NOT_FOUND
         with self.assertRaises(HTTPError):
             with self.assertLogs( current_app.logger, level='ERROR') as context_manager:
-                get_typeform_responses()
+                get_typeform_responses(self.form_key)
         mock_requests.get.return_value = FakeTypeformAPIResponses.FORBIDDEN
         with self.assertRaises(HTTPError):
             with self.assertLogs( current_app.logger, level='ERROR') as context_manager:
-                get_typeform_responses()
+                get_typeform_responses(self.form_key)
 
     @patch('typeseam.form_filler.tasks.requests')
     def test_seamless_submit_success(self, mock_requests):
