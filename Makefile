@@ -50,6 +50,12 @@ test.specific:
 		--verbose \
 		--nocapture
 
+test.unit:
+	nosetests \
+		$(SCOPE) \
+		--verbose \
+		--nocapture
+
 test.full:
 	$(info This test requires the server to be running locally)
 	dropdb test_$(DB_NAME) --if-exists
