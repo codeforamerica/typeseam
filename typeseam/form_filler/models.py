@@ -9,6 +9,7 @@ class Typeform(db.Model):
     edit_url = db.Column(db.String(128))
     form_key = db.Column(db.String(64))
     title = db.Column(db.String(128))
+    translator = db.Column(JSON)
     user_id = db.Column(db.Integer, db.ForeignKey('auth_user.id'))
     added_on = db.Column(db.DateTime(), server_default=db.func.now())
     latest_response = db.Column(db.DateTime())

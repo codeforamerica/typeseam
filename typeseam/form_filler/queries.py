@@ -31,6 +31,7 @@ def save_new_typeform_data(data, typeform=None):
     if typeform:
         data['user_id'] = typeform.user_id
         data['typeform_id'] = typeform.id
+        data['translator'] = typeform.translator
     models, errors = response_serializer.load(
         data, many=True, session=db.session)
     new_responses = []
@@ -111,12 +112,13 @@ def get_response_count():
     return db.session.query(func.count(TypeformResponse.id)).scalar()
 
 
-def create_typeform(form_key, title='', user=None, **kwargs):
+def create_typeform(form_key, title=None, user=None, translator=None, **kwargs):
     params = dict(form_key=form_key, title=title, user_id=user.id)
     typeform = db.session.query(Typeform).filter_by(**params).first()
     if not typeform:
         params.update(kwargs)
         typeform = Typeform(**params)
+        typeform.translator = translator
         db.session.add(typeform)
         db.session.commit()
     return typeform

@@ -1,4 +1,5 @@
 
+import os
 from flask import render_template, jsonify, Response
 from flask_user import login_required
 from flask.ext.login import current_user
@@ -56,8 +57,8 @@ def responses_csv(typeform_key):
     csv = queries.get_responses_csv(current_user, typeform_key)
     return Response(csv, mimetype="text/csv")
 
-##########  API Views  ################################################
 
+##########  API Views  ################################################
 
 @blueprint.route('/api/<typeform_key>/new_responses/', methods=['GET'])
 @login_required
@@ -68,7 +69,7 @@ def remote_responses(typeform_key):
         form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
     form = queries.get_typeform(
         form_key=typeform_key, user_id=current_user.id, model=True)
-    results = tasks.get_typeform_responses(form.form_key)
+    results = tasks.get_typeform_responses(typeform_key)
     queries.save_new_typeform_data(results, form)
     responses = queries.get_responses_for_typeform(typeform_id=form.id)
     return render_template(

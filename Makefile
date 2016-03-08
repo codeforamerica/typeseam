@@ -1,5 +1,3 @@
-# assumes several environmental variables are set
-# DB_NAME
 
 install:
 	pip install -r requirements.txt
@@ -50,6 +48,7 @@ test.specific:
 		--verbose \
 		--nocapture
 
+SCOPE=./tests/unit/
 test.unit:
 	nosetests \
 		$(SCOPE) \
