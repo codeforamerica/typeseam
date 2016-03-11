@@ -9,6 +9,7 @@ from typeseam.setup_logging import register_logging
 from flask_user import (
     UserManager, SQLAlchemyAdapter
     )
+from typeseam import constants
 
 
 def create_app():
@@ -74,10 +75,12 @@ def load_initial_data(app):
             title = os.environ.get('DEFAULT_TYPEFORM_TITLE', '')
             live_url = os.environ.get('DEFAULT_TYPEFORM_LIVE_URL', '')
             edit_url = os.environ.get('DEFAULT_TYPEFORM_EDIT_URL', '')
+            translator_key = os.environ.get('DEFAULT_TYPEFORM_TRANSLATOR', 'TRANSLATOR_A')
+            translator = getattr(constants, translator_key)
             if form_key and title:
                 from typeseam.form_filler.queries import create_typeform
-                create_typeform(form_key=form_key, title=title, user=user,
-                                live_url=live_url, edit_url=edit_url)
+                create_typeform(form_key=form_key, title=title, user_id=user.id,
+                                live_url=live_url, edit_url=edit_url, translator=translator)
         if app.config.get('LOAD_FAKE_DATA', False) and not app.testing:
             from typeseam.form_filler.queries import get_response_count
             from tests.mock.factories import generate_fake_data
