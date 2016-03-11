@@ -37,10 +37,10 @@ class TestQueries(TestCase):
     @patch('typeseam.form_filler.queries.Typeform')
     @patch('typeseam.form_filler.queries.db.session.add')
     @patch('typeseam.form_filler.queries.db.session.commit')
-    def test_create_typeform(self, commit, add, PatchedTypeform, query):
+    def test_create_new_typeform(self, commit, add, PatchedTypeform, query):
         user = Mock(id=1)
         translator = { 'field': ['other_field']}
-        mock_typeform = TypeformFactory()
+        mock_typeform = Mock()
         PatchedTypeform.return_value = mock_typeform
 
         lookup_params = dict(form_key='asdkjf', title="A typeform", user_id=user.id)
@@ -57,10 +57,19 @@ class TestQueries(TestCase):
         commit.assert_called_with()
         self.assertEqual(typeform, mock_typeform)
 
+    @patch('typeseam.form_filler.queries.db.session.query')
+    @patch('typeseam.form_filler.queries.Typeform')
+    @patch('typeseam.form_filler.queries.db.session.add')
+    @patch('typeseam.form_filler.queries.db.session.commit')
+    def test_create_existing_typeform(self, commit, add, PatchedTypeform, query):
+        user = Mock(id=1)
+        translator = { 'field': ['other_field']}
+        mock_typeform = Mock()
+
+        lookup_params = dict(form_key='asdkjf', title="A typeform", user_id=user.id)
+        att_params = dict(translator=translator, **lookup_params)
+
         # handle attempt to create an existing typeform
-        add.clear_mock()
-        commit.clear_mock()
-        PatchedTypeform.clear_mock()
         config = {'filter_by.return_value.first.return_value': mock_typeform}
         query_mock = Mock(**config)
         query.return_value = query_mock
