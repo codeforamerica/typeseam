@@ -1,12 +1,18 @@
 import sys
 import os
+
+PROJECT_PATH = os.path.dirname(
+        os.path.dirname(
+        os.path.dirname(
+            __file__)))
+if PROJECT_PATH not in sys.path:
+    sys.path.append(PROJECT_PATH)
+
 import typeseam
 from typeseam import constants
 from typeseam.app import create_app
 from typeseam.auth.queries import create_user
 from typeseam.form_filler.queries import create_typeform
-path = os.path.dirname(os.path.dirname(typeseam.__file__))
-sys.path.insert(0, path)
 from tests.mock.factories import generate_fake_responses
 
 def run(email=None, password=None):
