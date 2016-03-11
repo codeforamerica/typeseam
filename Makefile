@@ -1,3 +1,4 @@
+TEST_SCOPE=./tests/
 
 install:
 	pip install -r requirements.txt
@@ -32,7 +33,7 @@ serve:
 test:
 	dropdb test_$(DB_NAME) --if-exists
 	createdb test_$(DB_NAME)
-	nosetests ./tests/ \
+	nosetests $(TEST_SCOPE) \
 		--eval-attr "not selenium" \
 		--verbose \
 		--nocapture \
@@ -40,18 +41,11 @@ test:
 		--cover-package=./typeseam \
 		--cover-erase
 
-test.specific:
-	dropdb test_$(DB_NAME) --if-exists
-	createdb test_$(DB_NAME)
-	nosetests \
-		$(CURRENT_TESTS) \
-		--verbose \
-		--nocapture
 
-SCOPE=./tests/unit/
+UNIT=./tests/unit/
 test.unit:
 	nosetests \
-		$(SCOPE) \
+		$(UNIT) \
 		--verbose \
 		--nocapture
 
