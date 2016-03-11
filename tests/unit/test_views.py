@@ -16,8 +16,7 @@ class TestViews(TestCase):
     @patch('flask_user.decorators.current_user', is_authenticated=True)
     @patch('typeseam.form_filler.views.os.environ.get')
     @patch('typeseam.form_filler.views.current_user', id=1)
-    @patch('typeseam.form_filler.views.queries.get_typeform',
-        return_value=Mock(id=1))
+    @patch('typeseam.form_filler.views.queries.get_typeform')
     @patch('typeseam.form_filler.views.tasks.get_typeform_responses')
     @patch('typeseam.form_filler.views.queries.save_new_typeform_data')
     @patch('typeseam.form_filler.views.queries.get_responses_for_typeform')
@@ -25,12 +24,18 @@ class TestViews(TestCase):
     def test_remote_responses_expected(self, render, get_responses, save_data,
         pull_responses, get_typeform, user, env_get, curr_user):
         typeform_key = 'jns98s'
+        mock_typeform = Mock(id=1)
+        get_typeform.return_value = mock_typeform
+        mock_results = Mock()
+        pull_responses.return_value = mock_results
+        get_responses.return_value = "responses"
         result = remote_responses(typeform_key)
         env_get.assert_not_called()
         get_typeform.assert_called_once_with(
             form_key=typeform_key, user_id=1, model=True)
         pull_responses.assert_called_once_with('jns98s')
-        save_data.assert_called_once()
+        save_data.assert_called_once_with(mock_results, mock_typeform)
         get_responses.assert_called_once_with(typeform_id=1)
-        render.assert_called_once()
+        render.assert_called_once_with("response_list.html",
+            form=mock_typeform, responses="responses")
 
