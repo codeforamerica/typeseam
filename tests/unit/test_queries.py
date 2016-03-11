@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import Mock, patch
+from tests.mock.factories import TypeformFactory
 
 from typeseam.form_filler.queries import (
     get_response_model,
@@ -36,12 +37,41 @@ class TestQueries(TestCase):
     @patch('typeseam.form_filler.queries.Typeform')
     @patch('typeseam.form_filler.queries.db.session.add')
     @patch('typeseam.form_filler.queries.db.session.commit')
-    def test_create_typeform(self, commit, add, Typeform, query):
+    def test_create_typeform(self, commit, add, PatchedTypeform, query):
         user = Mock(id=1)
-        # if the thing exists this does not update the record
-        # if it does not exist,
-        typeform = create_typeform(form_key='asdkjf',
-            title="A typeform", user=user, translator={})
-        self.assertEqual(typeform, "pancake")
+        translator = { 'field': ['other_field']}
+        mock_typeform = TypeformFactory()
+        PatchedTypeform.return_value = mock_typeform
+
+        lookup_params = dict(form_key='asdkjf', title="A typeform", user_id=user.id)
+        att_params = dict(translator=translator, **lookup_params)
+
+        # handle new typeform
+        config = {'filter_by.return_value.first.return_value': []}
+        query_mock = Mock(**config)
+        query.return_value = query_mock
+        typeform = create_typeform(**att_params)
+        PatchedTypeform.assert_called_with(**att_params)
+        query_mock.filter_by.assert_called_with(**lookup_params)
+        add.assert_called_with(mock_typeform)
+        commit.assert_called_with()
+        self.assertEqual(typeform, mock_typeform)
+
+        # handle attempt to create an existing typeform
+        add.clear_mock()
+        commit.clear_mock()
+        PatchedTypeform.clear_mock()
+        config = {'filter_by.return_value.first.return_value': mock_typeform}
+        query_mock = Mock(**config)
+        query.return_value = query_mock
+        typeform = create_typeform(**att_params)
+        query_mock.filter_by.assert_called_with(**lookup_params)
+        self.assertEqual(typeform, mock_typeform)
+        PatchedTypeform.assert_not_called()
+        add.assert_not_called()
+        commit.assert_not_called()
+
+
+
 
 

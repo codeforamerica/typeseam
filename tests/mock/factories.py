@@ -7,6 +7,7 @@ from ago import human
 from factory.alchemy import SQLAlchemyModelFactory
 
 from typeseam.app import db
+from typeseam.constants import TRANSLATOR_A
 from typeseam.form_filler.models import (
     Typeform, TypeformResponse, SeamlessDoc
     )
@@ -109,7 +110,7 @@ def fake_typeform_responses(num_responses=1, start_date='-8w'):
                 start_date=start_date).strftime("%Y-%m-%d %H:%M:%S")
             }}
         responses.append(response)
-    return {'responses': responses,
+    return {'responses': responses, 'translator': TRANSLATOR_A,
         'stats': {'responses': {'showing': num_responses}}}
 
 def fake_translated_typeform_responses(count=1):

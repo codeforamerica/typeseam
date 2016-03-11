@@ -28,7 +28,8 @@ from typeseam.form_filler.queries import (
     get_responses_for_typeform,
     get_responses_csv,
     get_response_model,
-    get_response_detail
+    get_response_detail,
+    create_typeform,
     )
 
 response_serializer = TypeformResponseSerializer()
@@ -101,6 +102,20 @@ class TestQueries(BaseTestCase):
         csv_string = get_responses_csv(self.user, self.typeform.form_key)
         data = parse_csv(csv_string)
         self.assertEqual(len(data), 5)
+
+    def test_create_typeform(self):
+        # test simple creation case
+        translator = {'field': ['other_field']}
+        params = dict(
+            form_key='di0sd7',
+            title='A new typeform',
+            user_id=self.user.id,
+            translator=translator
+            )
+        typeform = create_typeform(**params)
+        for key in params:
+            self.assertEqual(getattr(typeform, key), params[key])
+
 
     def test_relative_dates(self):
         # generate some new data

@@ -61,7 +61,7 @@ class TypeformResponseSerializer(LookupMixin):
         translator = data['translator']
         for response in data['responses']:
             translated_answers = translate.translate_to_seamless(
-                response, translator, processors=form_field_processors)
+                response, translator, processors=form_field_processors.lookup)
             items.append(dict(
                 user_id=user_id,
                 typeform_id=typeform_id,

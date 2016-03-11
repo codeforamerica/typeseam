@@ -42,5 +42,5 @@ class TestSerializers(TestCase):
             )
         results = self.tr_serializer.parse_typeform_responses(data)
         translate_to_seamless.assert_called_with(data['responses'][0],
-            data['translator'], processors=form_field_processors)
+            data['translator'], processors=form_field_processors.lookup)
         self.assertDictEqual(results[0], expected_results)
