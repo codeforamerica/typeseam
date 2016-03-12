@@ -16,14 +16,15 @@
         in the San Francisco Public Defender's Clean Slate Program.
       </p>
 
-      <a href="/sanfrancisco/" class="btn btn-lg main-action">
+      <a href="/sanfrancisco/" class="btn btn-primary btn-lg main-action">
         <span class="main-action-text">
           Apply to the Clean Slate Program
         </span>
       </a>
 
       <p class="action-help">
-        The Public Defender will get back to you in 4 weeks.
+        If you apply today, you should hear back from the Public Defender by
+        {{ custom_strftime("%B {S}, %Y", response_estimate) }}.
       </p>
 
     {% endblock main %}

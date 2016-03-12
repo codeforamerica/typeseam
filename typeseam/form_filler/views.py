@@ -1,5 +1,6 @@
 
 import os
+from datetime import datetime, timedelta
 from flask import render_template, jsonify, Response
 from flask_user import login_required
 from flask.ext.login import current_user
@@ -9,6 +10,10 @@ from typeseam.form_filler import (
     tasks
     )
 
+def get_response_date():
+    now = datetime.now()
+    four_weeks = timedelta(days=28)
+    return now + four_weeks
 
 @blueprint.route('/', methods=['GET'])
 def index():
@@ -20,7 +25,8 @@ def index():
         )
     else:
         return render_template('main_splash.html',
-            page_title='Clear My Record - Code for America')
+            page_title='Clear My Record - Code for America',
+            response_estimate=get_response_date())
 
 @blueprint.route('/sanfrancisco/', methods=['GET'])
 def county_application():

@@ -4,7 +4,10 @@ from flask import Flask
 from typeseam.extensions import (
     db, migrate, seamless_auth, ma, csrf, mail, sg
     )
-from typeseam.context_processors import inject_static_url
+from typeseam.context_processors import (
+    add_custom_strftime,
+    inject_static_url
+    )
 from typeseam.setup_logging import register_logging
 from flask_user import (
     UserManager, SQLAlchemyAdapter
@@ -60,6 +63,7 @@ def register_blueprints(app):
 
 def register_context_processors(app):
     app.context_processor(inject_static_url)
+    app.context_processor(add_custom_strftime)
 
 def load_initial_data(app):
     with app.app_context():
