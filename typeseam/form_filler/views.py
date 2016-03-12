@@ -11,14 +11,24 @@ from typeseam.form_filler import (
 
 
 @blueprint.route('/', methods=['GET'])
-@login_required
 def index():
-    typeforms = queries.get_typeforms_for_user(current_user)
-    return render_template(
-        'index.html',
-        typeforms=typeforms,
-    )
+    if current_user.is_authenticated:
+        typeforms = queries.get_typeforms_for_user(current_user)
+        return render_template(
+            'user_splash.html',
+            typeforms=typeforms,
+        )
+    else:
+        return render_template('main_splash.html',
+            page_title='Clear My Record - Code for America')
 
+@blueprint.route('/sanfrancisco/', methods=['GET'])
+def county_application():
+    form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
+    typeform = queries.get_typeform(form_key=form_key)
+    return render_template(
+        'county_application_form.html',
+        form=typeform)
 
 @blueprint.route('/<typeform_key>/responses/', methods=['GET'])
 @login_required

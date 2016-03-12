@@ -24,7 +24,7 @@ class TestFormFillerViews(BaseTestCase):
     def login(self, **kwargs):
         login_data = dict(**self.sample_user_data)
         login_data.update(**kwargs)
-        get_response = self.client.get('/', follow_redirects=True)
+        get_response = self.client.get(url_for('user.login'))
         csrf_token = self.get_input_value('csrf_token', get_response)
         return self.client.post(
             url_for('user.login'),
@@ -38,8 +38,6 @@ class TestFormFillerViews(BaseTestCase):
         return get_user_by_email(self.sample_user_data['email'])
 
     def test_correct_response_count(self):
-        ''' The correct number of responses are reported in the form table.
-        '''
         # login and check the baseline response count
         response = self.login()
         self.assertEqual(response.status_code, 200)
