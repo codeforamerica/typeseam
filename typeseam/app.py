@@ -13,7 +13,7 @@ from typeseam import constants
 
 
 def create_app():
-    config = os.environ['CONFIG']
+    config = os.environ.get('CONFIG', 'typeseam.settings.DevConfig')
     app = Flask(__name__)
     app.config.from_object(config)
     register_extensions(app)

@@ -1,13 +1,97 @@
-.container h3 {
-  color: #888;
-  text-transform: uppercase;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+h1{
+  font-size:42px;
+  font-weight:600;
+}
+
+h1.main_headline{
+  margin-bottom: 4px;;
+}
+
+h2{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+h3{
+  font-size:22px;
+}
+
+h3.subheadline{
+  margin-top:0;
+  margin-bottom:40px;
+}
+
+h3.time_expectation{
+  font-weight:600;
+  text-align: center;
+}
+
+p.step_headline{
+  font-weight: 600;
+}
+
+.btn-lg{
+  width: 370px;
+}
+
+.new_section{
+  padding-top:24px;
 }
 
 .container {
   margin: 0 auto;
   max-width: 40em;
+  padding-bottom:20px;
+}
+
+.above_the_fold {
+  background-image: url("CMR-hero.png");
+}
+
+.about_the_service{
+  background-color: #ECF0F1;
+}
+
+.apply_backup{
+  background-color: #3498DB;
+  color:#fff;
+}
+
+.footer{
+  background-color: #34495E;
+}
+
+.btn-lg{
+  margin-bottom:12px;
+}
+
+.above_the_fold .btn{
+  margin-bottom:40px;
+}
+
+.journey_headline{
+  text-align: center;
+}
+
+.above_the_fold,
+.gov_service_name,
+.gov_service_description,
+.backup_apply_headline{
+  text-align: center;
+}
+
+ul.opportunities {
+  padding-top:12px;
+}
+
+.opportunities li{
+  padding-bottom:6px;
+}
+
+section.footer.container.new_section{
+  padding-top: 80px;
+  padding-bottom: 50px;
+  color:#fff;
 }
 
 iframe {
@@ -60,4 +144,28 @@ iframe {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg);
   }
+}
+
+@media (min-width: @screen-sm-min) {
+  h3.time_expectation{
+    padding-top:94px;
+    padding-left:28px;
+  }
+
+  h1{
+    margin-top:80px;
+  }
+
+  .new_section{
+    padding-top:40px;
+  }
+
+  .journey_headline, h3.time_expectation{
+    text-align: left;
+  }
+
+  .opportunities li, section.footer.container.new_section{
+    text-align: center;
+  }
+
 }

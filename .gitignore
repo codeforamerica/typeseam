@@ -7,3 +7,8 @@ __pycache__
 *.pyc
 .coverage
 static
+bin
+lib
+man
+pyvenv.cfg
+pip-selfcheck.json
