@@ -1,5 +1,4 @@
 
-from flask import url_for
 
 topbar = "Clear My Record | Apply to clear your criminal record in California"
 main_headline = "Get a new start."
