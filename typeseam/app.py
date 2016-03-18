@@ -4,10 +4,7 @@ from flask import Flask
 from typeseam.extensions import (
     db, migrate, seamless_auth, ma, csrf, mail, sg
     )
-from typeseam.context_processors import (
-    add_custom_strftime,
-    inject_static_url
-    )
+
 from typeseam.setup_logging import register_logging
 from flask_user import (
     UserManager, SQLAlchemyAdapter
@@ -60,10 +57,20 @@ def register_blueprints(app):
     app.register_blueprint(form_filler)
     from typeseam.auth import blueprint as auth
     app.register_blueprint(auth)
+    from typeseam.public import blueprint as public
+    app.register_blueprint(public)
+
 
 def register_context_processors(app):
+    from typeseam.context_processors import (
+        add_custom_strftime,
+        inject_static_url,
+        add_content_constants,
+        )
     app.context_processor(inject_static_url)
     app.context_processor(add_custom_strftime)
+    app.context_processor(add_content_constants)
+
 
 def load_initial_data(app):
     with app.app_context():

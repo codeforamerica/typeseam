@@ -4,7 +4,7 @@ import os
 PROJECT_PATH = os.path.dirname(
         os.path.dirname(
         os.path.dirname(
-            __file__)))
+            os.path.abspath(__file__))))
 if PROJECT_PATH not in sys.path:
     sys.path.append(PROJECT_PATH)
 

@@ -4,7 +4,8 @@
     {% include "includes/head.html" %}
     <link rel="stylesheet" type="text/css" href="{{ static_url }}css/main.css">
   </head>
-  <body>
+  <body
+  {%- if body_class %} class="{{body_class}}"{%- endif %}>
     {% block body %}
     {% include "includes/header.html" %}
 

@@ -23,5 +23,3 @@ class TestScripts(BaseTestCase):
         responses = db.session.query(TypeformResponse).all()
         self.assertEqual(len(responses), 20)
 
-
-

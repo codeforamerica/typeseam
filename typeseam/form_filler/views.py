@@ -9,6 +9,7 @@ from typeseam.form_filler import (
     queries,
     tasks
     )
+from typeseam import content_constants as content
 
 def get_response_date():
     now = datetime.now()
@@ -25,7 +26,8 @@ def index():
         )
     else:
         return render_template('main_splash.html',
-            page_title='Clear My Record - Code for America',
+            page_title=content.topbar,
+            body_class="splash",
             response_estimate=get_response_date())
 
 @blueprint.route('/sanfrancisco/', methods=['GET'])

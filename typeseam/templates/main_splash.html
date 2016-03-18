@@ -2,31 +2,71 @@
 
 {% block body %}
 
-{% include "includes/header.html" %}
+<section class="above_the_fold container">
 
-    <div class="container">
+{% include "includes/splash_header.html" %}
+
     {% block main %}
 
-      <h1 class="main-call-to-action">
-        Clear your record with help from the San Francisco Public Defender
+      <h1 class="main_headline">
+        {{ content.main_headline }}
       </h1>
 
-      <p class="action-detail">
-        You may be able to reduce or dismiss your past convictions
-        in the San Francisco Public Defender's Clean Slate Program.
-      </p>
+      <h4 class="subheadline">
+        {{ content.subheadline }}
+      </h4>
 
-      <a href="/sanfrancisco/" class="btn btn-primary btn-lg main-action">
+      <a href="/sanfrancisco/" class="btn btn-primary btn-lg call_to_action_button">
         <span class="main-action-text">
-          Apply to the Clean Slate Program
+          {{ content.call_to_action_button }}
         </span>
       </a>
 
-      <p class="action-help">
-        If you apply today, you should hear back from the Public Defender by
-        {{ custom_strftime("%B {S}, %Y", response_estimate) }}.
-      </p>
+      <p class="credibility_note">{{ content.credibility_note }}</p>
 
     {% endblock main %}
+</section>
+
+<section class="about_the_service container">
+
+  <div class="gov_service">
+    <h3 class="gov_service_name">
+      {{ content.gov_service_name }}
+    </h3>
+    <p class="gov_service_description">
+      {{ content.gov_service_description }}
+    </p>
+  </div>
+
+  <div class="journey_steps">
+    <h3 class="journey_headline">{{ content.journey_headline }}</h3>
+    <div class="step">
+      <h4 class="step_headline">{{ content.step_1_headline }}</h4>
+      <p class="step_paragraph">{{ content.step_1_paragraph }}</p>
     </div>
+    <div class="step">
+      <h4 class="step_headline">{{ content.step_2_headline }}</h4>
+      <p class="step_paragraph">{{ content.step_2_paragraph }}</p>
+    </div>
+    <div class="step">
+      <h4 class="step_headline">{{ content.step_3_headline }}</h4>
+      <p class="step_paragraph">{{ content.step_3_paragraph }}</p>
+    </div>
+  </div>
+
+  <p class="time_expectation">{{ content.time_expectation }}</p>
+
+</section>
+
+<section class="apply_backup container">
+  <h3 class="backup_apply_headline">{{ content.backup_apply_headline }}</h3>
+  <ul class="opportunities">
+    <li class="opportunity">{{ content.opportunity_1 }}</li>
+    <li class="opportunity">{{ content.opportunity_2 }}</li>
+    <li class="opportunity">{{ content.opportunity_3 }}</li>
+  </ul>
+</section>
+
+{% include "includes/footer.html" %}
+
 {% endblock body %}
