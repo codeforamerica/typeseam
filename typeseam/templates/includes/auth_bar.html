@@ -6,7 +6,6 @@
         </div>
         {% else %}
         <div class="auth-notice not-authenticated">
-          <span class="message">Not signed in</span>
           <a href="{{ url_for('user.login') }}" class="login_link">Sign in</a>
         </div>
         {% endif %}
