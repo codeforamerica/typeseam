@@ -1,3 +1,4 @@
+
 h1{
   font-size:42px;
   font-weight:600;
@@ -41,11 +42,15 @@ p.step_headline{
 .container {
   margin: 0 auto;
   max-width: 40em;
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
 
-.above_the_fold {
-  background-image: url("CMR-hero.png");
+@media (min-width: 600px) {
+  .above_the_fold {
+    // background: url('../images/teaser.jpg') no-repeat center #eee;
+    background-image: url("/static/img/CMR-hero.jpg");
+    background-size: cover;
+  }
 }
 
 .about_the_service{
@@ -59,6 +64,13 @@ p.step_headline{
 
 .footer{
   background-color: #34495E;
+}
+.cfa-logo {
+  width: 12em;
+  opacity: 0.3;
+}
+.footer_logo {
+  padding: 3em 0 5em 0;
 }
 
 .btn-lg{
@@ -76,16 +88,24 @@ p.step_headline{
 .above_the_fold,
 .gov_service_name,
 .gov_service_description,
-.backup_apply_headline{
+.apply_backup,
+.backup_apply_headline,
+.footer_logo {
   text-align: center;
 }
 
 ul.opportunities {
+  padding: 0;
   padding-top:12px;
+  text-align: left;
 }
 
-.opportunities li{
+.opportunity {
   padding-bottom:6px;
+}
+.opportunity:before {
+  content: "\2713";
+  padding-right: 0.75em
 }
 
 section.footer.container.new_section{
