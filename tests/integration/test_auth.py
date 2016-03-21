@@ -54,12 +54,12 @@ class TestAuthViews(BaseTestCase):
             bcrypt.hashpw(encoded_raw_password, presumably_hashed_password),
             presumably_hashed_password)
 
-    def test_unauthenticated_home_page_resolves_to_splash_view_with_login_link(self):
+    def test_unauthenticated_home_page_resolves_to_splash_view_without_login_link(self):
         r = self.client.get('/')
         self.assertEqual(r.status_code, 200)
         response_text = r.data.decode('utf-8')
         # did it redirect to Log in?
-        self.assertIn('Sign in', response_text)
+        self.assertNotIn('Sign in', response_text)
         self.assertIn('Clear My Record', response_text)
 
     def test_authenticated_home_page_shows_forms_for_user(self):
