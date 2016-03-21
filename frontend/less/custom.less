@@ -45,13 +45,6 @@ p.step_headline{
   padding-bottom: 20px;
 }
 
-@media (min-width: 600px) {
-  .above_the_fold {
-    // background: url('../images/teaser.jpg') no-repeat center #eee;
-    background-image: url("/static/img/CMR-hero.jpg");
-    background-size: cover;
-  }
-}
 
 .about_the_service{
   background-color: #ECF0F1;
@@ -90,7 +83,8 @@ p.step_headline{
 .gov_service_description,
 .apply_backup,
 .backup_apply_headline,
-.footer_logo {
+.footer_logo,
+.footer p {
   text-align: center;
 }
 
@@ -167,25 +161,39 @@ iframe {
 }
 
 @media (min-width: @screen-sm-min) {
-  h3.time_expectation{
+  h3.time_expectation {
     padding-top:94px;
     padding-left:28px;
   }
 
-  h1{
+  h1 {
     margin-top:80px;
   }
 
-  .new_section{
+  .new_section {
     padding-top:40px;
   }
 
-  .journey_headline, h3.time_expectation{
+  .journey_headline, h3.time_expectation {
     text-align: left;
   }
 
-  .opportunities li, section.footer.container.new_section{
+  .opportunity, section.footer.container.new_section {
     text-align: center;
+  }
+
+}
+
+@media (min-width: @screen-sm-min) {
+  .above_the_fold {
+    background-image: url("/static/img/CMR-hero.png");
+    background-size: cover;
+    height: 30em;
+  }
+}
+@media (min-width: @screen-md-min) {
+  .above_the_fold {
+    height: 36em;
   }
 
 }
