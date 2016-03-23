@@ -1,5 +1,32 @@
 import os
 import flask
+from flask import url_for
+from jinja2 import Markup
+
+
+class Linkifier:
+    def __init__(self, links):
+        self.links = links
+
+    def build_link(self, lookup):
+        url = self.links[lookup]
+        return '<a href="{}">{}</a>'.format(
+            url, lookup)
+
+    def __call__(self, content):
+        output = content
+        for str_lookup in self.links:
+            if str_lookup in content:
+                link = self.build_link(str_lookup)
+                output = content.replace(str_lookup, link)
+        return Markup(output)
+
+# http://stackoverflow.com/a/5891598/399726
+def suffix(d):
+    return 'th' if 11<=d<=13 else {1:'st',2:'nd',3:'rd'}.get(d%10, 'th')
+
+def custom_strftime(format, t):
+    return t.strftime(format).replace('{S}', str(t.day) + suffix(t.day))
 
 def inject_static_url():
     """Adds `STATIC_URL` variable to template context.
@@ -11,3 +38,19 @@ def inject_static_url():
     return dict(
         static_url=static_url
     )
+
+def add_custom_strftime():
+    return dict(
+        custom_strftime=custom_strftime
+        )
+
+def add_content_constants():
+    from typeseam import content_constants
+    linkify_links = {
+        "Code for America": "https://codeforamerica.org",
+        "Privacy Policy": url_for("public.privacy_policy"),
+    }
+    return dict(
+        content=content_constants,
+        linkify=Linkifier(linkify_links),
+        )

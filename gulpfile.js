@@ -9,6 +9,11 @@ gulp.task('fonts', function(){
     .pipe(gulp.dest('typeseam/static/fonts/'))
 });
 
+gulp.task('img', function(){
+  return gulp.src('./frontend/img/*.{png,jpg}')
+    .pipe(gulp.dest('typeseam/static/img/'))
+});
+
 gulp.task('less_dev', function(){
   return gulp.src('./frontend/less/main.less')
     .pipe(less())
@@ -39,5 +44,5 @@ gulp.task('flask', function(){
 });
 
 
-gulp.task('build', ['fonts', 'less_dev', 'js_dev'])
+gulp.task('build', ['fonts', 'img', 'less_dev', 'js_dev'])
 gulp.task('default', ['flask', 'build', 'watch'])

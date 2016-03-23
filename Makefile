@@ -1,4 +1,5 @@
 TEST_SCOPE=./tests/
+DB_NAME='typeseam'
 
 install:
 	pip install -r requirements.txt
@@ -86,4 +87,3 @@ deploy.prod:
 
 fake_data:
 	python ./typeseam/scripts/load_fake_data.py
-

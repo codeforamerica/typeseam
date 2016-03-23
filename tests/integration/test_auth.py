@@ -33,7 +33,7 @@ class TestAuthViews(BaseTestCase):
     def login(self, **kwargs):
         login_data = dict(**self.sample_user_data)
         login_data.update(**kwargs)
-        get_response = self.client.get('/', follow_redirects=True)
+        get_response = self.client.get(url_for('user.login'))
         csrf_token = self.get_input_value('csrf_token', get_response)
         return self.client.post(
             url_for('user.login'),
@@ -54,12 +54,19 @@ class TestAuthViews(BaseTestCase):
             bcrypt.hashpw(encoded_raw_password, presumably_hashed_password),
             presumably_hashed_password)
 
-    def test_unauthenticated_home_page_resolves_to_login_view(self):
+    def test_unauthenticated_home_page_resolves_to_splash_view_without_login_link(self):
         r = self.client.get('/')
-        self.assertEqual(r.status_code, 302)  # is it a redirect?
-        r = self.client.get('/', follow_redirects=True)
+        self.assertEqual(r.status_code, 200)
+        response_text = r.data.decode('utf-8')
         # did it redirect to Log in?
-        self.assertIn('Sign in', r.data.decode('utf-8'))
+        self.assertNotIn('Sign in', response_text)
+        self.assertIn('Clear My Record', response_text)
+
+    def test_authenticated_home_page_shows_forms_for_user(self):
+        self.login()
+        r = self.client.get('/', follow_redirects=True)
+        response_text = r.data.decode('utf-8')
+        self.assertIn('Total responses', response_text)
 
     def test_login_form_includes_csrf_token(self):
         r = self.client.get(url_for('user.login'))

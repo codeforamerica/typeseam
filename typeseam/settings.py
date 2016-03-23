@@ -15,7 +15,6 @@ class Config(AuthConfig):
     SEAMLESS_DOCS_API_SECRET = os.environ.get('SEAMLESS_DOCS_API_SECRET')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-    SERVER_NAME = os.environ.get('HOST_NAME', 'localhost:9000')
 
 
 class ProdConfig(Config):

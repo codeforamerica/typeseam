@@ -1,19 +1,7 @@
     <header class="header">
 
       <div class="top_bar">
-        <!-- TO DO: show navigation breadcrumbs in a mobile-friendly way -->
-        {% if current_user.is_authenticated %}
-        <div class="auth-notice authenticated">
-          <span class="message">Logged in as</span>
-          <span class="username">{{ current_user.email }}</span>
-          <a href="{{ url_for('user.logout') }}" class="logout_link">Log out</a>
-        </div>
-        {% else %}
-        <div class="auth-notice not-authenticated">
-          <span class="message">Not logged in</span>
-          <a href="{{ url_for('user.login') }}" class="login_link">Log in</a>
-        </div>
-        {% endif %}
+      {% include "includes/auth_bar.html" %}
       </div> <!-- end top_bar -->
 
     {% include "includes/flash_messages.html" %}

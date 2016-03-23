@@ -1,5 +1,6 @@
 
 import os
+from datetime import datetime, timedelta
 from flask import render_template, jsonify, Response
 from flask_user import login_required
 from flask.ext.login import current_user
@@ -8,17 +9,34 @@ from typeseam.form_filler import (
     queries,
     tasks
     )
+from typeseam import content_constants as content
 
+def get_response_date():
+    now = datetime.now()
+    four_weeks = timedelta(days=28)
+    return now + four_weeks
 
 @blueprint.route('/', methods=['GET'])
-@login_required
 def index():
-    typeforms = queries.get_typeforms_for_user(current_user)
-    return render_template(
-        'index.html',
-        typeforms=typeforms,
-    )
+    if current_user.is_authenticated:
+        typeforms = queries.get_typeforms_for_user(current_user)
+        return render_template(
+            'user_splash.html',
+            typeforms=typeforms,
+        )
+    else:
+        return render_template('main_splash.html',
+            page_title=content.topbar,
+            body_class="splash",
+            response_estimate=get_response_date())
 
+@blueprint.route('/sanfrancisco/', methods=['GET'])
+def county_application():
+    form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
+    typeform = queries.get_typeform(form_key=form_key)
+    return render_template(
+        'county_application_form.html',
+        form=typeform)
 
 @blueprint.route('/<typeform_key>/responses/', methods=['GET'])
 @login_required
