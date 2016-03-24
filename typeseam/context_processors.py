@@ -49,6 +49,7 @@ def add_content_constants():
     linkify_links = {
         "Code for America": "https://codeforamerica.org",
         "Privacy Policy": url_for("public.privacy_policy"),
+        "Clean Slate": "http://sfpublicdefender.org/services/clean-slate/",
     }
     return dict(
         content=content_constants,
