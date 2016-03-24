@@ -14,9 +14,9 @@
             {{ content.main_headline }}
           </h1>
 
-          <h3 class="subheadline">
+          <h2 class="subheadline">
             {{ content.subheadline }}
-          </h3>
+          </h2>
 
           <p class="call_to_action_time">
             {{ content.call_to_action_time }}
@@ -28,7 +28,7 @@
             </span>
           </a>
 
-          <p class="credibility_note small">{{ content.credibility_note }}</p>
+          <p class="credibility_note small">{{ linkify(content.credibility_note) }}</p>
         </div>
       </div>
 
@@ -68,7 +68,7 @@
       </div>
 
       <div class="col-sm-6">
-        <h3 class="time_expectation">{{ content.time_expectation }}</h3>
+        <h2 class="time_expectation">{{ content.time_expectation }}</h2>
       </div>
     </div>
 
