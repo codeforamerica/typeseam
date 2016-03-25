@@ -1,11 +1,12 @@
 
 
-topbar = "Clear My Record | Apply to clear your criminal record in California"
+topbar = "Clear My Record | Apply to clear your criminal record in San Francisco"
 main_headline = "Get a new start"
 subheadline = "Reduce or dismiss convictions on your criminal record"
 call_to_action_time = "Take the first step. Apply in 10 minutes."
 call_to_action_button = "Apply now"
-credibility_note = "Clear My Record is a free, non-profit service for people with a criminal record in California"
+credibility_note = str("Clear My Record is a free, non-profit service from "
+    "Code for America for people with a criminal record in San Francisco.")
 
 gov_service_name = "Clean Slate is the San Francisco Public Defender’s record clearance program"
 gov_service_description = str(
@@ -17,7 +18,7 @@ gov_service_description = str(
     "options make sense for you.")
 
 
-journey_headline = "3 Easy Steps to Enroll"
+journey_headline = "3 Easy Steps to Apply"
 step_1_headline = "1. Apply online –"
 step_1_paragraph = "Fill out the pre-screener to help the public defender understand your history."
 step_2_headline = "2. Eligibility review –"
