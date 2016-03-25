@@ -62,21 +62,42 @@ p.step_headline{
 
 .container {
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 
-.about_the_service {
+.about_the_service, .privacy_description {
   background-color: #ECF0F1;
   p, h2 {
     text-align: left;
     max-width: 48rem;
   }
 }
-.apply_backup {
+
+.apply_backup, .privacy_above_the_fold {
   background-color: #3498DB;
   color:#fff;
 }
+
+.privacy_above_the_fold h1{
+  padding-top:0;
+}
+
+.privacy_description{
+  padding-top:40px;
+  padding-bottom:40px;
+}
+
+.privacy_description li{
+  padding-bottom: 20px;
+}
+
+.privacy_description ul{
+  list-style-type: circle;
+}
+
+
+
 
 .footer {
   background-color: #34495E;
@@ -173,6 +194,11 @@ iframe {
 .loading .glyphicon-refresh {
    -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear;
+}
+
+
+.privacy_policy{
+
 }
 
 @-webkit-keyframes fa-spin {
