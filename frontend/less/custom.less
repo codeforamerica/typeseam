@@ -1,3 +1,4 @@
+
 .top_bar a {
   color: inherit;
   text-decoration: none;
@@ -47,9 +48,13 @@ p.step_headline{
   font-weight: 500;
 }
 
-p.credibility_note {
+.credibility_note {
   padding-top: 70px;
+  .col_centered {
+    max-width: 26em;
+  }
 }
+
 
 .new_section{
   padding-top:24px;
@@ -63,8 +68,11 @@ p.credibility_note {
 
 .about_the_service {
   background-color: #ECF0F1;
+  p, h2 {
+    text-align: left;
+    max-width: 48rem;
+  }
 }
-
 .apply_backup {
   background-color: #3498DB;
   color:#fff;
@@ -114,7 +122,6 @@ p.credibility_note {
 .col_centered {
   float: none;
   margin: 0 auto;
-  max-width: 33em;
 }
 
 ul.opportunities {
@@ -190,7 +197,7 @@ iframe {
 }
 
 @media (min-width: @screen-sm-min) {
-  h3.time_expectation {
+  h2.time_expectation {
     padding-top:94px;
     padding-left:28px;
   }
@@ -217,7 +224,7 @@ iframe {
   .above_the_fold {
     background-image: url("/static/img/CMR-hero.png");
     background-size: cover;
-    height: 30em;
+    min-height: 30em;
   }
 
 }
