@@ -45,4 +45,4 @@ opportunity_3 = "Hold a record that better represents who you are today"
 footer_website_description = str(
     "Clear My Record is a service delivered by "
     "Code for America")
-footer_legal = "Read our Privacy Policy and Nondiscrimination Statement."
+footer_legal = "Read our Privacy Policy."
