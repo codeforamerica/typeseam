@@ -9,7 +9,7 @@
 
       {% block main %}
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-6 col-sm-8 col-xs-12">
           <h1 class="main_headline new_section">
             {{ content.main_headline }}
           </h1>
@@ -28,12 +28,12 @@
             </span>
           </a>
 
-          
+
         </div>
       </div>
 
       <div class="row credibility_note">
-        <div class="col-xs-12 col-sm-8 col_centered">
+        <div class="col-xs-12 col-sm-7 col-md-4">
           <p class="small">{{ linkify(content.credibility_note) }}</p>
         </div>
       </div>
@@ -45,7 +45,7 @@
 <section class="about_the_service">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 col-md-6 col_centered">
+      <div class="col-xs-12 col-sm-8 col-md-7">
         <div class="gov_service new_section">
           <h2 class="gov_service_name">
             {{ linkify(content.gov_service_name) }}
@@ -58,8 +58,8 @@
     </div>
 
     <div class="row">
-          
-      <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1">
+
+      <div class="col-xs-12 col-sm-6 col-md-5">
         <div class="journey_steps new_section">
           <h2 class="journey_headline">{{ content.journey_headline }}</h2>
           <div class="step">
@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <div class="col-xs-12 col-sm-6 col-md-5">
+      <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-1">
         <h2 class="time_expectation">{{ content.time_expectation }}</h2>
       </div>
     </div>

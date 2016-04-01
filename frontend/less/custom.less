@@ -33,8 +33,9 @@ h3.subheadline {
 }
 
 h2.time_expectation{
-  font-weight: 500;
+  font-weight: 700;
   text-align: center;
+  color:#3498DB;
 }
 
 p.step_headline{
@@ -50,11 +51,11 @@ p.step_headline{
 
 .credibility_note {
   padding-top: 70px;
-  .col_centered {
-    max-width: 26em;
-  }
 }
-
+.credibility_note a{
+  color:#3498DB;
+  font-weight: bold;
+}
 
 .new_section{
   padding-top:24px;
@@ -65,12 +66,17 @@ p.step_headline{
   padding-bottom: 20px;
 }
 
+.above_the_fold{
+  background-color: #004C77;
+  color:#ffffff;
+}
+
 
 .about_the_service, .privacy_description {
   background-color: #ECF0F1;
   p, h2 {
     text-align: left;
-    max-width: 48rem;
+    max-width: 72rem;
   }
 }
 
@@ -96,11 +102,15 @@ p.step_headline{
   list-style-type: circle;
 }
 
+.journey_steps{
+  padding-bottom: 40px;
+}
+
 
 
 
 .footer {
-  background-color: #34495E;
+  background-color: #323a45;
   color: #fff;
 }
 .footer a {
@@ -130,7 +140,7 @@ p.step_headline{
   text-align: center;
 }
 
-.above_the_fold,
+
 .gov_service_name,
 .gov_service_description,
 .apply_backup,
@@ -249,6 +259,7 @@ iframe {
 
   .above_the_fold {
     background-image: url("/static/img/CMR-hero.png");
+    background-color: #205493;
     background-size: cover;
     min-height: 30em;
   }
@@ -257,7 +268,8 @@ iframe {
 
 @media (min-width: @screen-md-min) {
   .above_the_fold {
-    height: 36em;
+    height: 40em;
+    background-color: #205493;
   }
 }
 
