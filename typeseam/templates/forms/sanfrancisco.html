@@ -1,0 +1,361 @@
+<form action="/sanfrancisco/" method="POST" accept-charset="utf-8">
+
+	
+  {% include "includes/csrf_field.html" %}
+
+	<div class="field">	    
+		<legend>
+	    How would you like us to contact you?
+    </legend>
+			<span class="field-help_text">
+				Code for America will use this to update you about your application.
+			</span>
+		
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="email" type="checkbox" name="email" value="email">
+        <label for="email">Email</label>
+      </li>
+      <li>
+        <input id="sms" type="checkbox" name="sms" value="sms">
+        <label for="sms">Text message</label>
+      </li>
+      <li>
+        <input id="voicemail" type="checkbox" name="voicemail" value="voicemail">
+        <label for="voicemail">Voicemail</label>
+      </li>
+      <li>
+        <input id="snailmail" type="checkbox" name="snailmail" value="snailmail">
+        <label for="snailmail">Paper mail</label>
+      </li>
+    </ul>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your first name?
+			</span>
+			<input type="text" name="first_name" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your middle name?
+			</span>
+			<span class="field-optional">(optional)</span>
+			<input type="text" name="middle_name" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your last name?
+			</span>
+			<input type="text" name="last_name" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<fieldset>
+
+	    <legend>
+		    What is your date of birth?
+	    </legend>
+
+	    <span class="field-help_text usa-datefield-hint" id="dob_hint">
+		    For example: 4/28/1986
+	    </span>
+
+	    <div class="field-dob">
+	      <div class="usa-datefield usa-form-group usa-form-group-month">
+	        <label for="dob_mo">Month</label>
+	        <input aria-describedby="dob_hint" id="dob_mo" name="dob_mo" pattern="0?[1-9]|1[012]" type="number" min="1" max="12" value="">
+	      </div>
+	      <div class="usa-datefield usa-form-group usa-form-group-day">
+	        <label for="dob_day">Day</label>
+	        <input aria-describedby="dob_hint" id="dob_day" name="dob_day" pattern="0?[1-9]|1[0-9]|2[0-9]|3[01]" type="number" min="1" max="31" value="">
+	      </div>
+	      <div class="usa-datefield usa-form-group usa-form-group-year">
+	        <label for="dob_yr">Year</label>
+	        <input aria-describedby="dob_hint" id="dob_yr" name="dob_yr" pattern="[0-9]{4}" type="number" min="1900" max="2016" value="">
+	      </div>
+	    </div>
+	  </fieldset>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your Social Security Number?
+			</span>
+			<span class="field-help_text">
+				The public defender's office will use this to get your San Francisco RAP sheet and find any convictions that can be reduced or dismissed.
+			</span>
+			<input type="text" name="last_name" value="">
+		</label>
+	</div>
+
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your Driver's License or ID Number?
+			</span>
+			<span class="field-help_text">
+				The public defender's office will use this to get your San Francisco RAP sheet and find any convictions that can be reduced or dismissed.
+			</span>
+			<input type="text" name="last_name" value="">
+		</label>
+	</div>
+
+	<div class="field">	    
+		<legend>
+	    Are you a U.S. citizen?
+    </legend>
+			<span class="field-help_text">
+				The public defender handles non-citizen cases differently and has staff who can help with citizenship issues.
+			</span>
+		
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="us_citizen" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="us_citizen" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+
+	<div class="field">
+		<fieldset>
+
+	    <legend>
+		    What is your mailing address?
+	    </legend>
+			<span class="field-help_text">
+				The public defender will need to send you important papers.
+			</span>
+
+	    <div class="subfield">
+				<label class="field-wrapping_label">
+					<span class="field-display_text">
+						Street address or P.O. Box
+					</span>
+					<span class="field-help_text">
+						For example "432 Main Street" or "P.O. Box 5432"
+					</span>
+					<input type="text" name="address_street" value="">
+				</label>
+	    </div>
+
+	    <div class="subfield">
+				<label class="field-wrapping_label">
+					<span class="field-display_text">
+						City
+					</span>
+					<input type="text" name="address_city" value="">
+				</label>
+	    </div>
+
+	    <div class="subfield">
+				<label class="field-wrapping_label">
+					<span class="field-display_text">
+						State
+					</span>
+					<input type="text" name="address_state" value="CA">
+				</label>
+	    </div>
+
+	    <div class="subfield">
+				<label class="field-wrapping_label">
+					<span class="field-display_text">
+						Zip code
+					</span>
+					<input type="text" name="address_zip" value="">
+				</label>
+	    </div>
+
+	  </fieldset>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your phone number?
+			</span>
+			<span class="field-optional">(optional)</span>
+			<span class="field-help_text">
+				Code for America and the public defender will use this to contact you about your application.
+			</span>
+			<input type="text" name="phone_number" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your email?
+			</span>
+			<span class="field-optional">(optional)</span>
+			<input type="text" name="email" value="">
+		</label>
+	</div>
+
+
+	<div class="field">	    
+		<legend>
+	    Are you on probation or parole?
+    </legend>
+		
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="us_citizen" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="us_citizen" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				Where is your probation or parole?
+			</span>
+			<input type="text" name="where_probation_or_parole" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				When does your probation or parole end?
+			</span>
+			<input type="text" name="when_probation_or_parole" value="">
+		</label>
+	</div>
+
+
+	<div class="field">	    
+		<legend>
+	    Are you currently serving a sentence?
+    </legend>
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="serving_sentence" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="serving_sentence" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+	<div class="field">	    
+		<legend>
+	    Are you currently being charged with a crime?
+    </legend>
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="being_charged" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="being_charged" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+	<div class="field">	    
+		<legend>
+	    Have you ever been arrested or convicted outside of San Francisco?
+    </legend>
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="rap_outside_sf" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="rap_outside_sf" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				When and where were you arrested or convicted outside of San Francisco?
+			</span>
+			<input type="text" name="when_where_outside_sf" value="">
+		</label>
+	</div>
+
+
+	<div class="field">	    
+		<legend>
+	    Are you currently employed?
+    </legend>
+			<span class="field-help_text">
+				The Clean Slate program is free for you, but the public defender uses this information to get money from government programs.
+			</span>
+		 <ul class="usa-unstyled-list">
+      <li>
+        <input id="yes" type="radio" name="currently_employed" value="yes">
+        <label for="yes">Yes</label>
+      </li>
+      <li>
+        <input id="no" type="radio" name="currently_employed" value="no">
+        <label for="no">No</label>
+      </li>
+    </ul>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				What is your monthly income?
+			</span>
+			<span class="field-help_text">
+				The Clean Slate program is free for you, but the public defender uses this information to get money from government programs.
+			</span>
+			<input type="text" name="monthly_income" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				How much do you spend each month on things like rent, groceries, utilities, medical expenses, or childcare expenses?
+			</span>
+			<span class="field-help_text">
+				The Clean Slate program is free for you, but the public defender uses this information to get money from government programs.
+			</span>
+			<input type="text" name="monthly_expenses" value="">
+		</label>
+	</div>
+
+	<div class="field">
+		<label class="field-wrapping_label">
+			<span class="field-display_text">
+				How did you hear about this program or website?
+			</span>
+			<span class="field-optional">(optional)</span>
+			<input type="text" name="how_did_you_hear" value="">
+		</label>
+	</div>
+
+	<button type="submit">Send the application</button>
+</form>
