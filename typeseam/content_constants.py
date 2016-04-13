@@ -1,6 +1,6 @@
 
 
-topbar = "Clear My Record | Apply to clear your criminal record in San Francisco"
+topbar = "Clear My Record | Get help clearing your criminal record in San Francisco"
 main_headline = "Better days ahead"
 subheadline = "Reduce or dismiss convictions on your criminal record"
 call_to_action_time = "Take the first step. Apply in 10 minutes."
