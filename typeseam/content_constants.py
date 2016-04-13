@@ -6,7 +6,8 @@ subheadline = "Reduce or dismiss convictions on your criminal record"
 call_to_action_time = "Take the first step. Apply in 10 minutes."
 call_to_action_button = "Apply now"
 credibility_note = str("Clear My Record is a free, non-profit service from "
-    "Code for America for people with a criminal record in San Francisco.")
+    "Code for America for people with a criminal record in San Francisco. "
+    "We are not a law firm and the information on this site is not legal advice.")
 
 gov_service_name = "Clean Slate is the San Francisco Public Defender’s record clearance program"
 gov_service_description = str(
