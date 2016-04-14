@@ -69,15 +69,20 @@ class TestViews(TestCase):
     @patch('typeseam.form_filler.views.render_template')
     @patch('typeseam.form_filler.views.current_user')
     @patch('typeseam.form_filler.views.request')
-    @patch('typeseam.form_filler.views.redirect')
-    @patch('typeseam.form_filler.views.url_for')
-    def test_county_application_page(self, url_for, redirect, request, current_user, render_template):
+    def test_get_county_application_page(self, request, current_user, render_template):
         request.method = 'GET'
         current_user.is_authenticated = False
         county_application()
         render_template.called_once_with(
             'county_application_form.html')
+
+    @patch('typeseam.form_filler.views.redirect')
+    @patch('typeseam.form_filler.views.url_for')
+    @patch('typeseam.form_filler.views.current_user')
+    @patch('typeseam.form_filler.views.request')
+    def test_post_county_application_form(self, request, current_user, url_for, redirect):
         request.method = 'POST'
+        current_user.is_authenticated = False
         url_for_result = Mock()
         url_for.return_value = url_for_result
         county_application()
