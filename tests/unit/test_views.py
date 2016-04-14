@@ -66,21 +66,22 @@ class TestViews(TestCase):
             page_title='Clear My Record - Code for America',
             response_estimate='4 weeks from now')
 
-    @patch('typeseam.form_filler.views.get_response_date')
     @patch('typeseam.form_filler.views.render_template')
-    @patch('typeseam.form_filler.views.queries.get_typeform')
     @patch('typeseam.form_filler.views.current_user')
-    def test_county_application_page(self, current_user, get_typeform, render_template, get_resp_date):
-        import os
-        form_key = os.environ.get('DEFAULT_TYPEFORM_KEY', 'jd9s8d')
+    @patch('typeseam.form_filler.views.request')
+    @patch('typeseam.form_filler.views.redirect')
+    @patch('typeseam.form_filler.views.url_for')
+    def test_county_application_page(self, url_for, redirect, request, current_user, render_template):
+        request.method = 'GET'
         current_user.is_authenticated = False
-        get_typeform.return_value = 'Typeform model'
         county_application()
-        get_resp_date.assert_not_called()
-        get_typeform.assert_called_with(form_key=form_key)
         render_template.called_once_with(
-            'county_application_form.html',
-            form='Typeform model')
+            'county_application_form.html')
+        request.method = 'POST'
+        url_for_result = Mock()
+        url_for.return_value = url_for_result
+        county_application()
+        redirect.called_once_with(url_for_result)
 
     @patch('typeseam.form_filler.views.datetime')
     @patch('typeseam.form_filler.views.timedelta')
