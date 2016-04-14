@@ -5,6 +5,7 @@ main_headline = "Better days ahead"
 subheadline = "Reduce or dismiss convictions on your criminal record"
 call_to_action_time = "Take the first step. Apply in 10 minutes."
 call_to_action_button = "Apply now"
+learn_more_button = "Learn more"
 credibility_note = str("Clear My Record is a free, non-profit service from "
     "Code for America for people with a criminal record in San Francisco. "
     "We are not a law firm and the information on this site is not legal advice.")

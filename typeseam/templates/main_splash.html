@@ -22,18 +22,29 @@
             {{ content.call_to_action_time }}
           </p>
 
-          <a href="/sanfrancisco/" class="btn btn-primary btn-lg call_to_action_button text-center">
-            <span class="main-action-text">
-              {{ content.call_to_action_button }}
-            </span>
-          </a>
+          <div class="row">
+            <div class="col-md-4 col-sm-5" id="learn-more-button">
+              <a href="/sanfrancisco/" class="btn btn-default btn-lg call_to_action_button text-center">
+                <span class="main-action-text">
+                  {{ content.learn_more_button }}
+                </span>
+              </a>
+            </div>
 
+            <div class="col-md-6 col-sm-7">
+              <a href="/sanfrancisco/" class="btn btn-primary btn-lg call_to_action_button text-center">
+                <span class="main-action-text">
+                  {{ content.call_to_action_button }}
+                </span>
+              </a>
+            </div>
+          </div>
 
         </div>
       </div>
 
       <div class="row credibility_note">
-        <div class="col-xs-12 col-sm-7 col-md-4">
+        <div class="col-xs-12 col-sm-8 col-md-5">
           <p class="small">{{ linkify(content.credibility_note) }}</p>
         </div>
       </div>
