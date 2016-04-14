@@ -10,7 +10,8 @@ from pprint import pprint
 
 from .models import (
     TypeformResponse,
-    Typeform, SeamlessDoc
+    Typeform, SeamlessDoc,
+    FormSubmission
     )
 
 from .serializers import (
@@ -26,6 +27,13 @@ response_serializer = TypeformResponseSerializer()
 flat_response_serializer = FlatResponseSerializer()
 typeform_serializer = TypeformSerializer()
 
+def save_new_form_submission(data, county="sanfrancisco"):
+    submission = FormSubmission(
+        answers=data,
+        county=county,
+        )
+    db.session.add(submission)
+    db.session.commit()
 
 def save_new_typeform_data(data, typeform=None):
     if typeform:

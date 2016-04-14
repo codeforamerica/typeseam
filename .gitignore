@@ -10,5 +10,6 @@ static
 bin
 lib
 man
+comps
 pyvenv.cfg
 pip-selfcheck.json

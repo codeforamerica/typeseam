@@ -1,7 +1,7 @@
 
 import os
 from datetime import datetime, timedelta
-from flask import render_template, jsonify, Response
+from flask import request, redirect, render_template, jsonify, Response, url_for
 from flask_user import login_required
 from flask.ext.login import current_user
 from typeseam.form_filler import (
@@ -30,13 +30,19 @@ def index():
             body_class="splash",
             response_estimate=get_response_date())
 
-@blueprint.route('/sanfrancisco/', methods=['GET'])
+@blueprint.route('/sanfrancisco/', methods=['GET', 'POST'])
 def county_application():
-    form_key = os.environ.get('DEFAULT_TYPEFORM_KEY')
-    typeform = queries.get_typeform(form_key=form_key)
-    return render_template(
-        'county_application_form.html',
-        form=typeform)
+    if request.method == 'GET':
+        return render_template('county_application_form.html')
+    else:
+        # handle form
+        form_data = request.form.to_dict()
+        queries.save_new_form_submission(form_data)
+        return redirect(url_for('form_filler.thanks'))
+
+@blueprint.route('/thanks/', methods=['GET'])
+def thanks():
+    return render_template('thanks.html')
 
 @blueprint.route('/<typeform_key>/responses/', methods=['GET'])
 @login_required
@@ -74,6 +80,8 @@ def responses_csv(typeform_key):
     """
     csv = queries.get_responses_csv(current_user, typeform_key)
     return Response(csv, mimetype="text/csv")
+
+
 
 
 ##########  API Views  ################################################

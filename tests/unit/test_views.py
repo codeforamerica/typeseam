@@ -66,21 +66,32 @@ class TestViews(TestCase):
             page_title='Clear My Record - Code for America',
             response_estimate='4 weeks from now')
 
-    @patch('typeseam.form_filler.views.get_response_date')
     @patch('typeseam.form_filler.views.render_template')
-    @patch('typeseam.form_filler.views.queries.get_typeform')
     @patch('typeseam.form_filler.views.current_user')
-    def test_county_application_page(self, current_user, get_typeform, render_template, get_resp_date):
-        import os
-        form_key = os.environ.get('DEFAULT_TYPEFORM_KEY', 'jd9s8d')
+    @patch('typeseam.form_filler.views.request')
+    def test_get_county_application_page(self, request, current_user, render_template):
+        request.method = 'GET'
         current_user.is_authenticated = False
-        get_typeform.return_value = 'Typeform model'
         county_application()
-        get_resp_date.assert_not_called()
-        get_typeform.assert_called_with(form_key=form_key)
         render_template.called_once_with(
-            'county_application_form.html',
-            form='Typeform model')
+            'county_application_form.html')
+
+    @patch('typeseam.form_filler.views.queries.save_new_form_submission')
+    @patch('typeseam.form_filler.views.redirect')
+    @patch('typeseam.form_filler.views.url_for')
+    @patch('typeseam.form_filler.views.current_user')
+    @patch('typeseam.form_filler.views.request')
+    def test_post_county_application_form(self, request, current_user, url_for, redirect,
+            save_new_submission):
+        request.method = 'POST'
+        fake_form_data = Mock()
+        request.form.to_dict.return_value = fake_form_data
+        current_user.is_authenticated = False
+        url_for_result = Mock()
+        url_for.return_value = url_for_result
+        county_application()
+        save_new_submission.assert_called_once_with(fake_form_data)
+        redirect.assert_called_once_with(url_for_result)
 
     @patch('typeseam.form_filler.views.datetime')
     @patch('typeseam.form_filler.views.timedelta')

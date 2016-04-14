@@ -2,6 +2,16 @@
 // Variables
 // --------------------------------------------------
 
+// colors
+@body-text: #000;
+@brand-note: #069ED6;
+@links: @brand-note;
+@footer-background: #454545;
+@light-background: #E5E5E5;
+@splash-background: #004A6C;
+@above-the-fold-background: @brand-note;
+@action-background: #FEE228;
+@action-text: @body-text;
 
 //== Colors
 //
@@ -14,7 +24,7 @@
 @gray-light:             lighten(@gray-base, 46.7%); // #777
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
+@brand-primary:         @brand-note;
 @brand-success:         #5cb85c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
@@ -148,9 +158,9 @@
 @btn-default-bg:                 #fff;
 @btn-default-border:             #ccc;
 
-@btn-primary-color:              #004C77;;
-@btn-primary-bg:                 #F1C40F;
-@btn-primary-border:             darken(@btn-primary-bg, 5%);
+@btn-primary-color:              @action-text;
+@btn-primary-bg:                 @action-background;
+@btn-primary-border:             darken(@btn-primary-bg, 15%);
 
 @btn-success-color:              #fff;
 @btn-success-bg:                 @brand-success;
