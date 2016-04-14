@@ -9,13 +9,13 @@ from factory.alchemy import SQLAlchemyModelFactory
 from typeseam.app import db
 from typeseam.constants import TRANSLATOR_A
 from typeseam.form_filler.models import (
-    Typeform, TypeformResponse, SeamlessDoc
+    Typeform, TypeformResponse, SeamlessDoc, FormSubmission
     )
 from typeseam.auth.models import User
 from typeseam.auth.queries import create_user, hash_password
 from typeseam.form_filler.serializers import TypeformResponseSerializer
 
-faker = FakerFactory.create('en_US', includes=['tests.mock.typeform'])
+faker = FakerFactory.create('en_US', includes=['tests.mock.typeform', 'tests.mock.counties'])
 
 
 def lazy(func):
@@ -80,7 +80,6 @@ class TypeformResponseFactory(SessionFactory):
     class Meta:
         model = TypeformResponse
 
-
 class UserFactory(SessionFactory):
     id = factory.Sequence(lambda n: n)
     email = factory.Faker('free_email')
@@ -88,6 +87,15 @@ class UserFactory(SessionFactory):
 
     class Meta:
         model = User
+
+
+class SubmissionFactory(SessionFactory):
+    id = factory.Sequence(lambda n: n)
+    county = factory.Sequence(lambda n: 'sanfrancisco')
+    date_received = deferred(recent_date)
+    answers = lazy(lambda x: faker.sf_county_form_answers())
+    class Meta:
+        model = FormSubmission
 
 
 def user_data(**kwargs):
@@ -98,7 +106,6 @@ def user_data(**kwargs):
         }
     d.update(**kwargs)
     return d
-
 
 def fake_typeform_responses(num_responses=1, start_date='-8w'):
     responses = []

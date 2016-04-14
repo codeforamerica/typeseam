@@ -1,6 +1,15 @@
+import datetime
 from typeseam.extensions import db
 from sqlalchemy.dialects.postgresql import JSON
 
+
+class FormSubmission(db.Model):
+    __tablename__ = 'form_filler_submission'
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    date_received = db.Column(db.DateTime, default=datetime.datetime.now)
+    status = db.Column(db.String(), default='new')
+    county = db.Column(db.String(), default='sanfrancisco')
+    answers = db.Column(JSON)
 
 class Typeform(db.Model):
     __tablename__ = 'form_filler_typeform'

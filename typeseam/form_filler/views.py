@@ -36,6 +36,8 @@ def county_application():
         return render_template('county_application_form.html')
     else:
         # handle form
+        form_data = request.form.to_dict()
+        queries.save_new_form_submission(form_data)
         return redirect(url_for('form_filler.thanks'))
 
 @blueprint.route('/thanks/', methods=['GET'])
