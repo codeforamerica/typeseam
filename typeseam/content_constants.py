@@ -49,6 +49,6 @@ opportunity_2 = "Improve your chances of qualifying for financial aid or housing
 opportunity_3 = "Hold a record that better represents who you are today"
 
 footer_website_description = str(
-    "Clear My Record is a service delivered by "
+    "Learn more about "
     "Code for America")
-footer_legal = "Read our Privacy Policy."
+footer_legal = "Read our Privacy Policy"
