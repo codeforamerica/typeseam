@@ -54,7 +54,6 @@ def send_submission_notification(submission):
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
     message = sendgrid.Mail(
         subject="New submission to {}".format(submission.county),
-        from_email=app.config['MAIL_DEFAULT_SENDER'],
         to=app.config['DEFAULT_ADMIN_EMAIL'],
         text="""
 Received a new submission, {}, with {} answers to {} questions.""".format(
