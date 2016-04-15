@@ -52,7 +52,6 @@ def get_seamless_doc_pdf(response_id, pdf_wait_time=10):
 def send_submission_notification(submission):
     questions = len(submission.answers.keys())
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
-    import pdb; pdb.set_trace()
     message = sendgrid.Mail(
         subject="New submission to {}".format(submission.county),
         from_email=app.config['MAIL_DEFAULT_SENDER'],

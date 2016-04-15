@@ -76,21 +76,26 @@ class TestViews(TestCase):
         render_template.called_once_with(
             'county_application_form.html')
 
+    @patch('typeseam.form_filler.views.tasks.send_submission_notification')
     @patch('typeseam.form_filler.views.queries.save_new_form_submission')
     @patch('typeseam.form_filler.views.redirect')
     @patch('typeseam.form_filler.views.url_for')
     @patch('typeseam.form_filler.views.current_user')
     @patch('typeseam.form_filler.views.request')
     def test_post_county_application_form(self, request, current_user, url_for, redirect,
-            save_new_submission):
+            save_new_submission, send_notification):
         request.method = 'POST'
         fake_form_data = Mock()
         request.form.to_dict.return_value = fake_form_data
         current_user.is_authenticated = False
         url_for_result = Mock()
         url_for.return_value = url_for_result
+        fake_submission = Mock()
+        save_new_submission.return_value = fake_submission
+        # run
         county_application()
         save_new_submission.assert_called_once_with(fake_form_data)
+        send_notification.assert_called_once_with(fake_submission)
         redirect.assert_called_once_with(url_for_result)
 
     @patch('typeseam.form_filler.views.datetime')
