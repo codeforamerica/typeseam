@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 from tests.mock.factories import TypeformFactory
 
 from typeseam.form_filler.queries import (
+    save_new_form_submission,
     get_response_model,
     create_typeform,
     save_new_typeform_data,
@@ -79,6 +80,20 @@ class TestQueries(TestCase):
         PatchedTypeform.assert_not_called()
         add.assert_not_called()
         commit.assert_not_called()
+
+
+    @patch('typeseam.form_filler.queries.FormSubmission')
+    @patch('typeseam.form_filler.queries.db.session.commit')
+    @patch('typeseam.form_filler.queries.db.session.add')
+    def test_save_new_form_submission(self, add, commit, FormSubmission):
+        fake_submission_instance = Mock()
+        FormSubmission.return_value = fake_submission_instance
+        mock_data = Mock()
+        result = save_new_form_submission(mock_data)
+        FormSubmission.assert_called_once_with(answers=mock_data, county="sanfrancisco")
+        add.assert_called_once_with(fake_submission_instance)
+        commit.assert_called_once_with()
+        self.assertEqual(result, fake_submission_instance)
 
 
 

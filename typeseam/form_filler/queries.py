@@ -34,6 +34,7 @@ def save_new_form_submission(data, county="sanfrancisco"):
         )
     db.session.add(submission)
     db.session.commit()
+    return submission
 
 def save_new_typeform_data(data, typeform=None):
     if typeform:
