@@ -1,10 +1,13 @@
 import requests
 import os
 import time
+import sendgrid
 from flask import abort, current_app as app
-from typeseam.app import db
+from typeseam.app import db, sg
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
+
+from flask_mail import Message
 
 
 SEAMLESS_BASE_URL = 'https://cleanslate.seamlessdocs.com/api/'
@@ -46,6 +49,18 @@ def get_seamless_doc_pdf(response_id, pdf_wait_time=10):
     response_data = queries.response_serializer.dump(response).data
     return form, response_data
 
+def send_submission_notification(submission):
+    questions = len(submission.answers.keys())
+    answers = sum([a not in ('', None) for q, a in submission.answers.items()])
+    import pdb; pdb.set_trace()
+    message = sendgrid.Mail(
+        subject="New submission to {}".format(submission.county),
+        from_email=app.config['MAIL_DEFAULT_SENDER'],
+        to=app.config['DEFAULT_ADMIN_EMAIL'],
+        text="""
+Received a new submission, {}, with {} answers to {} questions.""".format(
+    submission.id, answers, questions))
+    sg.send(message)
 
 def submit_answers_to_seamless_docs(form_id, answers):
     submit_url = SEAMLESS_BASE_URL + 'form/{}/submit'.format(form_id)

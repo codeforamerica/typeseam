@@ -15,6 +15,8 @@ class Config(AuthConfig):
     SEAMLESS_DOCS_API_SECRET = os.environ.get('SEAMLESS_DOCS_API_SECRET')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    DEFAULT_ADMIN_EMAIL = os.environ.get('DEFAULT_ADMIN_EMAIL')
 
 
 class ProdConfig(Config):

@@ -35,14 +35,17 @@ def county_application():
     if request.method == 'GET':
         return render_template('county_application_form.html')
     else:
-        # handle form
+        # TODO: add validation and error handling
         form_data = request.form.to_dict()
-        queries.save_new_form_submission(form_data)
+        submission = queries.save_new_form_submission(form_data)
+        tasks.send_submission_notification(submission)
         return redirect(url_for('form_filler.thanks'))
 
 @blueprint.route('/thanks/', methods=['GET'])
 def thanks():
     return render_template('thanks.html')
+
+
 
 @blueprint.route('/<typeform_key>/responses/', methods=['GET'])
 @login_required
