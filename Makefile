@@ -77,6 +77,10 @@ deploy.prod.static:
 	gulp build
 	aws s3 sync ./typeseam/static s3://typeseam/static
 
+deploy.this_to_demo:
+	make deploy.demo.static
+	git push demo HEAD:master	
+
 deploy.demo:
 	make deploy.demo.static
 	git push demo master
