@@ -2,7 +2,7 @@ import requests
 import os
 import time
 import sendgrid
-from flask import abort, current_app as app
+from flask import abort, request, current_app as app
 from typeseam.app import db, sg
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
@@ -53,7 +53,7 @@ def send_submission_notification(submission):
     questions = len(submission.answers.keys())
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
     message = sendgrid.Mail(
-        subject="New submission to {}".format(submission.county),
+        subject="New submission to {}".format(request.url),
         to=app.config['DEFAULT_ADMIN_EMAIL'],
         text="""
 Received a new submission, {}, with {} answers to {} questions.""".format(
