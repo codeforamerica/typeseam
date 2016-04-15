@@ -52,3 +52,6 @@ footer_website_description = str(
     "Learn more about "
     "Code for America")
 footer_legal = "Read our Privacy Policy"
+footer_cleanslate = str(
+    "Learn more about "
+    "Clean Slate")
