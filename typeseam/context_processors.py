@@ -50,6 +50,8 @@ def add_content_constants():
         "Code for America": "https://codeforamerica.org",
         "Privacy Policy": url_for("public.privacy_policy"),
         "Clean Slate": "http://sfpublicdefender.org/services/clean-slate/",
+        "clearmyrecord@codeforamerica.org": "mailto:clearmyrecord@codeforamerica.org",
+        "(415) 301-6005": "tel:14153016005"
     }
     return dict(
         content=content_constants,

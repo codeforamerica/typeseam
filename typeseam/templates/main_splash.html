@@ -87,8 +87,10 @@
       <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-2">
         <div class="contact_info new_section">
           <h2>{{ content.contact_headline }}</h2>
-          <p><span class="glyphicon glyphicon-envelope"></span>{{ content.contact_email }}</p>
-          <!--  <p><span class="glyphicon glyphicon-earphone"></span>{{ content.contact_phone}}</p> -->
+          <ul>
+            <li>Email: {{ linkify(content.contact_email) }}</li>
+            <li>Phone: {{ linkify(content.contact_phone) }}</li>
+          </ul>
         </div>
       </div>
     </div>

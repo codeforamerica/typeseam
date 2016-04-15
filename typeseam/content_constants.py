@@ -32,7 +32,7 @@ step_3_paragraph = str(
 
 contact_headline = "Questions? Contact us."
 contact_email = "clearmyrecord@codeforamerica.org"
-contact_phone = "(415)301-6005"
+contact_phone = "(415) 301-6005"
 
 time_expectation = "It could take up to one year to clear your record. Start today."
 
