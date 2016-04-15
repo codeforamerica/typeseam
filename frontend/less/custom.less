@@ -7,6 +7,10 @@ h1 { font-size: 40px; font-weight: 700; }
 h1.main_headline { margin-bottom: 4px; }
 section.content > .container:first-child { padding-top: 2em; }
 
+.header-contact-info{
+
+}
+
 h2 {
   font-size: 26px;
   margin-bottom: 20px;
@@ -26,6 +30,14 @@ p.step_headline{
   font-weight: 600;
 }
 
+.call_to_action_time{
+  margin-bottom: 26px;
+}
+
+.main_headline{
+  margin-top:70px;
+}
+
 .call_to_action_button {
   width: 100%;
   max-width: 20em;
@@ -33,8 +45,13 @@ p.step_headline{
   font-weight: 700;
 }
 
+#learn-more-button{
+  padding-right:0;
+}
+
 .credibility_note {
-  padding-top: 70px;
+  padding-top: 100px;
+  padding-bottom: 20px;
 }
 .credibility_note a {
   color: @brand-note;
@@ -86,8 +103,17 @@ p.step_headline{
   list-style-type: circle;
 }
 
-.journey_steps{
-  padding-bottom: 40px;
+
+span.glyphicon{
+  padding-right:10px;
+}
+
+.time_expectation h2{
+  text-align: center;
+  max-width: none;
+  color:#004A6C;
+  margin-bottom:40px;
+  padding-top: 40px;
 }
 
 
@@ -104,12 +130,21 @@ p.step_headline{
   color: @brand-note;
 }
 
+.footer_info{
+  margin-top:20px;
+}
+
 .cfa-logo {
   width: 12em;
   opacity: 0.3;
 }
 .footer_logo {
   padding: 3em 0 5em 0;
+  margin-top:30px;
+}
+
+.footer_logo p{
+  color:grey;
 }
 
 .btn-lg{
@@ -117,7 +152,7 @@ p.step_headline{
 }
 
 .splash.above_the_fold .btn {
-  margin-bottom:40px;
+  margin-bottom:20px;
 }
 
 .journey_headline{
@@ -130,7 +165,7 @@ p.step_headline{
 .apply_backup,
 .backup_apply_headline,
 .footer_logo,
-.footer p {
+{
   text-align: center;
 }
 
@@ -138,9 +173,13 @@ p.step_headline{
   float: none;
   margin: 0 auto;
 }
+.splash ul {
+  padding: 0;
+  font-size: 18px;
+  line-height: 1.8em;
+}
 
 ul.opportunities {
-  padding: 0;
   padding-top: 12px;
   text-align: left;
 }
@@ -196,14 +235,14 @@ section.footer.container.new_section{
 }
 
 @media (min-width: @screen-sm-min) {
-  h2.time_expectation {
-    padding-top: 94px;
-    padding-left: 28px;
-  }
 
   .splash.above_the_fold h1 {
     font-size: 54px;
     padding-top: 150px;
+  }
+
+  .main_headline{
+    margin-top:0px;
   }
 
   .new_section {
