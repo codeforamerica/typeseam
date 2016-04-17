@@ -1,6 +1,5 @@
 from unittest import TestCase
 from unittest.mock import Mock, patch
-from tests.mock.factories import TypeformFactory
 
 from typeseam.form_filler.queries import (
     save_new_form_submission,

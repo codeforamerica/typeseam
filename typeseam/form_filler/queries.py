@@ -1,12 +1,11 @@
+import io, csv
+
 from sqlalchemy import desc, inspect, func
 from sqlalchemy.orm import subqueryload
 from flask import abort
 from flask.ext.login import current_user
 
 from typeseam.app import db
-import io
-import csv
-from pprint import pprint
 
 from .models import (
     TypeformResponse,
@@ -30,11 +29,16 @@ typeform_serializer = TypeformSerializer()
 def save_new_form_submission(data, county="sanfrancisco"):
     submission = FormSubmission(
         answers=data,
-        county=county,
+        county=county
         )
     db.session.add(submission)
     db.session.commit()
     return submission
+
+def get_submission_by_uuid(submission_uuid):
+    q = db.session.query(FormSubmission).filter(
+        FormSubmission.uuid == submission_uuid)
+    return q.first()
 
 def save_new_typeform_data(data, typeform=None):
     if typeform:
