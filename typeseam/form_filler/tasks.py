@@ -58,7 +58,7 @@ def send_submission_notification(submission):
         subject="New application to {} received {}".format(
             request.url,
             submission.get_local_date_received().strftime("%-m/%-d/%Y %-I:%M %p %Z")),
-        to=app.config['DEFAULT_ADMIN_EMAIL'],
+        to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
     sg.send(message)
 

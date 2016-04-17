@@ -16,6 +16,7 @@ class Config(AuthConfig):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
     DEFAULT_ADMIN_EMAIL = os.environ.get('DEFAULT_ADMIN_EMAIL')
+    DEFAULT_NOTIFICATION_EMAIL = os.environ.get('DEFAULT_NOTIFICATION_EMAIL')
 
 
 class ProdConfig(Config):

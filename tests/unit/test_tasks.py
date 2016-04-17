@@ -11,7 +11,7 @@ class TestTasks(TestCase):
     @patch('typeseam.form_filler.tasks.app')
     def test_send_submission_notification(self, app, sg, sendgrid, request, render_template):
         app.config = {
-            'DEFAULT_ADMIN_EMAIL': 'me'
+            'DEFAULT_NOTIFICATION_EMAIL': 'me'
         }
         fake_rendered_template = Mock()
         render_template.return_value = fake_rendered_template
