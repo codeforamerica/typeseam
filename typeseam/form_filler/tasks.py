@@ -56,8 +56,8 @@ def send_submission_notification(submission):
         subject="New submission to {}".format(request.url),
         to=app.config['DEFAULT_ADMIN_EMAIL'],
         text="""
-Received a new submission, {}, with {} answers to {} questions.""".format(
-    submission.id, answers, questions))
+Received a new submission, {}, with {} answers to {} questions.\nUUID: {}""".format(
+    submission.id, answers, questions, submission.uuid))
     sg.send(message)
 
 def submit_answers_to_seamless_docs(form_id, answers):

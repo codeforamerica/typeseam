@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 from typeseam.form_filler import tasks
 
-class TestQueries(TestCase):
+class TestTasks(TestCase):
 
     @patch('typeseam.form_filler.tasks.request')
     @patch('typeseam.form_filler.tasks.sendgrid')
@@ -12,8 +12,8 @@ class TestQueries(TestCase):
         app.config = {
             'DEFAULT_ADMIN_EMAIL': 'me'
         }
-        body = "\nReceived a new submission, 10, with 14 answers to 27 questions."
-        submission = Mock(id=10)
+        body = "\nReceived a new submission, 10, with 14 answers to 27 questions.\nUUID: a uuid"
+        submission = Mock(id=10, uuid='a uuid')
         request.url = "https://localtesting:80/yolo"
         message = Mock()
         submission.answers.keys.return_value = range(27)
