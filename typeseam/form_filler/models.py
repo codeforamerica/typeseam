@@ -1,10 +1,12 @@
 import datetime, uuid
+from pytz import timezone
 from typeseam.extensions import db
 from sqlalchemy.dialects.postgresql import JSON
 
 from typeseam.form_filler.pdftk_wrapper import PDFTKWrapper
 
 pdftk = PDFTKWrapper()
+pacific = timezone('US/Pacific')
 
 def gen_uuid():
     return uuid.uuid4().hex
@@ -26,7 +28,7 @@ clean_slate_translator = {
             'Arrested outside SF': lambda s: yesno(s, 'rap_outside_sf'),
             'Cell phone number': 'phone_number',
             'Charged with a crime': lambda s: yesno(s, 'being_charged'),
-            'Date': lambda s: s.date_received.strftime('%-m/%-d/%Y'),
+            'Date': lambda s: pacific.localize(s.date_received).strftime('%-m/%-d/%Y'),
             'Date of Birth': lambda s: '{}/{}/{}'.format(
                 s.answers.get('dob_month', ''),
                 s.answers.get('dob_day', ''),

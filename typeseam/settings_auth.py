@@ -3,6 +3,8 @@
 class AuthConfig(object):
     USER_ENABLE_USERNAMES = False
     USER_ENABLE_CHANGE_USERNAME = False
+    USER_ENABLE_REGISTER = False
+    USER_APP_NAME = "Clear My Record"
 
 # def set_default_settings(user_manager, app_config):
 #     """ Set default app.config settings, but only if they have not been set before """

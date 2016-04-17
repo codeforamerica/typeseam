@@ -91,3 +91,13 @@ deploy.prod:
 
 fake_data:
 	python ./typeseam/scripts/load_fake_data.py
+
+invite.demo:
+	heroku run --app clean-slate-demo \
+		python typeseam/scripts/invite_user.py \
+		$(EMAIL)
+
+invite.prod:
+	heroku run --app clean-slate-sf \
+		python typeseam/scripts/invite_user.py \
+		$(EMAIL)
