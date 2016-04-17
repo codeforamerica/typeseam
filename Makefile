@@ -101,3 +101,11 @@ invite.prod:
 	heroku run --app clean-slate-sf \
 		python typeseam/scripts/invite_user.py \
 		$(EMAIL)
+
+shell.demo:
+	heroku run --app clean-slate-demo \
+		python manage.py shell
+
+shell.prod:
+	heroku run --app clean-slate-sf \
+		python manage.py shell
