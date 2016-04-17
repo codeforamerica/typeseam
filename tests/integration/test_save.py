@@ -1,4 +1,4 @@
-
+from typeseam.app import db
 from nose.plugins.attrib import attr
 from tests.test_base import BaseTestCase
 
@@ -7,6 +7,8 @@ from tests.mock.factories import (
     generate_fake_users,
     generate_fake_typeforms,
     generate_fake_responses,
+    SessionFactory,
+    SubmissionFactory,
     UserFactory,
     TypeformFactory,
     SeamlessDocFactory,
@@ -16,7 +18,7 @@ from tests.mock.factories import (
     )
 
 
-class TestModelSaving(BaseTestCase):
+class TestSave(BaseTestCase):
 
     def test_save_a_user(self):
         generate_fake_users(1)
@@ -41,6 +43,16 @@ class TestModelSaving(BaseTestCase):
         responses = TypeformResponse.query.all()
         self.assertEqual(len(responses), 1)
         self.assertTrue(responses[0].id)
+
+    def test_save_submission(self):
+        s = SubmissionFactory.create()
+        db.session.commit()
+        self.assertEqual(len(s.uuid), 32)
+        self.assertEqual(type(s.uuid), str)
+        self.assertEqual(s.county, 'sanfrancisco')
+        self.assertTrue(getattr(s, 'id'))
+        self.assertTrue(getattr(s, 'date_received'))
+        self.assertTrue(getattr(s, 'answers'))
 
     @attr(speed="slow")
     def test_save_everything(self):
