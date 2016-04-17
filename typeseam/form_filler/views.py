@@ -1,7 +1,10 @@
 
-import os
+import os, io
 from datetime import datetime, timedelta
-from flask import request, redirect, render_template, jsonify, Response, url_for
+from flask import (
+    request, redirect, render_template, jsonify,
+    Response, url_for, send_file
+    )
 from flask_user import login_required
 from flask.ext.login import current_user
 from typeseam.form_filler import (
@@ -10,6 +13,8 @@ from typeseam.form_filler import (
     tasks
     )
 from typeseam import content_constants as content
+from typeseam.settings import PROJECT_ROOT
+
 
 def get_response_date():
     now = datetime.now()
@@ -40,6 +45,18 @@ def county_application():
         submission = queries.save_new_form_submission(form_data)
         tasks.send_submission_notification(submission)
         return redirect(url_for('form_filler.thanks'))
+
+
+@blueprint.route('/sanfrancisco/<submission_uuid>/')
+@login_required
+def get_filled_pdf(submission_uuid):
+    submission = queries.get_submission_by_uuid(submission_uuid)
+    pdf_path = os.path.join(PROJECT_ROOT, 'data/pdfs/CleanSlateSinglePage.pdf')
+    pdf = submission.fill_pdf(pdf_path)
+    return send_file(
+        io.BytesIO(pdf),
+        mimetype='application/pdf')
+
 
 @blueprint.route('/thanks/', methods=['GET'])
 def thanks():
