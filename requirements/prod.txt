@@ -8,6 +8,7 @@ psycopg2==2.6.1
 Flask-Migrate==1.6.0
 flask-marshmallow==0.6.2
 marshmallow-sqlalchemy==0.7.1
+pytz==2016.3
 
 # External API calls
 requests==2.8.1
