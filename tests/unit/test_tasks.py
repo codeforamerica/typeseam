@@ -23,14 +23,14 @@ class TestTasks(TestCase):
             (n, '' if n % 2 else 1)
             for n in range(27)
         ] # 14 answers
-        fake_time = Mock(strftime=Mock(return_value='nice time format'))
+        fake_time = Mock(strftime=Mock(return_value='<nice time format>'))
         submission.get_local_date_received.return_value = fake_time
         fake_Mail = Mock()
         fake_Mail.return_value = message
         sendgrid.Mail = fake_Mail
         tasks.send_submission_notification(submission)
         fake_Mail.assert_called_once_with(
-            subject="New submission to https://localtesting:80/yolo received nice time format",
+            subject="New application to https://localtesting:80/yolo received <nice time format>",
             to='me',
             text=fake_rendered_template
             )

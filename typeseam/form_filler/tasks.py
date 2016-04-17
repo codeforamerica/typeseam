@@ -55,7 +55,7 @@ def send_submission_notification(submission):
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
     text = render_template('notification_email.txt', submission=submission)
     message = sendgrid.Mail(
-        subject="New submission to {} received {}".format(
+        subject="New application to {} received {}".format(
             request.url,
             submission.get_local_date_received().strftime("%-m/%-d/%Y %-I:%M %p %Z")),
         to=app.config['DEFAULT_ADMIN_EMAIL'],
