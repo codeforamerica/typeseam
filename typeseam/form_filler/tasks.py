@@ -1,6 +1,7 @@
 import requests
 import os
 import time
+from datetime import datetime
 import sendgrid
 from flask import abort, request, render_template, current_app as app
 from typeseam.app import db, sg
@@ -54,7 +55,9 @@ def send_submission_notification(submission):
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
     text = render_template('notification_email.txt', submission=submission)
     message = sendgrid.Mail(
-        subject="New submission to {}".format(request.url),
+        subject="New submission to {} received {}".format(
+            request.url,
+            submission.get_local_date_received().strftime("%-m/%-d/%Y %-I:%M %p %Z")),
         to=app.config['DEFAULT_ADMIN_EMAIL'],
         text=text)
     sg.send(message)

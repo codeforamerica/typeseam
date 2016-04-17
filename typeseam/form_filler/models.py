@@ -70,6 +70,10 @@ class FormSubmission(db.Model):
     county = db.Column(db.String(), default='sanfrancisco')
     answers = db.Column(JSON)
 
+    def get_local_date_received(self, timezone_name='US/Pacific'):
+        local_tz = timezone(timezone_name)
+        return gmt.localize(self.date_received).astimezone(local_tz)
+
     def fill_pdf(self, pdf_path):
         data = self.answers
         translation = self.translate(clean_slate_translator)
