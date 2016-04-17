@@ -23,17 +23,10 @@ def get_response_date():
 
 @blueprint.route('/', methods=['GET'])
 def index():
-    if current_user.is_authenticated:
-        typeforms = queries.get_typeforms_for_user(current_user)
-        return render_template(
-            'user_splash.html',
-            typeforms=typeforms,
-        )
-    else:
-        return render_template('main_splash.html',
-            page_title=content.topbar,
-            body_class="splash",
-            response_estimate=get_response_date())
+    return render_template('main_splash.html',
+        page_title=content.topbar,
+        body_class="splash",
+        response_estimate=get_response_date())
 
 @blueprint.route('/sanfrancisco/', methods=['GET', 'POST'])
 def county_application():

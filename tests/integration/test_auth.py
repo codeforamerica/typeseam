@@ -62,12 +62,6 @@ class TestAuthViews(BaseTestCase):
         self.assertNotIn('Sign in', response_text)
         self.assertIn('Clear My Record', response_text)
 
-    def test_authenticated_home_page_shows_forms_for_user(self):
-        self.login()
-        r = self.client.get('/', follow_redirects=True)
-        response_text = r.data.decode('utf-8')
-        self.assertIn('Total responses', response_text)
-
     def test_login_form_includes_csrf_token(self):
         r = self.client.get(url_for('user.login'))
         self.assertIn('csrf_token', r.data.decode('utf-8'))
@@ -80,10 +74,6 @@ class TestAuthViews(BaseTestCase):
         self.login()
         response = self.logout()
         self.assertFalse(current_user.is_authenticated)
-
-    def test_successful_login_has_message(self):
-        response = self.login()
-        self.assertIn('signed in successfully', response.data.decode('utf-8'))
 
     def test_login_fails_without_csrf(self):
         response = self.client.post(

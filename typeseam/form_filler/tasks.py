@@ -2,7 +2,7 @@ import requests
 import os
 import time
 import sendgrid
-from flask import abort, request, current_app as app
+from flask import abort, request, render_template, current_app as app
 from typeseam.app import db, sg
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
@@ -52,12 +52,11 @@ def get_seamless_doc_pdf(response_id, pdf_wait_time=10):
 def send_submission_notification(submission):
     questions = len(submission.answers.keys())
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
+    text = render_template('notification_email.txt', submission=submission)
     message = sendgrid.Mail(
         subject="New submission to {}".format(request.url),
         to=app.config['DEFAULT_ADMIN_EMAIL'],
-        text="""
-Received a new submission, {}, with {} answers to {} questions.\nUUID: {}""".format(
-    submission.id, answers, questions, submission.uuid))
+        text=text)
     sg.send(message)
 
 def submit_answers_to_seamless_docs(form_id, answers):

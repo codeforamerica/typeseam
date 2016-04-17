@@ -4,15 +4,17 @@ from typeseam.form_filler import tasks
 
 class TestTasks(TestCase):
 
+    @patch('typeseam.form_filler.tasks.render_template')
     @patch('typeseam.form_filler.tasks.request')
     @patch('typeseam.form_filler.tasks.sendgrid')
     @patch('typeseam.form_filler.tasks.sg')
     @patch('typeseam.form_filler.tasks.app')
-    def test_send_submission_notification(self, app, sg, sendgrid, request):
+    def test_send_submission_notification(self, app, sg, sendgrid, request, render_template):
         app.config = {
             'DEFAULT_ADMIN_EMAIL': 'me'
         }
-        body = "\nReceived a new submission, 10, with 14 answers to 27 questions.\nUUID: a uuid"
+        fake_rendered_template = Mock()
+        render_template.return_value = fake_rendered_template
         submission = Mock(id=10, uuid='a uuid')
         request.url = "https://localtesting:80/yolo"
         message = Mock()
@@ -29,6 +31,6 @@ class TestTasks(TestCase):
         fake_Mail.assert_called_once_with(
             subject="New submission to https://localtesting:80/yolo",
             to='me',
-            text=body
+            text=fake_rendered_template
             )
         sg.send.assert_called_once_with(message)
