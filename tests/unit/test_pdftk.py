@@ -183,7 +183,7 @@ class TestPDFTK(TestCase):
             DATA_FIELDS_STR_SAMPLE))
         self.assertListEqual(results, PARSED_DATA_FIELDS)
 
-    @patch('typeseam.form_filler.pdftk_wrapper.open')
+    @patch('builtins.open')
     def test_fill_pdf(self, fake_open):
         pdftk = PDFTKWrapper()
         fake_answers = Mock()
