@@ -79,7 +79,7 @@ deploy.prod.static:
 
 deploy.this_to_demo:
 	make deploy.demo.static
-	git push demo HEAD:master	
+	git push demo HEAD:master
 
 deploy.demo:
 	make deploy.demo.static
@@ -91,6 +91,10 @@ deploy.prod:
 
 fake_data:
 	python ./typeseam/scripts/load_fake_data.py
+
+invite.local:
+	python typeseam/scripts/invite_user.py \
+	$(EMAIL)
 
 invite.demo:
 	heroku run --app clean-slate-demo \

@@ -3,7 +3,9 @@
 class AuthConfig(object):
     USER_ENABLE_USERNAMES = False
     USER_ENABLE_CHANGE_USERNAME = False
-    USER_ENABLE_REGISTER = False
+    USER_ENABLE_REGISTER = True
+    USER_ENABLE_INVITATION = True
+    USER_REQUIRE_INVITATION = True
     USER_APP_NAME = "Clear My Record"
 
 # def set_default_settings(user_manager, app_config):
