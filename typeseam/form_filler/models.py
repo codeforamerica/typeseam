@@ -65,7 +65,7 @@ class FormSubmission(db.Model):
     __tablename__ = 'form_filler_submission'
     id = db.Column(db.Integer, primary_key=True, index=True)
     uuid = db.Column(db.String(), default=gen_uuid)
-    date_received = db.Column(db.DateTime, default=datetime.datetime.now)
+    date_received = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     status = db.Column(db.String(), default='new')
     county = db.Column(db.String(), default='sanfrancisco')
     answers = db.Column(JSON)

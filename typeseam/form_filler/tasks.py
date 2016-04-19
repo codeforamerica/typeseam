@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 import sendgrid
 from flask import abort, request, render_template, current_app as app
+from flask.ext.login import current_user
 from typeseam.app import db, sg
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
@@ -60,6 +61,19 @@ def send_submission_notification(submission):
             submission.get_local_date_received().strftime("%-m/%-d/%Y %-I:%M %p %Z")),
         to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
+    sg.send(message)
+
+def send_submission_viewed_notification(submission):
+    text = render_template('submission_viewed_email.txt',
+        submission=submission,
+        user=current_user)
+    message = sendgrid.Mail(
+        subject="Application {} viewed by {}".format(
+            submission.uuid, current_user.email
+            ),
+        to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
+        text=text
+        )
     sg.send(message)
 
 def submit_answers_to_seamless_docs(form_id, answers):
