@@ -6,6 +6,7 @@ from .settings_auth import AuthConfig
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(HERE, os.pardir))
 
+server_name = os.environ.get('SERVER_NAME')
 
 class Config(AuthConfig):
     SECRET_KEY = os.environ.get('SECRET_KEY', 'secret-key')
@@ -17,7 +18,8 @@ class Config(AuthConfig):
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
     DEFAULT_ADMIN_EMAIL = os.environ.get('DEFAULT_ADMIN_EMAIL')
     DEFAULT_NOTIFICATION_EMAIL = os.environ.get('DEFAULT_NOTIFICATION_EMAIL')
-
+    if server_name:
+        SERVER_NAME = server_name
 
 class ProdConfig(Config):
     ENV = 'prod'
