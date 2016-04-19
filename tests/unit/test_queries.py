@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 from typeseam.form_filler.queries import (
     save_new_form_submission,
+    get_submission_by_uuid,
     get_response_model,
     create_typeform,
     save_new_typeform_data,
@@ -93,6 +94,24 @@ class TestQueries(TestCase):
         add.assert_called_once_with(fake_submission_instance)
         commit.assert_called_once_with()
         self.assertEqual(result, fake_submission_instance)
+
+    @patch('typeseam.form_filler.queries.FormSubmission')
+    @patch('typeseam.form_filler.queries.db.session.query')
+    def test_get_submission_by_uuid(self, query, FormSubmission):
+        mock_uuid_column = Mock()
+        FormSubmission.uuid = mock_uuid_column
+        expected_result = Mock()
+        mock_q = Mock()
+        mock_q.first.return_value = expected_result
+        mock_filter = Mock(return_value=mock_q)
+        query.return_value = Mock(filter=mock_filter)
+        result = get_submission_by_uuid('uuid')
+        query.assert_called_once_with(FormSubmission)
+        mock_filter.assert_called_once_with(mock_uuid_column == 'uuid')
+        self.assertEqual(result, expected_result)
+
+
+
 
 
 
