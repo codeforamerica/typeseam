@@ -15,7 +15,7 @@ class TestTasks(TestCase):
         }
         fake_rendered_template = Mock()
         render_template.return_value = fake_rendered_template
-        submission = Mock(id=10, uuid='a uuid')
+        submission = Mock(uuid='a uuid')
         request.url = "https://localtesting:80/yolo"
         message = Mock()
         submission.answers.keys.return_value = range(27)
@@ -31,6 +31,34 @@ class TestTasks(TestCase):
         tasks.send_submission_notification(submission)
         fake_Mail.assert_called_once_with(
             subject="New application to https://localtesting:80/yolo received <nice time format>",
+            to='me',
+            text=fake_rendered_template
+            )
+        sg.send.assert_called_once_with(message)
+
+
+    @patch('typeseam.form_filler.tasks.render_template')
+    @patch('typeseam.form_filler.tasks.sendgrid')
+    @patch('typeseam.form_filler.tasks.sg')
+    @patch('typeseam.form_filler.tasks.app')
+    @patch('typeseam.form_filler.tasks.current_user')
+    def test_send_submission_viewed_notification(self, current_user, app, sg, sendgrid, render_template):
+        app.config = {
+            'DEFAULT_NOTIFICATION_EMAIL': 'me'
+        }
+        fake_rendered_template = Mock()
+        render_template.return_value = fake_rendered_template
+        submission = Mock(uuid='uuid')
+        current_user.email = 'email'
+        message = Mock()
+        fake_time = Mock(strftime=Mock(return_value='<nice time format>'))
+        submission.get_local_date_received.return_value = fake_time
+        fake_Mail = Mock()
+        fake_Mail.return_value = message
+        sendgrid.Mail = fake_Mail
+        tasks.send_submission_viewed_notification(submission)
+        fake_Mail.assert_called_once_with(
+            subject="Application uuid viewed by email",
             to='me',
             text=fake_rendered_template
             )

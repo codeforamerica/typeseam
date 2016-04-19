@@ -4,6 +4,7 @@ from unittest.mock import Mock, patch
 from typeseam.form_filler.views import (
     index,
     county_application,
+    get_filled_pdf,
     responses,
     response_detail,
     responses_csv,
@@ -97,6 +98,39 @@ class TestViews(TestCase):
         save_new_submission.assert_called_once_with(fake_form_data)
         send_notification.assert_called_once_with(fake_submission)
         redirect.assert_called_once_with(url_for_result)
+
+    @patch('typeseam.form_filler.views.tasks.send_submission_viewed_notification')
+    @patch('typeseam.form_filler.views.queries.get_submission_by_uuid')
+    @patch('typeseam.form_filler.views.os.path.join')
+    @patch('typeseam.form_filler.views.send_file')
+    @patch('typeseam.form_filler.views.io')
+    @patch('typeseam.form_filler.views.PROJECT_ROOT')
+    @patch('flask_user.decorators.current_user', is_authenticated=True)
+    def test_get_filled_pdf(self, current_user, PROJECT_ROOT, io, send_file, join, get_submission_by_uuid, 
+            send_submission_viewed_notification):
+        actual_pdf_path = 'data/pdfs/CleanSlateSinglePage.pdf'
+        actual_mimetype = 'application/pdf'
+        mock_pdf_path = Mock()
+        mock_pdf = Mock()
+        mock_submission = Mock()
+        mock_fill = Mock(return_value=mock_pdf)
+        mock_submission.fill_pdf = mock_fill
+        mock_raw_pdf_data = Mock()
+        mock_BytesIO = Mock(return_value=mock_raw_pdf_data)
+        io.BytesIO = mock_BytesIO
+        get_submission_by_uuid.return_value = mock_submission
+        join.return_value = mock_pdf_path
+        # run
+        get_filled_pdf('uuid')
+        get_submission_by_uuid.assert_called_once_with('uuid')
+        join.assert_called_once_with(PROJECT_ROOT, actual_pdf_path)
+        mock_fill.assert_called_once_with(mock_pdf_path)
+        send_submission_viewed_notification.assert_called_once_with(mock_submission)
+        mock_BytesIO.assert_called_once_with(mock_pdf)
+        send_file.assert_called_once_with(
+            mock_raw_pdf_data,
+            mimetype=actual_mimetype
+            )
 
     @patch('typeseam.form_filler.views.datetime')
     @patch('typeseam.form_filler.views.timedelta')
