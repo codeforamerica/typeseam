@@ -28,7 +28,7 @@ step_2_paragraph = "A public defender will pull up your criminal record and figu
 step_3_headline = "3. Wait for next steps –"
 step_3_paragraph = str(
     "In about 4 weeks, you’ll receive a letter from the public defender "
-    "with your court date or instructions on next steps.")
+    "with your results and instructions on next steps.")
 
 contact_headline = "Questions? Contact us."
 contact_email = "clearmyrecord@codeforamerica.org"
