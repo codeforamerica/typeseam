@@ -1,9 +1,8 @@
 
 import os
-import requests
 from datetime import datetime
 from pytz import timezone
-from flask import render_template, url_for, current_app
+from flask import render_template, url_for, current_app, request
 from typeseam.public import blueprint
 from twilio import twiml
 import sendgrid
