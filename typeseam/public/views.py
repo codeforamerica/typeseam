@@ -21,7 +21,8 @@ def voicemail_response():
     # get the static URL
     static_url = os.environ.get('STATIC_URL', current_app.static_url_path)
     greeting_path = os.path.join(static_url, 'voicemail/CMR_voicemail_greeting.mp3')
-    handle_voicemail_url = url_for('public.handle_voicemail_recording', _external=True)
+    handle_voicemail_url = url_for('public.handle_voicemail_recording', _external=True
+        _scheme=current_app.config.get('EXTERNAL_SCHEME', 'https'))
     response.play(greeting_path)
     response.record(
         action=handle_voicemail_url,

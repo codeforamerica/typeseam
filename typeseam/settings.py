@@ -20,6 +20,11 @@ class Config(AuthConfig):
     DEFAULT_NOTIFICATION_EMAIL = os.environ.get('DEFAULT_NOTIFICATION_EMAIL')
     if server_name:
         SERVER_NAME = server_name
+    # use https for external links on heroku
+    if 'DYNO' in os.environ:
+        EXTERNAL_SCHEME = 'https'
+    else:
+        EXTERNAL_SCHEME = 'http'
 
 class ProdConfig(Config):
     ENV = 'prod'
