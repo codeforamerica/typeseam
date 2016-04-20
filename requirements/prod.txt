@@ -12,6 +12,7 @@ pytz==2016.3
 
 # External API calls
 requests==2.8.1
+twilio==5.4.0
 
 # Remote server
 gunicorn==19.4.1
