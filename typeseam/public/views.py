@@ -44,3 +44,5 @@ def handle_voicemail_recording():
             time_received.strftime("%-m/%-d/%Y %-I:%M %p %Z")),
         to=current_app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
+    response = twiml.Response()
+    return str(response)
