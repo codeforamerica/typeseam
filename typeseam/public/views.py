@@ -21,7 +21,7 @@ def voicemail_response():
     response = twiml.Response()
     # get the static URL
     static_url = os.environ.get('STATIC_URL', current_app.static_url_path)
-    greeting_path = os.path.join(static_url, 'voicemail/CMR_voicemail_greeting.m4a')
+    greeting_path = os.path.join(static_url, 'voicemail/CMR_voicemail_greeting.mp3')
     handle_voicemail_url = url_for(
             'public.handle_voicemail_recording', _external=True)
     response.play(greeting_path)
