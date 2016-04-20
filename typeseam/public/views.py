@@ -42,5 +42,5 @@ def handle_voicemail_recording():
         subject="New voicemail from {} received {}".format(
             from_number,
             time_received.strftime("%-m/%-d/%Y %-I:%M %p %Z")),
-        to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
+        to=current_app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
