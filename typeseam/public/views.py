@@ -7,7 +7,7 @@ from flask import render_template, url_for, current_app
 from typeseam.public import blueprint
 from twilio import twiml
 import sendgrid
-from typeseam.app import sg
+from typeseam.app import sg, csrf
 
 
 
@@ -29,7 +29,7 @@ def voicemail_response():
         method='POST')
     return str(response)
 
-
+@csrf.exempt
 @blueprint.route('/record/', methods=['POST'])
 def handle_voicemail_recording():
     recording_url = request.values.get("RecordingUrl", '')
