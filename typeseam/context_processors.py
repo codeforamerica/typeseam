@@ -1,5 +1,7 @@
 import os
 import flask
+from datetime import datetime
+from pytz import timezone
 from flask import url_for
 from jinja2 import Markup
 
@@ -27,6 +29,11 @@ def suffix(d):
 
 def custom_strftime(format, t):
     return t.strftime(format).replace('{S}', str(t.day) + suffix(t.day))
+
+def current_local_time(fmt):
+    utc_now = timezone('GMT').localize(datetime.utcnow())
+    return utc_now.astimezone(timezone('US/Pacific')).strftime(fmt)
+
 
 def inject_static_url():
     """Adds `STATIC_URL` variable to template context.
@@ -56,4 +63,5 @@ def add_content_constants():
     return dict(
         content=content_constants,
         linkify=Linkifier(linkify_links),
+        current_local_time=current_local_time,
         )
