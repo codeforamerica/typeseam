@@ -14,6 +14,11 @@ gulp.task('img', function(){
     .pipe(gulp.dest('typeseam/static/img/'))
 });
 
+gulp.task('voicemail', function(){
+  return gulp.src('./frontend/voicemail/*')
+    .pipe(gulp.dest('typeseam/static/voicemail/'))
+});
+
 gulp.task('less_dev', function(){
   return gulp.src('./frontend/less/main.less')
     .pipe(less())
@@ -44,5 +49,5 @@ gulp.task('flask', function(){
 });
 
 
-gulp.task('build', ['fonts', 'img', 'less_dev', 'js_dev'])
+gulp.task('build', ['fonts', 'img', 'voicemail', 'less_dev', 'js_dev'])
 gulp.task('default', ['flask', 'build', 'watch'])
