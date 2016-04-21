@@ -15,3 +15,4 @@ class TestModels(TestCase):
             'title', 'translator', 'user_id', 'added_on', 'latest_response',
             'responses']:
             self.assertTrue(getattr(Typeform, att))
+

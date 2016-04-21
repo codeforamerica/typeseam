@@ -24,6 +24,13 @@ def yesno(s, key=None):
     if result in ('yes', 'no'):
         return result.capitalize()
 
+nice_contact_choices = {
+    'voicemail': 'Voicemail',
+    'sms': 'Text Message',
+    'email': 'Email',
+    'snailmail': 'Paper mail'
+}
+
 clean_slate_translator = {
             'Address City': 'address_city',
             'Address State': 'address_state',
@@ -87,6 +94,13 @@ class FormSubmission(db.Model):
             else:
                 result[key] = self.answers.get(extractor, '')
         return result
+
+    def get_contact_preferences(self):
+        preferences = []
+        for k in self.answers:
+            if "prefers" in k:
+                preferences.append(k[8:])
+        return [nice_contact_choices[m] for m in preferences]
 
 
 class Typeform(db.Model):
