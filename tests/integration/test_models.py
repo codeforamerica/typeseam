@@ -13,3 +13,14 @@ class TestModels(BaseTestCase):
         db.session.commit()
         result = s.fill_pdf('data/pdfs/CleanSlateSinglePage.pdf')
         self.assertEqual(type(result), bytes)
+
+    def test_submission_contact_preferences(self):
+        submission = SubmissionFactory.create()
+        media = ["email", "sms", "voicemail", "snailmail"]
+        nice_contacts = ['Voicemail', 'Text Message', 'Email', 'Paper mail']
+        for medium in media:
+            submission.answers['prefers_' + medium] = "yes"
+        db.session.commit()
+        results = submission.get_contact_preferences()
+        for thing in nice_contacts:
+            self.assertIn(thing, results)

@@ -51,6 +51,7 @@ def get_seamless_doc_pdf(response_id, pdf_wait_time=10):
     response_data = queries.response_serializer.dump(response).data
     return form, response_data
 
+
 def send_submission_notification(submission):
     questions = len(submission.answers.keys())
     answers = sum([a not in ('', None) for q, a in submission.answers.items()])
@@ -62,6 +63,7 @@ def send_submission_notification(submission):
         to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
     sg.send(message)
+
 
 def send_submission_viewed_notification(submission):
     text = render_template('submission_viewed_email.txt',
@@ -75,6 +77,7 @@ def send_submission_viewed_notification(submission):
         text=text
         )
     sg.send(message)
+
 
 def submit_answers_to_seamless_docs(form_id, answers):
     submit_url = SEAMLESS_BASE_URL + 'form/{}/submit'.format(form_id)

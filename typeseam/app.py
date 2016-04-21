@@ -20,11 +20,9 @@ def create_app():
     register_blueprints(app)
     register_context_processors(app)
     register_logging(app, config)
-
     @app.before_first_request
     def setup():
         load_initial_data(app)
-
     return app
 
 
