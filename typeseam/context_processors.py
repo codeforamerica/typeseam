@@ -63,6 +63,5 @@ def add_content_constants():
     return dict(
         content=content_constants,
         linkify=Linkifier(linkify_links),
-        current_local_time=current_local_time,
-        current_page_url=request.url
+        current_local_time=current_local_time
         )

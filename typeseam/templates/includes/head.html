@@ -10,22 +10,22 @@
 {# Schema.org markup for Google+ #}
 <meta itemprop="name" content="{{ content.metadata_title }}" />
 <meta itemprop="description" content="{{ content.metadata_description }}">
-<meta itemprop="image" content="{{ content.metadata_image_url }}">
+<meta itemprop="image" content="{{ static_url }}img/CMR-hero.png">
 
 {# Twitter card data #}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@codeforamerica">
-<meta name="twitter:url" content="{{ content.current_page_url }}">
+<meta name="twitter:url" content="{{ request.url }}">
 <meta name="twitter:title" content="{{ content.metadata_title }}">
 <meta name="twitter:description" content="{{ content.metadata_description }}">
 <meta name="twitter:creator" content="@codeforamerica">
-<meta name="twitter:image:src" content="{{ content.metadata_image_url }}">
+<meta name="twitter:image:src" content="{{ static_url }}img/CMR-hero.png">
 
 {# Open Graph data #}
 <meta property="og:title" content="{{ content.metadata_title }}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="{{ current_page_url }}">
-<meta property="og:image" content="{{ content.metadata_image_url }}">
+<meta property="og:url" content="{{ request.url }}">
+<meta property="og:image" content="{{ static_url }}img/CMR-hero.png">
 <meta property="og:description" content="{{ content.metadata_description }}">
 <meta property="og:site_name" content="{{ content.metadata_author }}">
 
@@ -33,6 +33,6 @@
 {%- if page_title -%}
 {{- page_title -}}
 {%- else -%}
-Clean Slate SF Applications
+{{ content.metadata_title }}
 {%- endif -%}
 </title>
