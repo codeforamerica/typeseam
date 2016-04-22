@@ -1,6 +1,8 @@
-import datetime, uuid
+import datetime, uuid, os
 from pytz import timezone
 from typeseam.extensions import db
+from typeseam.settings import PROJECT_ROOT
+
 from sqlalchemy.dialects.postgresql import JSON
 
 from typeseam.form_filler.pdftk_wrapper import PDFTKWrapper
@@ -31,6 +33,12 @@ nice_contact_choices = {
     'snailmail': 'Paper mail'
 }
 
+def get_formatted_dob(s):
+    return '{}/{}/{}'.format(
+                s.answers.get('dob_month', ''),
+                s.answers.get('dob_day', ''),
+                s.answers.get('dob_year', ''))
+
 clean_slate_translator = {
             'Address City': 'address_city',
             'Address State': 'address_state',
@@ -40,10 +48,7 @@ clean_slate_translator = {
             'Cell phone number': 'phone_number',
             'Charged with a crime': lambda s: yesno(s, 'being_charged'),
             'Date': lambda s: PDT(s.date_received).strftime('%-m/%-d/%Y'),
-            'Date of Birth': lambda s: '{}/{}/{}'.format(
-                s.answers.get('dob_month', ''),
-                s.answers.get('dob_day', ''),
-                s.answers.get('dob_year', '')),
+            'Date of Birth': get_formatted_dob,
             'Dates arrested outside SF': 'when_where_outside_sf',
             'Drivers License': 'drivers_license_number',
             'Email Address': 'email',
@@ -68,6 +73,21 @@ clean_slate_translator = {
             'Work phone number': '',
         }
 
+rap_request_translator = {
+    'DOB': get_formatted_dob,
+    'Date of Request': lambda s: PDT(s.date_received).strftime('%-m/%-d/%Y'),
+    'First Name': 'first_name',
+    'Last Name': 'last_name'
+}
+
+PDFS = {
+    'clean_slate': {
+        'translator': clean_slate_translator,
+        'pdf_path': 'CleanSlateSinglePage.pdf'},
+    'rap_request': {
+        'translator': rap_request_translator,
+        'pdf_path': 'SFPD_RAP_Sheet_Request.pdf'}}
+
 class FormSubmission(db.Model):
     __tablename__ = 'form_filler_submission'
     id = db.Column(db.Integer, primary_key=True, index=True)
@@ -81,10 +101,20 @@ class FormSubmission(db.Model):
         local_tz = timezone(timezone_name)
         return gmt.localize(self.date_received).astimezone(local_tz)
 
-    def fill_pdf(self, pdf_path):
-        data = self.answers
-        translation = self.translate(clean_slate_translator)
-        return pdftk.fill_pdf(pdf_path, translation)
+    def fill_pdfs(self, pdf_keys):
+        pdfs = []
+        for key in pdf_keys:
+            pdfs.append(self.fill_pdf(key))
+        return pdftk.join_pdfs(pdfs)
+
+    def fill_pdf(self, pdf_key):
+        if pdf_key not in PDFS:
+                raise KeyError("no pdf with that key")
+        pdf_path = os.path.join(PROJECT_ROOT, 'data/pdfs', PDFS[pdf_key]['pdf_path'])
+        translator = PDFS[pdf_key]['translator']
+        data = self.translate(translator)
+        import pdb; pdb.set_trace()
+        return pdftk.fill_pdf(pdf_path, data)
 
     def translate(self, translator):
         result = {}

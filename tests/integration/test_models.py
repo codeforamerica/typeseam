@@ -11,7 +11,13 @@ class TestModels(BaseTestCase):
     def test_submission_fill_pdf(self):
         s = SubmissionFactory.create()
         db.session.commit()
-        result = s.fill_pdf('data/pdfs/CleanSlateSinglePage.pdf')
+        result = s.fill_pdf('rap_request')
+        self.assertEqual(type(result), bytes)
+
+    def test_submission_fill_pdfs(self):
+        s = SubmissionFactory.create()
+        db.session.commit()
+        result = s.fill_pdfs(['clean_slate','rap_request'])
         self.assertEqual(type(result), bytes)
 
     def test_submission_contact_preferences(self):
