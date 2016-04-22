@@ -10,7 +10,7 @@ credibility_note = str("Clear My Record is a free, non-profit service from "
     "Code for America for people with a criminal record in San Francisco. "
     "We are not a law firm and the information on this site is not legal advice.")
 
-gov_service_name = "Clean Slate is the San Francisco Public Defender’s record clearance program"
+gov_service_name = "Clean Slate is the San Francisco Public Defender's record clearance program"
 gov_service_description = str(
     "Clearing your record means you might be able to access more "
     "employment, housing, education, and financial opportunities. Clear My Record is "
@@ -55,3 +55,7 @@ footer_legal = "Read our Privacy Policy"
 footer_cleanslate = str(
     "Learn more about "
     "Clean Slate")
+
+metadata_title = "Clear My Record | Get help clearing your criminal record in San Francisco"
+metadata_description = "Clear My Record is a free, non-profit service that can help you remove convictions from your criminal record."
+metadata_author = "Clear My Record (by Code for America)"
