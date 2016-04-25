@@ -10,6 +10,9 @@ credibility_note = str("Clear My Record is a free, non-profit service from "
     "Code for America for people with a criminal record in San Francisco. "
     "We are not a law firm and the information on this site is not legal advice.")
 
+benefits_headline = "Clearing your criminal record could help you qualify for jobs, housing, and educational opportunities."
+eligibilty_headline = "Most people qualify for some form of record clearance."
+
 gov_service_name = "Clean Slate is the San Francisco Public Defender's record clearance program"
 gov_service_description = str(
     "Clearing your record means you might be able to access more "
@@ -21,11 +24,11 @@ gov_service_description = str(
 
 
 journey_headline = "3 Easy Steps to Apply"
-step_1_headline = "1. Apply online –"
+step_1_headline = "1. Apply online"
 step_1_paragraph = "Fill out the pre-screener to help the public defender understand your history."
-step_2_headline = "2. Eligibility review –"
+step_2_headline = "2. Check your eligibility"
 step_2_paragraph = "A public defender will pull up your criminal record and figure out what record clearance options make sense for you."
-step_3_headline = "3. Wait for next steps –"
+step_3_headline = "3. Wait for next steps"
 step_3_paragraph = str(
     "In about 4 weeks, you’ll receive a letter from the public defender "
     "with your results and instructions on next steps.")
