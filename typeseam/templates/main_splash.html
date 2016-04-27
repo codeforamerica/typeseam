@@ -58,25 +58,45 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="benefits_healine new_section">{{ content.benefits_headline }}</h2>
+        <h2 class="benefits_healine new_section" id="learn_more_section" name="learn_more_section">{{ content.journey_headline }}</h2>
       </div>
     </div>
 
     <div class="row">
       <div class="apply_steps">
-        <div class="col-xs-12 col-md-4">
-          <h4 class="step_headline">{{ content.step_1_headline }}</h4>
-          <p class="step_paragraph">{{ content.step_1_paragraph }}</p>
+        <div class="col-xs-12 col-md-3">
+          <div class="step">
+            <h4 class="step_headline">{{ content.step_1_headline }}</h4>
+            <p class="step_paragraph">{{ content.step_1_paragraph }}</p>
+          </div>
         </div>
 
-        <div class="col-xs-12 col-md-4">
-          <h4 class="step_headline">{{ content.step_2_headline }}</h4>
-          <p class="step_paragraph">{{ content.step_2_paragraph }}</p>
+        <div class="col-xs-12 col-md-1">
+          <h1 class="step-arrow">
+            <span class="glyphicon glyphicon-arrow-right visible-md visible-lg" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-arrow-down visible-xs visible-sm" aria-hidden="true"></span>
+          </h1>
         </div>
 
-        <div class="col-xs-12 col-md-4">
-          <h4 class="step_headline">{{ content.step_3_headline }}</h4>
-          <p class="step_paragraph">{{ content.step_3_paragraph }}</p>
+        <div class="col-xs-12 col-md-3">
+          <div class="step">
+            <h4 class="step_headline">{{ content.step_2_headline }}</h4>
+            <p class="step_paragraph">{{ content.step_2_paragraph }}</p>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-1">
+          <h1 class="step-arrow">
+            <span class="glyphicon glyphicon-arrow-right visible-md visible-lg" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-arrow-down visible-xs visible-sm" aria-hidden="true"></span>
+          </h1>
+        </div>
+
+        <div class="col-xs-12 col-md-3">
+          <div class="step">
+            <h4 class="step_headline">{{ content.step_3_headline }}</h4>
+            <p class="step_paragraph">{{ content.step_3_paragraph }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -84,7 +104,7 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="eligibility_healine new_section">{{ content.eligibilty_headline }}</h2>
+        <h2 class="eligibility_headline new_section">{{ content.eligibilty_headline }}</h2>
       </div>
     </div>
 
@@ -92,12 +112,12 @@
       <div class="eligibility_info">
 
         <div class="yes_qualify">
-          <div class="col-xs-12 col-md-8">
+          <div class="col-xs-12 col-md-7">
             <h4 class="eligibility-list-header">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
               You might qualify
             </h4>
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-7">
               <ul class="eligibility_list">
                 <li>Drug possession</li>
                 <li>Petty theft under $950</li>
@@ -109,7 +129,7 @@
               </ul>
             </div>
 
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-5">
               <ul class="eligibility_list">
                 <li>Theft</li>
                 <li>Prostitution</li>
@@ -125,7 +145,7 @@
 
 
         <div class="no-qualify">
-          <div class="col-xs-12 col-md-4">
+          <div class="col-xs-12 col-md-4 col-md-offset-1">
             <h4 class="eligibility-list-header">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               You do not qualify
@@ -140,6 +160,7 @@
                 <li>On the sex offender registry</li>
                 <li>Convicted of any superstrikes</li>
               </ul>
+            </div>
           </div>
         </div>
 
@@ -168,16 +189,20 @@
 
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <div class="gov_service" id="learn_more_section" name="learn_more_section">
+        <div class="gov_service">
           <h2 class="gov_service_name">
             {{ content.gov_service_name }}
           </h2>
-          <p class="gov_service_description">
-            {{ content.gov_service_description }}
+          <p class="gov_service_description_1)">
+            {{ content.gov_service_description_1 }}
+          </p>
+
+          <p class="gov_service_description_2)">
+            {{ content.gov_service_description_2 }}
           </p>
         </div>
 
-        <div class="contact_info new_section">
+        <div class="contact_info">
           <h2>{{ content.contact_headline }}</h2>
           <ul>
             <li>Email: {{ linkify(content.contact_email) }}</li>
