@@ -23,7 +23,7 @@ gov_service_description_1 = str(
 about_service_headline = "This is an online service by Code for America for the San Francisco Public Defender"
 
 
-journey_headline = "Apply to Clear My Record in 3 easy steps"
+journey_headline = "Apply to Clear My Record in 3 easy steps:"
 step_1_headline = "1. Apply online"
 step_1_paragraph = "Fill out the pre-screener to help the public defender understand your history."
 step_2_headline = "2. Check your eligibility"
