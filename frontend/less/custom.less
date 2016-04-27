@@ -1,4 +1,4 @@
-
+/**Universal Styles**/
 
 header { padding: 1em 0;}
 .top_bar a { color: inherit; text-decoration: none; }
@@ -6,7 +6,6 @@ p, ul { font-size: 18px; font-weight: 400; }
 h1 { font-size: 40px; font-weight: 700; }
 h1.main_headline { margin-bottom: 4px; }
 section.content > .container:first-child { padding-top: 2em; }
-
 
 
 h2 {
@@ -18,26 +17,44 @@ h2 {
 h3 { font-size:22px; }
 h3.subheadline { margin-top:0; margin-bottom:40px; }
 
-h2.time_expectation{
-  font-weight: 700;
-  text-align: center;
-  color: @splash-background;
-}
-
 h4{
   font-weight: 700;
 }
 
-p.step_headline{
-  font-weight: 600;
+.new_section{
+  padding-top:24px;
+}
+
+.container {
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+span.glyphicon{
+  padding-right:10px;
+}
+
+.secondary_headline2{
+  color:#004A6C;
+}
+
+.col_centered {
+  float: none;
+  margin: 0 auto;
+}
+.splash ul, .footer ul {
+  padding: 0;
+  line-height: 1.8em;
+}
+
+
+/**Hero Section**/
+.main_headline{
+  margin-top: 1em;
 }
 
 .call_to_action_time{
   margin-bottom: 26px;
-}
-
-.main_headline{
-  margin-top: 1em;
 }
 
 .call_to_action_button {
@@ -60,14 +77,14 @@ p.step_headline{
   font-weight: bold;
 }
 
-.new_section{
-  padding-top:24px;
+.btn-lg{
+  margin-bottom:12px;
 }
 
-.container {
-  margin: 0 auto;
-  padding-bottom: 20px;
+.splash.above_the_fold .btn {
+  margin-bottom:20px;
 }
+
 
 // for all above the fold sections
 .above_the_fold {
@@ -92,6 +109,12 @@ p.step_headline{
   line-height: 1.5;
 }
 
+
+/**Steps to apply**/
+p.step_headline{
+  font-weight: 600;
+}
+
 .apply_steps{
   margin-top: 20px;
 }
@@ -113,6 +136,8 @@ p.step_headline{
   color: @splash-background;
   text-align: center;
 }
+
+/**Eligibility info**/
 .eligibility_headline{
   margin-top:70px;
 }
@@ -131,10 +156,13 @@ p.step_headline{
   padding-bottom: 5px;
 }
 
+/**About the service**/
 .about_the_service, .who_we_are{
   padding-bottom:50px;
 }
 
+
+/**Team**/
 .who_we_are {
   background-color: @brand-note;
   color: #fff;
@@ -180,6 +208,29 @@ p.step_headline{
   background-size: 100%;
 }
 
+
+/**Contact Info**/
+
+
+/**Apply backup**/
+h2.time_expectation{
+  font-weight: 700;
+  text-align: center;
+  color: @splash-background;
+}
+
+.apply_backup_2, .backup_apply_headline,
+.footer_logo,
+{
+  text-align: center;
+}
+
+.journey_headline{
+  text-align: center;
+}
+
+
+/**Privacy Page**/
 .privacy_description{
   padding-top:40px;
   padding-bottom:40px;
@@ -194,20 +245,7 @@ p.step_headline{
 }
 
 
-span.glyphicon{
-  padding-right:10px;
-}
-
-.secondary_headline2{
-  color:#004A6C;
-}
-
-
-
-
-
-
-
+/**Footer**/
 .footer {
   background-color: @footer-background;
   color: #fff;
@@ -236,53 +274,12 @@ span.glyphicon{
   color:grey;
 }
 
-.btn-lg{
-  margin-bottom:12px;
-}
-
-.splash.above_the_fold .btn {
-  margin-bottom:20px;
-}
-
-.journey_headline{
-  text-align: center;
-}
-
-
-
-.apply_backup_2, .backup_apply_headline,
-.footer_logo,
-{
-  text-align: center;
-}
-
-.col_centered {
-  float: none;
-  margin: 0 auto;
-}
-.splash ul, .footer ul {
-  padding: 0;
-  line-height: 1.8em;
-}
-
-ul.opportunities {
-  padding-top: 12px;
-  text-align: left;
-}
-
-.opportunity {
-  padding-bottom: 20px;
-}
-.opportunity:before {
-  content: "\2713";
-  padding-right: 0.75em
-}
-
 section.footer.container.new_section{
   padding-top: 80px;
   padding-bottom: 50px;
   color: #fff;
 }
+
 
 
 // breadcrumbs
