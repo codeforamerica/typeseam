@@ -58,6 +58,7 @@ footer_legal = "Read our Privacy Policy"
 footer_cleanslate = str(
     "Learn more about "
     "Clean Slate")
+back_home_btn ="Go back to main page"
 
 metadata_title = "Clear My Record | Get help clearing your criminal record in San Francisco"
 metadata_description = "Clear My Record is a free, non-profit service to help you dismiss or reduce old convictions on your criminal record."
