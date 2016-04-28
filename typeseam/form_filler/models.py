@@ -41,8 +41,10 @@ def get_formatted_dob(s):
 
 def fmt_ssn(s):
     ssn = s.answers.get('ssn', '')
-    digits = ''.join([d for d in ssn if d.isnumeric()])
-    return '{}-{}-{}'.format(digits[:3], digits[3:5], digits[5:])
+    if ssn:
+        digits = ''.join([d for d in ssn if d.isnumeric()])
+        return '{}-{}-{}'.format(digits[:3], digits[3:5], digits[5:])
+    return ''
 
 clean_slate_translator = {
             'Address City': 'address_city',
