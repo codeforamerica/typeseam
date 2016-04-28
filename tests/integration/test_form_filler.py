@@ -37,18 +37,5 @@ class TestFormFillerViews(BaseTestCase):
     def get_user(self):
         return get_user_by_email(self.sample_user_data['email'])
 
-    # def test_correct_response_count(self):
-    #     # login and check the baseline response count
-    #     response = self.login()
-    #     self.assertEqual(response.status_code, 200)
-    #     soup = BeautifulSoup(response.data, 'html.parser')
-    #     self.assertEqual(str(self.fake_response_count), soup.find("td", {"data-test-id": "typeform-response-count"}).text.strip())
-    #     # create a new response
-    #     fake_user = self.get_user()
-    #     fake_typeform = db.session.query(Typeform).filter(Typeform.user_id == fake_user.id).first()
-    #     generate_fake_responses(fake_typeform, 1)
-    #     # reload the front page and check the new response count
-    #     response = self.client.get('/', follow_redirects=True)
-    #     new_response_count = self.fake_response_count + 1
-    #     soup = BeautifulSoup(response.data, 'html.parser')
-    #     self.assertEqual(str(new_response_count), soup.find("td", {"data-test-id": "typeform-response-count"}).text.strip())
+
+

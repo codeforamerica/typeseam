@@ -4,7 +4,8 @@ from unittest.mock import Mock, patch
 from typeseam.form_filler.models import (
     Typeform,
     SeamlessDoc,
-    TypeformResponse
+    TypeformResponse,
+    FormSubmission
     )
 
 
