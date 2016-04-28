@@ -44,7 +44,7 @@ def county_application():
 @login_required
 def get_filled_pdf(submission_uuid):
     submission = queries.get_submission_by_uuid(submission_uuid)
-    pdf = submission.fill_pdfs(['clean_slate', 'rap_request'])
+    pdf = submission.fill_pdf('clean_slate')
     tasks.send_submission_viewed_notification(submission)
     return send_file(
         io.BytesIO(pdf),

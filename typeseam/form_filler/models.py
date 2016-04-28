@@ -5,9 +5,9 @@ from typeseam.settings import PROJECT_ROOT
 
 from sqlalchemy.dialects.postgresql import JSON
 
-from typeseam.form_filler.pdftk_wrapper import PDFTKWrapper
+from typeseam.form_filler.pdfparser import PDFParser
 
-pdftk = PDFTKWrapper()
+pdfparser = PDFParser()
 gmt = timezone('GMT')
 pacific = timezone('US/Pacific')
 
@@ -71,22 +71,17 @@ clean_slate_translator = {
             'US Citizen': lambda s: yesno(s, 'us_citizen'),
             'What is your monthly income': 'monthly_income',
             'Work phone number': '',
+            'DOB': get_formatted_dob,
+            'Date of Request': lambda s: PDT(datetime.datetime.now()).strftime('%-m/%-d/%Y'),
+            'FirstName': 'first_name',
+            'LastName': 'last_name'
         }
 
-rap_request_translator = {
-    'DOB': get_formatted_dob,
-    'Date of Request': lambda s: PDT(s.date_received).strftime('%-m/%-d/%Y'),
-    'First Name': 'first_name',
-    'Last Name': 'last_name'
-}
 
 PDFS = {
     'clean_slate': {
         'translator': clean_slate_translator,
-        'pdf_path': 'CleanSlateSinglePage.pdf'},
-    'rap_request': {
-        'translator': rap_request_translator,
-        'pdf_path': 'SFPD_RAP_Sheet_Request.pdf'}}
+        'pdf_path': 'CleanSlateCombined.pdf'}}
 
 class FormSubmission(db.Model):
     __tablename__ = 'form_filler_submission'
@@ -101,20 +96,13 @@ class FormSubmission(db.Model):
         local_tz = timezone(timezone_name)
         return gmt.localize(self.date_received).astimezone(local_tz)
 
-    def fill_pdfs(self, pdf_keys):
-        pdfs = []
-        for key in pdf_keys:
-            pdfs.append(self.fill_pdf(key))
-        return pdftk.join_pdfs(pdfs)
-
     def fill_pdf(self, pdf_key):
         if pdf_key not in PDFS:
                 raise KeyError("no pdf with that key")
         pdf_path = os.path.join(PROJECT_ROOT, 'data/pdfs', PDFS[pdf_key]['pdf_path'])
         translator = PDFS[pdf_key]['translator']
         data = self.translate(translator)
-        import pdb; pdb.set_trace()
-        return pdftk.fill_pdf(pdf_path, data)
+        return pdfparser.fill_pdf(pdf_path, data)
 
     def translate(self, translator):
         result = {}
