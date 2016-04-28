@@ -30,7 +30,7 @@ class TestModels(TestCase):
             fake_submission = Mock(answers={
                 'ssn': entry
                 })
-            self.assertEqual(fmt_ssn(fake_submission), '000-00-0000')
+            self.assertEqual(fmt_ssn(fake_submission), 'SS# 000-00-0000')
         fake_submission = Mock(answers={
                 'ssn': ''
                 })

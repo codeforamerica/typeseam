@@ -43,7 +43,7 @@ def fmt_ssn(s):
     ssn = s.answers.get('ssn', '')
     if ssn:
         digits = ''.join([d for d in ssn if d.isnumeric()])
-        return '{}-{}-{}'.format(digits[:3], digits[3:5], digits[5:])
+        return 'SS# {}-{}-{}'.format(digits[:3], digits[3:5], digits[5:])
     return ''
 
 clean_slate_translator = {
