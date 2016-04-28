@@ -112,7 +112,7 @@ class TestViews(TestCase):
         mock_pdf = Mock()
         mock_submission = Mock()
         mock_fill = Mock(return_value=mock_pdf)
-        mock_submission.fill_pdfs = mock_fill
+        mock_submission.fill_pdf = mock_fill
         mock_raw_pdf_data = Mock()
         mock_BytesIO = Mock(return_value=mock_raw_pdf_data)
         io.BytesIO = mock_BytesIO
@@ -120,7 +120,7 @@ class TestViews(TestCase):
         # run
         get_filled_pdf('uuid')
         get_submission_by_uuid.assert_called_once_with('uuid')
-        mock_fill.assert_called_once_with(['clean_slate', 'rap_request'])
+        mock_fill.assert_called_once_with('clean_slate')
         send_submission_viewed_notification.assert_called_once_with(mock_submission)
         mock_BytesIO.assert_called_once_with(mock_pdf)
         send_file.assert_called_once_with(
