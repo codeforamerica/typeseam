@@ -21,7 +21,10 @@ class TestModels(TestCase):
     def test_ssn_fmt(self):
         inputs = [
             '000000000',
-            '000-00-0000'
+            '000-00-0000',
+            '000 00 0000',
+            '000.00.0000',
+            '000/00/0000'
         ]
         for entry in inputs:
             fake_submission = Mock(answers={
