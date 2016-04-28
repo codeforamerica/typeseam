@@ -72,7 +72,7 @@ clean_slate_translator = {
             'What is your monthly income': 'monthly_income',
             'Work phone number': '',
             'DOB': get_formatted_dob,
-            'Date of Request': lambda s: PDT(datetime.datetime.now()).strftime('%-m/%-d/%Y'),
+            'SSN': 'ssn',
             'FirstName': 'first_name',
             'LastName': 'last_name'
         }
