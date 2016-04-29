@@ -39,11 +39,11 @@ def get_formatted_dob(s):
                 s.answers.get('dob_day', ''),
                 s.answers.get('dob_year', ''))
 
-def fmt_ssn(s):
+def fmt_ssn(s, prefix='SS# '):
     ssn = s.answers.get('ssn', '')
     if ssn:
         digits = ''.join([d for d in ssn if d.isnumeric()])
-        return 'SS# {}-{}-{}'.format(digits[:3], digits[3:5], digits[5:])
+        return '{}{}-{}-{}'.format(prefix, digits[:3], digits[3:5], digits[5:])
     return ''
 
 clean_slate_translator = {
@@ -74,7 +74,7 @@ clean_slate_translator = {
             'On probation or parole': lambda s: yesno(s, 'on_probation_parole'),
             'Other phone number': '',
             'Serving a sentence': lambda s: yesno(s, 'serving_sentence'),
-            'Social Security Number': fmt_ssn,
+            'Social Security Number': lambda s: fmt_ssn(s, ''),
             'US Citizen': lambda s: yesno(s, 'us_citizen'),
             'What is your monthly income': 'monthly_income',
             'Work phone number': '',
