@@ -8,6 +8,12 @@ View and download the new application here:
             'form_filler.get_filled_pdf', submission_uuid=submission.uuid, _external=True
         )}}
 
+You can review this and all previous applications here:
+
+    {{ url_for(
+            'form_filler.applications_index', _external=True
+        )}}
+
 This client prefers to be contacted through:
 {%- for medium in submission.get_contact_preferences() %}
     - {{ medium }}

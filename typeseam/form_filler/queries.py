@@ -10,7 +10,8 @@ from typeseam.app import db
 from .models import (
     TypeformResponse,
     Typeform, SeamlessDoc,
-    FormSubmission
+    FormSubmission,
+    LogEntry
     )
 
 from .serializers import (
@@ -39,6 +40,47 @@ def get_submission_by_uuid(submission_uuid):
     q = db.session.query(FormSubmission).filter(
         FormSubmission.uuid == submission_uuid)
     return q.first()
+
+def get_latest_logentry():
+    q = db.session.query(LogEntry).\
+            order_by(desc(LogEntry.datetime))
+    return q.first()
+
+def save_new_logentries_from_front_events(events=None):
+    for event in events:
+        logentry = LogEntry.from_parsed_front_event(event)
+        db.session.add(logentry)
+    db.session.commit()
+
+def get_submissions():
+    q = db.session.query(FormSubmission).\
+            order_by(desc(FormSubmission.date_received))
+    return q.all()
+
+def get_logentries():
+    q = db.session.query(LogEntry).\
+            order_by(desc(LogEntry.datetime))
+    return q.all()
+
+
+def get_submissions_with_logs():
+    lookups = {}
+    submissions = get_submissions()
+    logs = get_logentries()
+    for submission in submissions:
+        lookups[submission.uuid] = {'submission': submission}
+    for log in logs:
+        uuid = log.submission_key
+        if uuid in lookups:
+            if 'logs' not in lookups[uuid]:
+                lookups[uuid]['logs'] = [log]
+            else:
+                lookups[uuid]['logs'].append(log)
+    results = list(lookups.values())
+    for row in results:
+        row['logs'].sort(key=lambda e: e.datetime, reverse=True) 
+    return sorted(results, key=lambda s: s['submission'].date_received, reverse=True)
+
 
 def save_new_typeform_data(data, typeform=None):
     if typeform:

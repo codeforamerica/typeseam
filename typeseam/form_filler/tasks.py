@@ -8,9 +8,11 @@ from flask.ext.login import current_user
 from typeseam.app import db, sg
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
+from typeseam.form_filler.front import Front
 
 from flask_mail import Message
 
+front_app = Front(os.environ.get('FRONT_API_TOKEN'))
 
 SEAMLESS_BASE_URL = 'https://cleanslate.seamlessdocs.com/api/'
 
@@ -77,6 +79,12 @@ def send_submission_viewed_notification(submission):
         text=text
         )
     sg.send(message)
+
+def pull_new_front_events(latest=None):
+    latest_time=None
+    if latest:
+        latest_time = latest.datetime.timestamp()
+    return front_app.get_events(latest_time)
 
 
 def submit_answers_to_seamless_docs(form_id, answers):

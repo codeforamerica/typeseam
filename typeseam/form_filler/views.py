@@ -39,6 +39,15 @@ def county_application():
         tasks.send_submission_notification(submission)
         return redirect(url_for('form_filler.thanks'))
 
+@blueprint.route('/sanfrancisco/applications/', methods=['GET'])
+@login_required
+def applications_index():
+    latest = queries.get_latest_logentry()
+    events = tasks.pull_new_front_events(latest)
+    if events:
+        queries.save_new_logentries_from_front_events(events)
+    submissions = queries.get_submissions_with_logs()
+    return render_template("app_index.html", submissions=submissions)
 
 @blueprint.route('/sanfrancisco/<submission_uuid>/')
 @login_required

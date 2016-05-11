@@ -127,6 +127,41 @@ class FormSubmission(db.Model):
                 preferences.append(k[8:])
         return [nice_contact_choices[m] for m in preferences]
 
+    def date_opened_or_not(self, logs):
+        # this assumes logs are sorted from most recent to oldest
+        for log in logs:
+            if log.user == 'Louise.Winterstein@sfgov.org':
+                return log.pacific(
+                    '%a %-m/%-d/%y %-I:%M %p')
+        return '------------'
+
+
+class LogEntry(db.Model):
+    __tablename__ = "form_filler_logentry"
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    datetime = db.Column(db.DateTime, index=True)
+    user = db.Column(db.String())
+    submission_key = db.Column(db.String(), index=True)
+    event_type = db.Column(db.String())
+
+    @classmethod
+    def from_parsed_front_event(cls, event):
+        return cls(
+            datetime=datetime.datetime.fromtimestamp(
+                event['time']),
+            user=event.get('by', ''),
+            submission_key=event['key'],
+            event_type=event['type']
+            )
+
+    def pacific(self, fmt=None):
+        dtz = gmt.localize(
+                    self.datetime
+                    ).astimezone(pacific)
+        if fmt:
+            return dtz.strftime(fmt)
+        return dtz
+
 
 class Typeform(db.Model):
     __tablename__ = 'form_filler_typeform'
@@ -175,3 +210,10 @@ class TypeformResponse(db.Model):
     def __repr__(self):
         return "<TypeformResponse received='{}'>".format(
             str(self.date_received))
+
+
+
+
+
+
+

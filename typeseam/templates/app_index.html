@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<h1>Applications</h1>
+	</div>
+	<div class="row">
+		<table class="table">
+		<tr>
+			<th>Date</th>
+			<th>Last Name</th>
+			<th>First Name</th>
+			<th>Intake PDF</th>
+			<th>Opened by Aleem</th>
+		</tr>
+		{% for app in submissions %}
+		<tr>
+			<td>{{ app.submission.get_local_date_received().strftime('%-m/%-d/%y') }}</td>
+			<td>{{ app.submission.answers.last_name }}</td>
+			<td>{{ app.submission.answers.first_name }}</td>
+			<td>
+				<a href="{{ 
+					url_for('form_filler.get_filled_pdf',
+						submission_uuid=app.submission.uuid
+						) }}">{{ app.submission.uuid[-8:] }}</a>
+			</td> 
+			<td>{{ app.submission.date_opened_or_not(app.logs) }}</td>
+			
+		</tr>
+		{% endfor %}
+			
+		</table>
+	</div>
+</div>
+{% endblock body %}
