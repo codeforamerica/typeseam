@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "includes/header.html" %}
+
+{% block main %}{% block content %}{% endblock %}{% endblock %}
+{% endblock body %}
+{% block scripts %}
+  <script>
+  {% block js_variables %}
+  {% endblock js_variables %}
+  </script>
+{% endblock %}
+
+{% include "includes/google_analytics.html" %}
+{% include "includes/intercom.html" %}
