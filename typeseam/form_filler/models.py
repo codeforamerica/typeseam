@@ -28,7 +28,10 @@ def yesno(s, key=None):
 
 def namify(s, key):
     string = s.answers.get(key, '')
-    return ' '.join([word[0].upper() + word[1:] for word in string.split()])
+    if not string:
+        return ''
+    words = string.split()
+    return ' '.join([words[0][0].upper() + words[0][1:]] + words[1:])
 
 nice_contact_choices = {
     'voicemail': 'Voicemail',
