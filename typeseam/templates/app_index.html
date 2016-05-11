@@ -17,8 +17,8 @@
 		{% for app in submissions %}
 		<tr>
 			<td>{{ app.submission.get_local_date_received().strftime('%-m/%-d/%y') }}</td>
-			<td>{{ app.submission.answers.last_name }}</td>
-			<td>{{ app.submission.answers.first_name }}</td>
+			<td>{{ namify(app.submission, 'last_name') }}</td>
+			<td>{{ namify(app.submission, 'first_name') }}</td>
 			<td>
 				<a href="{{ 
 					url_for('form_filler.get_filled_pdf',

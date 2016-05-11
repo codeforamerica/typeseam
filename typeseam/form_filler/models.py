@@ -26,6 +26,10 @@ def yesno(s, key=None):
     if result in ('yes', 'no'):
         return result.capitalize()
 
+def namify(s, key):
+    string = s.answers.get(key, '')
+    return ' '.join([word[0].upper() + word[1:] for word in string.split()])
+
 nice_contact_choices = {
     'voicemail': 'Voicemail',
     'sms': 'Text Message',
@@ -60,13 +64,13 @@ clean_slate_translator = {
             'Drivers License': 'drivers_license_number',
             'Email Address': 'email',
             'Employed': lambda s: yesno(s, 'currently_employed'),
-            'First Name': 'first_name',
+            'First Name': lambda s: namify(s, 'first_name'),
             'Home phone number': '',
             'How did you hear about the Clean Slate Program': 'how_did_you_hear',
             'If probation where and when?': lambda s: '{} {}'.format(
                 s.answers.get('where_probation_or_parole'),
                 s.answers.get('when_probation_or_parole')),
-            'Last Name': 'last_name',
+            'Last Name': lambda s: namify(s, 'last_name'),
             'MI': lambda s: s.answers.get('middle_name', '')[:1],
             'May we leave voicemail': lambda s: yesno(s),
             'May we send mail here': lambda s: yesno(s),

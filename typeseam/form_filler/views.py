@@ -47,7 +47,8 @@ def applications_index():
     if events:
         queries.save_new_logentries_from_front_events(events)
     submissions = queries.get_submissions_with_logs()
-    return render_template("app_index.html", submissions=submissions)
+    from typeseam.form_filler.models import namify
+    return render_template("app_index.html", submissions=submissions, namify=namify)
 
 @blueprint.route('/sanfrancisco/<submission_uuid>/')
 @login_required
