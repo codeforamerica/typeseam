@@ -11,7 +11,8 @@ class TestTasks(TestCase):
     @patch('typeseam.form_filler.tasks.app')
     def test_send_submission_notification(self, app, sg, sendgrid, request, render_template):
         app.config = {
-            'DEFAULT_NOTIFICATION_EMAIL': 'me'
+            'DEFAULT_NOTIFICATION_EMAIL': 'me',
+            'MAIN_INTAKE_EMAIL': 'louise'
         }
         fake_rendered_template = Mock()
         render_template.return_value = fake_rendered_template
@@ -29,12 +30,17 @@ class TestTasks(TestCase):
         fake_Mail.return_value = message
         sendgrid.Mail = fake_Mail
         tasks.send_submission_notification(submission)
-        fake_Mail.assert_called_once_with(
+        fake_Mail.assert_any_call(
             subject="New application to https://localtesting:80/yolo received <nice time format>",
             to='me',
             text=fake_rendered_template
             )
-        sg.send.assert_called_once_with(message)
+        fake_Mail.assert_any_call(
+            subject="You’ve received a new online application to Clean Slate from Code for America",
+            to='louise',
+            text=fake_rendered_template
+            )
+        sg.send.assert_any_call(message)
 
 
     @patch('typeseam.form_filler.tasks.render_template')

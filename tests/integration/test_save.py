@@ -53,16 +53,3 @@ class TestSave(BaseTestCase):
         self.assertTrue(getattr(s, 'id'))
         self.assertTrue(getattr(s, 'date_received'))
         self.assertTrue(getattr(s, 'answers'))
-
-    @attr(speed="slow")
-    def test_save_everything(self):
-        data = generate_fake_data(num_users=10)
-        user_report, user_data, users, form_sets, doc_sets, response_sets = data
-        users = User.query.all()
-        forms = Typeform.query.all()
-        docs = SeamlessDoc.query.all()
-        responses = TypeformResponse.query.all()
-        self.assertTrue(len(users) == 10)
-        self.assertTrue(len(forms) > 0)
-        self.assertTrue(len(docs) > 0)
-        self.assertTrue(len(responses) > 0)

@@ -65,7 +65,11 @@ def send_submission_notification(submission):
         to=app.config['DEFAULT_NOTIFICATION_EMAIL'],
         text=text)
     sg.send(message)
-
+    message = sendgrid.Mail(
+        subject="You’ve received a new online application to Clean Slate from Code for America",
+        to=app.config['MAIN_INTAKE_EMAIL'],
+        text=text)
+    sg.send(message)
 
 def send_submission_viewed_notification(submission):
     text = render_template('submission_viewed_email.txt',
