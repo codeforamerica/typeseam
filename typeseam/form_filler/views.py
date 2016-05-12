@@ -63,8 +63,25 @@ def get_filled_pdf(submission_uuid):
 @blueprint.route('/sanfrancisco/<submission_uuid>/add/')
 @login_required
 def mark_as_added(submission_uuid):
-    queries.save_new_logentry(submission_uuid, 'added')
+    submission = queries.get_submission_by_uuid(submission_uuid)
     return redirect(url_for('form_filler.applications_index'))
+
+
+@blueprint.route('/sanfrancisco/<submission_uuid>/delete/')
+@login_required
+def delete_page(submission_uuid):
+    submission = queries.get_submission_by_uuid(submission_uuid)
+    return render_template('delete_page.html',
+        page_title="Delete Application",
+        submission=submission)
+
+@blueprint.route('/sanfrancisco/<submission_uuid>/delete-forever/')
+@login_required
+def definitely_delete(submission_uuid):
+    queries.delete_submission_forever(submission_uuid)
+    return redirect(url_for('form_filler.applications_index'))
+
+
 
 @blueprint.route('/thanks/', methods=['GET'])
 def thanks():

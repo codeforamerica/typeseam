@@ -42,6 +42,13 @@ def get_submission_by_uuid(submission_uuid):
         FormSubmission.uuid == submission_uuid)
     return q.first()
 
+def delete_submission_forever(submission_uuid):
+    q = db.session.query(FormSubmission).filter(
+        FormSubmission.uuid == submission_uuid)
+    submission = q.first()
+    db.session.delete(submission)
+    db.session.commit()
+
 def get_latest_logentry():
     q = db.session.query(LogEntry).\
             filter(LogEntry.source == 'front').\
@@ -91,7 +98,8 @@ def get_submissions_with_logs():
                 lookups[uuid]['logs'].append(log)
     results = list(lookups.values())
     for row in results:
-        row['logs'].sort(key=lambda e: e.datetime, reverse=True) 
+        if 'logs' in row:
+            row['logs'].sort(key=lambda e: e.datetime, reverse=True) 
     return sorted(results, key=lambda s: s['submission'].date_received, reverse=True)
 
 
