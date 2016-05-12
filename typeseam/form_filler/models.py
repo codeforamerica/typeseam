@@ -1,5 +1,6 @@
 import datetime, uuid, os
 from pytz import timezone
+from ago import human
 from typeseam.extensions import db
 from typeseam.settings import PROJECT_ROOT
 
@@ -134,13 +135,19 @@ class FormSubmission(db.Model):
                 preferences.append(k[8:])
         return [nice_contact_choices[m] for m in preferences]
 
-    def date_opened_or_not(self, logs):
+    def was_opened(self, logs):
         # this assumes logs are sorted from most recent to oldest
         for log in logs:
             if log.user == 'Louise.Winterstein@sfgov.org':
-                return log.pacific(
-                    '%a %-m/%-d/%y %-I:%M %p')
-        return '------------'
+                return log.datetime
+        return False
+
+    def was_added(self, logs):
+        for log in logs:
+            if log.event_type == 'added' and log.user == 'Louise.Winterstein@sfgov.org':
+                return log.datetime
+        return False
+
 
 
 class LogEntry(db.Model):
@@ -150,6 +157,7 @@ class LogEntry(db.Model):
     user = db.Column(db.String())
     submission_key = db.Column(db.String(), index=True)
     event_type = db.Column(db.String())
+    source = db.Column(db.String(), default='front')
 
     @classmethod
     def from_parsed_front_event(cls, event):

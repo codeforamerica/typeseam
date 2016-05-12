@@ -60,6 +60,11 @@ def get_filled_pdf(submission_uuid):
         io.BytesIO(pdf),
         mimetype='application/pdf')
 
+@blueprint.route('/sanfrancisco/<submission_uuid>/add/')
+@login_required
+def mark_as_added(submission_uuid):
+    queries.save_new_logentry(submission_uuid, 'added')
+    return redirect(url_for('form_filler.applications_index'))
 
 @blueprint.route('/thanks/', methods=['GET'])
 def thanks():

@@ -1,4 +1,5 @@
 import io, csv
+from datetime import datetime
 
 from sqlalchemy import desc, inspect, func
 from sqlalchemy.orm import subqueryload
@@ -43,6 +44,7 @@ def get_submission_by_uuid(submission_uuid):
 
 def get_latest_logentry():
     q = db.session.query(LogEntry).\
+            filter(LogEntry.source == 'front').\
             order_by(desc(LogEntry.datetime))
     return q.first()
 
@@ -61,6 +63,17 @@ def get_logentries():
     q = db.session.query(LogEntry).\
             order_by(desc(LogEntry.datetime))
     return q.all()
+
+def save_new_logentry(uuid, event_type):
+    log = LogEntry(
+        datetime=datetime.now(),
+        user=current_user.email,
+        submission_key=uuid,
+        event_type=event_type,
+        source='form_filler'
+        )
+    db.session.add(log)
+    db.session.commit()
 
 
 def get_submissions_with_logs():
