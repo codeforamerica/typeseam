@@ -1,7 +1,7 @@
 import io, csv
 from datetime import datetime
 
-from sqlalchemy import desc, inspect, func
+from sqlalchemy import desc, inspect, func, text
 from sqlalchemy.orm import subqueryload
 from flask import abort
 from flask.ext.login import current_user
@@ -48,6 +48,22 @@ def delete_submission_forever(submission_uuid):
     submission = q.first()
     db.session.delete(submission)
     db.session.commit()
+
+def get_unread_submissions():
+    raw_sql = text("""
+        select * from form_filler_submission sub
+        where sub.uuid in (
+            select
+                entry.submission_key as uuid
+            from form_filler_logentry entry
+            group by entry.submission_key
+            having bool_or(
+                    entry.event_type = 'opened' and entry.user = 'Louise.Winterstein@sfgov.org'
+                    ) = false
+        );
+    """)
+    q = db.session.query(FormSubmission).from_statement(raw_sql)
+    return q.all()
 
 def get_latest_logentry():
     q = db.session.query(LogEntry).\
