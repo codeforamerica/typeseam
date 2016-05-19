@@ -30,14 +30,9 @@ class TestTasks(TestCase):
         fake_Mail.return_value = message
         sendgrid.Mail = fake_Mail
         tasks.send_submission_notification(submission)
-        fake_Mail.assert_any_call(
+        fake_Mail.assert_called_once_with(
             subject="New application to https://localtesting:80/yolo received <nice time format>",
             to='me',
-            text=fake_rendered_template
-            )
-        fake_Mail.assert_any_call(
-            subject="You’ve received a new online application to Clean Slate from Code for America",
-            to='louise',
             text=fake_rendered_template
             )
         sg.send.assert_any_call(message)
