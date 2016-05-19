@@ -1,4 +1,4 @@
-import io, csv
+import io, csv, json
 from datetime import datetime
 
 from sqlalchemy import desc, inspect, func, text
@@ -117,6 +117,40 @@ def get_submissions_with_logs():
         if 'logs' in row:
             row['logs'].sort(key=lambda e: e.datetime, reverse=True) 
     return sorted(results, key=lambda s: s['submission'].date_received, reverse=True)
+
+def get_stats():
+    base_data = get_submissions_with_logs()
+    stats = {
+        'received': len(base_data),
+        'opened': len([
+            s for s in base_data
+            if s['submission'].was_opened(s['logs'])
+            ]),
+        'days':[]
+    }
+    day_lookup = {}
+    for row in base_data:
+        for log in row['logs']:
+            day = log.day()
+            if day in day_lookup:
+                day_lookup[day].append(log)
+            else:
+                day_lookup[day] = [log]
+    for day, logs in day_lookup.items():
+        stats['days'].append({
+            'date': day,
+            'received': len([
+                n for n in logs if n.event_type == 'received']),
+            'referred': len([
+                n for n in logs if n.event_type == 'referred']),
+            'opened': len([
+                n for n in logs if (
+                    n.event_type == 'opened' and n.user == 'Louise.Winterstein@sfgov.org'
+                    )]),
+            })
+    stats['days'].sort(key=lambda d: d['date'])
+    stats['days'] = json.dumps(stats['days'])
+    return stats
 
 
 def save_new_typeform_data(data, typeform=None):

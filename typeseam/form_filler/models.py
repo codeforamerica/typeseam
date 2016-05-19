@@ -177,6 +177,9 @@ class LogEntry(db.Model):
             return dtz.strftime(fmt)
         return dtz
 
+    def day(self):
+        return self.pacific('%Y-%m-%d')
+
 
 class Typeform(db.Model):
     __tablename__ = 'form_filler_typeform'

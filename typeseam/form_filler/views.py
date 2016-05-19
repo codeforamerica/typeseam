@@ -82,12 +82,15 @@ def definitely_delete(submission_uuid):
     return redirect(url_for('form_filler.applications_index'))
 
 
-
 @blueprint.route('/thanks/', methods=['GET'])
 def thanks():
     return render_template('thanks.html')
 
+@blueprint.route('/stats/', methods=['GET'])
+def analytics():
+    stats = queries.get_stats()
 
+    return render_template('analytics.html', stats=stats)
 
 @blueprint.route('/<typeform_key>/responses/', methods=['GET'])
 @login_required
