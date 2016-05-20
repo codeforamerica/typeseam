@@ -70,6 +70,7 @@ def get_application_bundle():
         return render_template('app_bundle.html',
             submissions=submissions,
             count=len(submissions),
+            uuids='|'.join(uuids),
             body_class="admin")
     else:
         return redirect(url_for('form_filler.applications_index'))
