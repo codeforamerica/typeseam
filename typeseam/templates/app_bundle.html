@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% include "includes/header.html" %}
+
+<section class="content">
+	<div class="container">
+
+	{% if count == 0 and unopened %}
+		<div class="row">
+			<h1>No new unopened applications</h1>
+		</div>
+	{% else %}
+		<div class="row">				
+			{% if unopened %}
+			<h1>{{ count }} new unopened applications</h1>
+			{% else %}
+			<h1>{{ count }} applications</h1>
+			{% endif %}
+
+			<ol class="app_bundle_list">
+				{% for submission in submissions %}
+					<li>{{ namify(submission.answers.last_name) }},
+					{{ namify(submission.answers.first_name) }}</li>
+				{% endfor %}
+			</ol>
+
+		</div>
+
+		<div class="row">
+		{% if unopened %}
+		<a href="{{ url_for('form_filler.multi_mark_as_added',
+			keys=uuids)
+			}}"
+			class="btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-plus"></span>
+			Mark all as added
+			</a>
+		{% else %}
+
+		{% endif %}
+		</div>
+
+		<div class="row">
+			<div class="iframe_container">
+				<iframe class="pdf_inset" src="{{ url_for('form_filler.unopened_apps_pdf') }}" frameborder="0" width="800" height="600"></iframe>
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</section>
+{% endblock body %}
