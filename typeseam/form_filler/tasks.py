@@ -89,7 +89,8 @@ def send_unopened_apps_notification():
         return None
     todays_date = current_local_time('%a %b %-d, %Y')
     subject= todays_date + ": Online applications to Clean Slate"
-    text = render_template('daily_email.txt', count=count)
+    text = render_template('daily_email.txt', count=count,
+        uuids="|".join([s.uuid for s in submissions]))
     message = sendgrid.Mail(
         subject=subject,
         to=[

@@ -74,6 +74,7 @@ def get_application_bundle():
     else:
         return redirect(url_for('form_filler.applications_index'))
 
+
 @blueprint.route('/sanfrancisco/pdfs/')
 @login_required
 def get_multiple_filled_pdfs():
@@ -90,14 +91,9 @@ def get_multiple_filled_pdfs():
 def unopened_apps():
     submissions = queries.get_unopened_submissions()
     uuids = '|'.join([s.uuid for s in submissions])
-    return render_template(
-        'app_bundle.html',
-        submissions=submissions,
-        count=len(submissions),
-        uuids=uuids,
-        unopened=True,
-        body_class="admin")
-
+    return redirect(
+        url_for('form_filler.get_application_bundle',
+            keys=uuids))
 
 @blueprint.route('/sanfrancisco/unopened/pdf/')
 @login_required
