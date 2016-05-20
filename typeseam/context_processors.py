@@ -6,6 +6,12 @@ from flask import url_for
 from jinja2 import Markup
 from ago import human
 
+def namify(s=''):
+    words = s.split()
+    if not words:
+        return s
+    first_word = words[0].capitalize()
+    return ' '.join([first_word] + words[1:])
 
 class Linkifier:
     def __init__(self, links):
@@ -65,5 +71,6 @@ def add_content_constants():
         content=content_constants,
         linkify=Linkifier(linkify_links),
         current_local_time=current_local_time,
-        human=human
+        human=human,
+        namify=namify
         )

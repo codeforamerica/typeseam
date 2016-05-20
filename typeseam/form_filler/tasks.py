@@ -6,6 +6,7 @@ import sendgrid
 from flask import abort, request, render_template, current_app as app
 from flask.ext.login import current_user
 from typeseam.app import db, sg
+from typeseam.context_processors import current_local_time
 from typeseam.utils import seamless_auth
 from typeseam.form_filler import queries, models, logs
 from typeseam.form_filler.front import Front
@@ -66,6 +67,7 @@ def send_submission_notification(submission):
         text=text)
     sg.send(message)
 
+
 def send_submission_viewed_notification(submission):
     text = render_template('submission_viewed_email.txt',
         submission=submission,
@@ -79,11 +81,54 @@ def send_submission_viewed_notification(submission):
         )
     sg.send(message)
 
+
+def send_unopened_apps_notification():
+    submissions = queries.get_unopened_submissions()
+    count = len(submissions)
+    if not submissions:
+        return None
+    todays_date = current_local_time('%a %b %-d, %Y')
+    subject= todays_date + ": Online applications to Clean Slate"
+    text = render_template('daily_email.txt', count=count)
+    message = sendgrid.Mail(
+        subject=subject,
+        to=[
+            app.config['MAIN_INTAKE_EMAIL'],
+            app.config['DEFAULT_NOTIFICATION_EMAIL']
+            ],
+        text=text)
+    sg.send(message)
+
+
+def sync_logentries_with_front():
+    latest = queries.get_latest_logentry()
+    events = pull_new_front_events(latest)
+    if events:
+        queries.save_new_logentries_from_front_events(events)
+
 def pull_new_front_events(latest=None):
     latest_time=None
     if latest:
         latest_time = latest.datetime.timestamp()
     return front_app.get_events(latest_time)
+
+
+def build_multi_submission_pdf(uuids):
+    submissions = queries.get_submissions(uuids)
+    queries.save_multiple_logentries(
+        [s.uuid for s in submissions],
+        'opened'
+        )
+    return models.FormSubmission.fill_many_pdfs('clean_slate', submissions)
+
+
+def build_unopened_submissions_pdf():
+    submissions = queries.get_unopened_submissions()
+    queries.save_multiple_logentries(
+        [s.uuid for s in submissions],
+        'opened'
+        )
+    return models.FormSubmission.fill_many_pdfs('clean_slate', submissions)
 
 
 def submit_answers_to_seamless_docs(form_id, answers):

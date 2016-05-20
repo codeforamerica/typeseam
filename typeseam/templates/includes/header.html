@@ -1,7 +1,15 @@
-    <header class="header">
+    <header class="header admin">
 
       <div class="top_bar">
-      {% include "includes/auth_bar.html" %}
+	      <div class="container">
+	      	<div class="row">
+		      	<a href="{{ url_for('form_filler.applications_index') }}"
+		      			class="btn btn-sm home_link">
+		      		All Applications
+		      	</a>
+			      {% include "includes/auth_bar.html" %}
+	      	</div>
+	      </div>
       </div> <!-- end top_bar -->
 
     {% include "includes/flash_messages.html" %}

@@ -3,7 +3,7 @@ from datetime import datetime
 
 from sqlalchemy import desc, inspect, func, text
 from sqlalchemy.orm import subqueryload
-from flask import abort
+from flask import abort, Markup
 from flask.ext.login import current_user
 
 from typeseam.app import db
@@ -28,6 +28,7 @@ response_serializer = TypeformResponseSerializer()
 flat_response_serializer = FlatResponseSerializer()
 typeform_serializer = TypeformSerializer()
 
+
 def save_new_form_submission(data, county="sanfrancisco"):
     submission = FormSubmission(
         answers=data,
@@ -37,10 +38,18 @@ def save_new_form_submission(data, county="sanfrancisco"):
     db.session.commit()
     return submission
 
+
+def get_submissions(uuids):
+    query = db.session.query(FormSubmission).filter(
+        FormSubmission.uuid.in_(uuids))
+    return query.all()
+
+
 def get_submission_by_uuid(submission_uuid):
     q = db.session.query(FormSubmission).filter(
         FormSubmission.uuid == submission_uuid)
     return q.first()
+
 
 def delete_submission_forever(submission_uuid):
     q = db.session.query(FormSubmission).filter(
@@ -49,7 +58,8 @@ def delete_submission_forever(submission_uuid):
     db.session.delete(submission)
     db.session.commit()
 
-def get_unread_submissions():
+
+def get_unopened_submissions():
     raw_sql = text("""
         select * from form_filler_submission sub
         where sub.uuid in (
@@ -65,11 +75,13 @@ def get_unread_submissions():
     q = db.session.query(FormSubmission).from_statement(raw_sql)
     return q.all()
 
+
 def get_latest_logentry():
     q = db.session.query(LogEntry).\
             filter(LogEntry.source == 'front').\
             order_by(desc(LogEntry.datetime))
     return q.first()
+
 
 def save_new_logentries_from_front_events(events=None):
     for event in events:
@@ -77,15 +89,18 @@ def save_new_logentries_from_front_events(events=None):
         db.session.add(logentry)
     db.session.commit()
 
-def get_submissions():
+
+def get_all_submissions():
     q = db.session.query(FormSubmission).\
             order_by(desc(FormSubmission.date_received))
     return q.all()
+
 
 def get_logentries():
     q = db.session.query(LogEntry).\
             order_by(desc(LogEntry.datetime))
     return q.all()
+
 
 def save_new_logentry(uuid, event_type):
     log = LogEntry(
@@ -98,10 +113,22 @@ def save_new_logentry(uuid, event_type):
     db.session.add(log)
     db.session.commit()
 
+def save_multiple_logentries(uuids, event_type):
+    for uuid in uuids:
+        log = LogEntry(
+            datetime=datetime.now(),
+            user=current_user.email,
+            submission_key=uuid,
+            event_type=event_type,
+            source='form_filler'
+            )
+        db.session.add(log)
+    db.session.commit()
+
 
 def get_submissions_with_logs():
     lookups = {}
-    submissions = get_submissions()
+    submissions = get_all_submissions()
     logs = get_logentries()
     for submission in submissions:
         lookups[submission.uuid] = {'submission': submission}
@@ -117,6 +144,7 @@ def get_submissions_with_logs():
         if 'logs' in row:
             row['logs'].sort(key=lambda e: e.datetime, reverse=True) 
     return sorted(results, key=lambda s: s['submission'].date_received, reverse=True)
+
 
 def get_stats():
     base_data = get_submissions_with_logs()
@@ -149,7 +177,7 @@ def get_stats():
                     )]),
             })
     stats['days'].sort(key=lambda d: d['date'])
-    stats['days'] = json.dumps(stats['days'])
+    stats['days'] = Markup(json.dumps(stats['days']))
     return stats
 
 

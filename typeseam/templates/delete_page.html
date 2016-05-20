@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block body %}
+{% include "includes/header.html" %}
+
 
 <section class="delete">
 <div class="container">
@@ -18,7 +20,7 @@
 	<div class="row">
 		<div class="iframe_container">
 			<iframe class="pdf_inset" src="{{ url_for('form_filler.get_filled_pdf',
-				submission_uuid=submission.uuid ) }}" frameborder="0" width="600" height="400"></iframe>
+				submission_uuid=submission.uuid ) }}" frameborder="0" width="800" height="600"></iframe>
 		</div>
 	</div>
 </div>

@@ -1,7 +1,9 @@
 /**Universal Styles**/
-
-header { padding: 1em 0;}
-.top_bar a { color: inherit; text-decoration: none; }
+header { padding: 0;}
+.top_bar {
+  padding: 1em 0; 
+}
+.public .top_bar a { color: inherit; text-decoration: none; }
 p, ul { font-size: 18px; font-weight: 400; }
 h1 { font-size: 40px; font-weight: 700; }
 h1.main_headline { margin-bottom: 4px; }
@@ -27,7 +29,6 @@ h4 {
 
 .container {
   margin: 0 auto;
-  padding-bottom: 20px;
 }
 
 li > span.glyphicon:first-child {
@@ -289,9 +290,19 @@ section.footer.container.new_section{
 
 
 
-// breadcrumbs
-.breadcrumb .current { color: @text-color; }
+ol.app_bundle_list {
+  padding-left: 1.25em;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+body.admin {
+  padding-bottom: 4em;
+}
 
+body.admin .container {
+  max-width: 100rem;
+
+}
 
 .btn .glyphicon {
   margin-right: .5em;
@@ -354,7 +365,7 @@ section.footer.container.new_section{
 
 @media (min-width: @screen-md-min) {
 
-  header { padding: 1.5em 0;}
+  .top_bar { padding: 1.5em 0;}
   .splash.above_the_fold {
     min-height: 40em;
   }
@@ -377,7 +388,7 @@ section.footer.container.new_section{
 }
 
 .iframe_container {
-  width: 600px;
-  height: 400px;
+  width: 800px;
+  height: 600px;
   background-color: #ccc;
 }
