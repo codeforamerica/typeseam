@@ -3,6 +3,7 @@ from pytz import timezone
 from ago import human
 from typeseam.extensions import db
 from typeseam.settings import PROJECT_ROOT
+from typeseam.context_processors import namify
 
 from sqlalchemy.dialects.postgresql import JSON
 
@@ -27,12 +28,6 @@ def yesno(s, key=None):
     if result in ('yes', 'no'):
         return result.capitalize()
 
-def namify(s, key):
-    string = s.answers.get(key, '')
-    if not string:
-        return ''
-    words = string.split()
-    return ' '.join([words[0][0].upper() + words[0][1:]] + words[1:])
 
 nice_contact_choices = {
     'voicemail': 'Voicemail',
@@ -68,13 +63,13 @@ clean_slate_translator = {
             'Drivers License': 'drivers_license_number',
             'Email Address': 'email',
             'Employed': lambda s: yesno(s, 'currently_employed'),
-            'First Name': lambda s: namify(s, 'first_name'),
+            'First Name': lambda s: namify(s.answers.get('first_name','')),
             'Home phone number': '',
             'How did you hear about the Clean Slate Program': 'how_did_you_hear',
             'If probation where and when?': lambda s: '{} {}'.format(
                 s.answers.get('where_probation_or_parole'),
                 s.answers.get('when_probation_or_parole')),
-            'Last Name': lambda s: namify(s, 'last_name'),
+            'Last Name': lambda s: namify(s.answers.get('last_name','')),
             'MI': lambda s: s.answers.get('middle_name', '')[:1],
             'May we leave voicemail': lambda s: yesno(s),
             'May we send mail here': lambda s: yesno(s),
@@ -106,6 +101,13 @@ class FormSubmission(db.Model):
     status = db.Column(db.String(), default='new')
     county = db.Column(db.String(), default='sanfrancisco')
     answers = db.Column(JSON)
+
+    @classmethod
+    def fill_many_pdfs(cls, pdf_key, submissions):
+        pdf_path = os.path.join(PROJECT_ROOT, 'data/pdfs', PDFS[pdf_key]['pdf_path'])
+        translator = PDFS[pdf_key]['translator']
+        answers = [s.translate(translator) for s in submissions]
+        return pdfparser.fill_many_pdfs(pdf_path, answers)
 
     def get_local_date_received(self, timezone_name='US/Pacific'):
         local_tz = timezone(timezone_name)

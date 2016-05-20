@@ -1,4 +1,4 @@
-{% if count == 1 %}You've received 1 new online application to Clean Slate in the past 24 hours.
+{% if count == 1 %}You've received 1 new online application to Clean Slate in the past 24 hours from Code for America.
 
 To review and print the unopened application, follow this link:
 {%- else -%}
