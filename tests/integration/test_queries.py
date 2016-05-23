@@ -6,11 +6,13 @@ from ago import human
 
 import csv
 import io
+from datetime import datetime
 
 from tests.mock.factories import (
     generate_fake_users,
     generate_fake_typeforms,
-    generate_fake_responses
+    generate_fake_responses,
+    SubmissionFactory,
     )
 
 from typeseam.form_filler.serializers import (
@@ -22,6 +24,7 @@ from typeseam.form_filler.serializers import (
     )
 
 from typeseam.form_filler.queries import (
+    db,
     get_response_model,
     save_new_typeform_data,
     get_typeforms_for_user,
@@ -30,6 +33,8 @@ from typeseam.form_filler.queries import (
     get_response_model,
     get_response_detail,
     create_typeform,
+    get_unopened_submissions,
+    save_new_logentry
     )
 
 response_serializer = TypeformResponseSerializer()
@@ -137,3 +142,28 @@ class TestQueries(BaseTestCase):
         for response in check_responses:
             check_date = dateutil.parser.parse(response['date_received']).replace(tzinfo=None)
             self.assertEqual(human(check_date, precision=1), response['date_received_relative'])
+
+    def test_get_unopened_submissions(self):
+        # have two submissions
+        submission_A = SubmissionFactory.create()
+        submission_B = SubmissionFactory.create()
+        db.session.commit()
+        # one opened, one not opened
+        from typeseam.form_filler.models import LogEntry
+        log = LogEntry(
+            datetime=datetime.now(),
+            user='Louise.Winterstein@sfgov.org',
+            submission_key=submission_A.uuid,
+            event_type='opened',
+            source='front'
+            )
+        db.session.add(log)
+        db.session.commit()
+        # # get unopened submissions
+        unopened = get_unopened_submissions()
+        self.assertEqual(len(unopened), 1)
+        self.assertEqual(unopened[0], submission_B)
+
+
+
+

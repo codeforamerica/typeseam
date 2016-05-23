@@ -60,20 +60,15 @@ def delete_submission_forever(submission_uuid):
 
 
 def get_unopened_submissions():
-    raw_sql = text("""
-        select * from form_filler_submission sub
-        where sub.uuid in (
-            select
-                entry.submission_key as uuid
-            from form_filler_logentry entry
-            group by entry.submission_key
-            having bool_or(
-                    entry.event_type = 'opened' and entry.user = 'Louise.Winterstein@sfgov.org'
-                    ) = false
-        );
-    """)
-    q = db.session.query(FormSubmission).from_statement(raw_sql)
-    return q.all()
+    data = get_submissions_with_logs()
+    unopened = []
+    for row in data:
+        if 'logs' not in row:
+            unopened.append(row['submission'])
+        else:
+            if not row['submission'].was_opened(row['logs']):
+                unopened.append(row['submission'])
+    return unopened
 
 
 def get_latest_logentry():
