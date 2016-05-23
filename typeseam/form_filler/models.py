@@ -83,8 +83,8 @@ clean_slate_translator = {
             'Work phone number': '',
             'DOB': get_formatted_dob,
             'SSN': fmt_ssn,
-            'FirstName': 'first_name',
-            'LastName': 'last_name'
+            'FirstName': lambda s: namify(s.answers.get('first_name','')),
+            'LastName': lambda s: namify(s.answers.get('last_name',''))
         }
 
 
