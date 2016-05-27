@@ -20,8 +20,8 @@
 
 			<ol class="app_bundle_list">
 				{% for submission in submissions %}
-					<li>{{ namify(submission.answers.last_name) }},
-					{{ namify(submission.answers.first_name) }}</li>
+					<li>{{ namify(submission.answers.get("last_name", "")) }},
+					{{ namify(submission.answers.get("first_name", "")) }}</li>
 				{% endfor %}
 			</ol>
 
