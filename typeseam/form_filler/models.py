@@ -107,7 +107,10 @@ class FormSubmission(db.Model):
         pdf_path = os.path.join(PROJECT_ROOT, 'data/pdfs', PDFS[pdf_key]['pdf_path'])
         translator = PDFS[pdf_key]['translator']
         answers = [s.translate(translator) for s in submissions]
-        return pdfparser.fill_many_pdfs(pdf_path, answers)
+        if len(answers) > 1:
+            return pdfparser.fill_many_pdfs(pdf_path, answers)
+        else:
+            return pdfparser.fill_pdf(pdf_path, answers[0])
 
     def get_local_date_received(self, timezone_name='US/Pacific'):
         local_tz = timezone(timezone_name)
