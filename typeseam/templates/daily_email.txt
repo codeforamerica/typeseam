@@ -1,10 +1,8 @@
-{% if count == 1 %}You've received 1 new online application to Clean Slate in the past 24 hours from Code for America.
+As of {{ current_local_time('%-I:%M %p %Z on %A %b %-d') }}, you have 
+{%- if count == 1 %} one unopened application{% else %} {{ count }} unopened applications
+{%- endif %} to Clean Slate.
 
-To review and print the new application, follow this link:
-{%- else -%}
-You've received {{ count }} new online applications to Clean Slate in the past 24 hours.
-
-To review and print all the new applications, follow this link:{% endif %}
+You can review and print them at this link:
     {{ url_for('form_filler.get_application_bundle', keys=uuids, _external=True) }}
 
 If you have any questions or concerns, email us at clearmyrecord@codeforamerica.org and Jazmyn or Ben will get back to you right away.
