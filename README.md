@@ -1,6 +1,6 @@
 # typeseam
 
-## This repo is no longer in use
+## This repo is no longer in use and will be deleted on September 1st.
 
 Please look at [codeforamerica/intake](https://github.com/codeforamerica/intake) if you want to see the current active version of this project.
 
