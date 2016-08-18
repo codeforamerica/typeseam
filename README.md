@@ -1,5 +1,9 @@
 # typeseam
 
+## This repo is no longer in use
+
+Please look at [codeforamerica/intake](https://github.com/codeforamerica/intake) if you want to see the current active version of this project.
+
 [![Build Status](https://travis-ci.org/codeforamerica/typeseam.svg?branch=master)](https://travis-ci.org/codeforamerica/typeseam) [![Coverage Status](https://coveralls.io/repos/codeforamerica/typeseam/badge.svg?branch=master&service=github)](https://coveralls.io/github/codeforamerica/typeseam?branch=master)
 
 This is an alpha proof-of-concept software for tying together [Typeform](http://www.typeform.com/) forms and
